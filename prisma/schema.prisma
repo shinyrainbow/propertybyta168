@@ -1,0 +1,231 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// NextAuth.js Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("user") // "user", "admin", "agent"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Property Extensions - Local enhancements for external API properties
+model PropertyExtension {
+  id                 String   @id @default(cuid())
+  externalPropertyId String   @unique // ID from external NainaHub API
+  priority           Int      @default(0) // For sorting/featuring
+  internalNotes      String?  @db.Text // Admin notes
+  isHidden           Boolean  @default(false) // Hide from public listing
+
+  // Property Type Classification
+  mainPropertyType   String?  // "Living", "Land", "Commercial"
+  subPropertyType    String?  // "Condo", "Villa", "Office", etc.
+
+  // Popular Properties
+  isFeaturedPopular  Boolean  @default(false) // Show in popular section
+
+  // Closed Deals
+  closedDealDate     DateTime? // When the deal was closed
+  closedDealType     String?   // "sold" or "rented"
+  closedDealPrice    Float?    // Final deal price
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  tags       PropertyTag[]
+
+  @@index([externalPropertyId])
+  @@index([priority])
+  @@index([isFeaturedPopular])
+  @@index([closedDealDate])
+}
+
+model PropertyTag {
+  id        String   @id @default(cuid())
+  name      String // "verified", "exclusive", "pet-friendly"
+  color     String?  @default("#3B82F6") // Tailwind blue-500
+  createdAt DateTime @default(now())
+
+  extensionId String
+  extension   PropertyExtension @relation(fields: [extensionId], references: [id], onDelete: Cascade)
+
+  @@index([extensionId])
+  @@index([name])
+}
+
+// Customer Reviews
+model Review {
+  id              String   @id @default(cuid())
+  name            String   // Customer name
+  email           String?  // Optional email for verification
+  phone           String?  // Optional phone
+  rating          Int      // 1-5 stars
+  comment         String   @db.Text
+  transactionType String   // "เช่าคอนโด", "ซื้อบ้านเดี่ยว", etc.
+  location        String   // "สุขุมวิท", "พระราม 9", etc.
+  status          String   @default("pending") // "pending", "published", "rejected"
+  helpful         Int      @default(0) // Helpful count
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+// Inquiries - Customer contact form submissions
+model Inquiry {
+  id            String   @id @default(cuid())
+  propertyId    String?  // External property ID (optional)
+  propertyCode  String?  // Property code for reference
+  propertyTitle String?  // Property title for reference
+  name          String   // Customer name
+  phone         String   // Customer phone
+  message       String?  @db.Text // Optional message
+  status        String   @default("new") // "new", "contacted", "resolved"
+  notes         String?  @db.Text // Admin notes
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([propertyId])
+}
+
+// Property Listings - Owner submissions to list their property
+model PropertyListing {
+  id           String   @id @default(cuid())
+  name         String   // Owner name
+  phone        String   // Contact phone
+  email        String?  // Optional email
+  listingType  String   // "rent" or "sale"
+  propertyType String   // "condo", "house", etc.
+  location     String   // Property location
+  size         String?  // Property size
+  price        String?  // Expected price/rent
+  details      String?  @db.Text // Additional details
+  status       String   @default("new") // "new", "contacted", "listed", "rejected"
+  notes        String?  @db.Text // Admin notes
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([listingType])
+}
+
+// Blog Categories
+model BlogCategory {
+  id        String   @id @default(cuid())
+  name      String   // Thai name
+  nameEn    String?  // English name
+  nameZh    String?  // Chinese name
+  slug      String   @unique // URL-friendly slug
+  color     String   @default("#3B82F6") // Color for UI display
+  order     Int      @default(0) // Display order
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogs Blog[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([order])
+}
+
+// Blog Posts
+model Blog {
+  id          String   @id @default(cuid())
+  title       String   // Thai title
+  titleEn     String?  // English title
+  titleZh     String?  // Chinese title
+  slug        String   @unique // URL-friendly slug
+  excerpt     String?  @db.Text // Short description (Thai)
+  excerptEn   String?  @db.Text // Short description (English)
+  excerptZh   String?  @db.Text // Short description (Chinese)
+  coverImage  String?  // Cover image URL for listing
+  isPublished Boolean  @default(false)
+  publishedAt DateTime?
+  categoryId  String?  // Foreign key to BlogCategory
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  sections BlogSection[]
+  category BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([publishedAt])
+  @@index([categoryId])
+}
+
+// Blog Sections - Multiple content sections per blog (image + content pairs)
+model BlogSection {
+  id        String  @id @default(cuid())
+  blogId    String
+  order     Int     @default(0) // Display order
+  imageUrl  String? // Optional image for this section
+  content   String? @db.Text // Thai content
+  contentEn String? @db.Text // English content
+  contentZh String? @db.Text // Chinese content
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@index([blogId])
+  @@index([order])
+}
