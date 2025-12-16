@@ -1,20 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { v2 as cloudinary } from "cloudinary";
 
-// Configure AWS S3 client
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION || "ap-southeast-1",
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-  },
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME || "";
-
-// POST /api/admin/upload - Upload image to AWS S3
+// POST /api/admin/upload - Upload image to Cloudinary
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
@@ -46,43 +42,43 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    // Validate file size (max 10MB for Cloudinary)
+    const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
       return NextResponse.json(
-        { success: false, error: "File too large. Maximum size is 5MB." },
+        { success: false, error: "File too large. Maximum size is 10MB." },
         { status: 400 }
       );
     }
 
-    // Convert file to buffer
+    // Convert file to base64
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString("base64");
+    const dataUri = `data:${file.type};base64,${base64}`;
 
     // Generate unique filename
     const timestamp = Date.now();
     const randomString = Math.random().toString(36).substring(2, 15);
-    const extension = file.type.split("/")[1] === "jpeg" ? "jpg" : file.type.split("/")[1];
-    const key = `skypro-blog/${timestamp}-${randomString}.${extension}`;
+    const publicId = `${timestamp}-${randomString}`;
 
-    // Upload to S3
-    const command = new PutObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: key,
-      Body: buffer,
-      ContentType: file.type,
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(dataUri, {
+      folder: "propertybyta168",
+      public_id: publicId,
+      resource_type: "image",
+      overwrite: true,
+      transformation: [
+        { quality: "auto:best" },
+        { fetch_format: "auto" },
+      ],
     });
-
-    await s3Client.send(command);
-
-    // Generate S3 URL
-    const url = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || "ap-southeast-1"}.amazonaws.com/${key}`;
 
     return NextResponse.json({
       success: true,
       data: {
-        url: url,
-        publicId: key,
+        url: result.secure_url,
+        publicId: result.public_id,
       },
     });
   } catch (error) {

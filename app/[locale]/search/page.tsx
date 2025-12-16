@@ -290,19 +290,20 @@ function SearchContent() {
       {/* Spacer for fixed header */}
       <div className="h-16" />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#C9A227] to-[#A88B1F] py-12">
+      {/* Hero Section - Light with Red Accent */}
+      <section className="bg-white border-b border-gray-100 py-12">
         <div
-          className={`container mx-auto px-4 text-center text-white transition-all duration-700 ${
+          className={`container mx-auto px-4 text-center transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
           }`}
         >
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="w-16 h-1 bg-[#eb3838] mx-auto mb-6" />
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             {selectedProject
               ? `${t("searchPage.title")} - ${selectedProjectName}`
               : t("searchPage.title")}
           </h1>
-          <p className="text-lg text-white/90 mb-6">
+          <p className="text-lg text-gray-600 mb-6">
             {selectedProject
               ? `${properties.length} ${t("common.properties")} - ${selectedProjectName}`
               : t("searchPage.subtitle")}
@@ -311,7 +312,7 @@ function SearchContent() {
           {selectedProject && (
             <Button
               variant="outline"
-              className="bg-white/20 border-white text-white hover:bg-white hover:text-[#C9A227]"
+              className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
               onClick={() => setSelectedProject("")}
             >
               <X className="w-4 h-4 mr-2" />
@@ -333,8 +334,8 @@ function SearchContent() {
                 }
                 className={`transition-all duration-300 ${
                   selectedProject === project.projectCode
-                    ? "bg-[#C9A227] hover:bg-[#A88B1F] text-white border-[#C9A227]"
-                    : "bg-white border-2 border-gray-200 text-gray-700 hover:border-[#C9A227] hover:bg-[#C9A227]/10 hover:text-[#C9A227]"
+                    ? "bg-[#eb3838] hover:bg-[#d32f2f] text-white border-[#eb3838]"
+                    : "bg-white border-2 border-gray-200 text-gray-700 hover:border-[#eb3838] hover:bg-[#eb3838]/10 hover:text-[#eb3838]"
                 }`}
                 onClick={() => handleProjectSelect(project.projectCode)}
               >
@@ -354,7 +355,7 @@ function SearchContent() {
         <div className="lg:hidden mb-4">
           <Button
             variant="outline"
-            className="w-full border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-white"
+            className="w-full border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
             onClick={() => setShowFilters(!showFilters)}
           >
             <SlidersHorizontal className="w-4 h-4 mr-2" />
@@ -375,7 +376,7 @@ function SearchContent() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-0 text-[#C9A227] hover:text-[#A88B1F] hover:bg-transparent"
+                  className="border-0 text-[#eb3838] hover:text-[#d32f2f] hover:bg-transparent"
                   onClick={handleResetFilters}
                 >
                   {t("search.resetFilters")}
@@ -495,7 +496,7 @@ function SearchContent() {
                 <div className="mt-4">
                   <Button
                     onClick={handleSearch}
-                    className="w-full bg-[#C9A227] hover:bg-[#A88B1F] text-white"
+                    className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white"
                   >
                     <Search className="w-4 h-4 mr-2" />
                     {t("search.searchButton")}
@@ -523,7 +524,7 @@ function SearchContent() {
                   size="sm"
                   className={
                     viewMode === "grid"
-                      ? "bg-[#C9A227] hover:bg-[#A88B1F]"
+                      ? "bg-[#eb3838] hover:bg-[#d32f2f]"
                       : "border-gray-300 text-gray-700 hover:bg-gray-100"
                   }
                   onClick={() => setViewMode("grid")}
@@ -535,7 +536,7 @@ function SearchContent() {
                   size="sm"
                   className={
                     viewMode === "list"
-                      ? "bg-[#C9A227] hover:bg-[#A88B1F]"
+                      ? "bg-[#eb3838] hover:bg-[#d32f2f]"
                       : "border-gray-300 text-gray-700 hover:bg-gray-100"
                   }
                   onClick={() => setViewMode("list")}
@@ -577,7 +578,7 @@ function SearchContent() {
                 </p>
                 <Button
                   onClick={handleResetFilters}
-                  className="bg-[#C9A227] hover:bg-[#A88B1F] text-white"
+                  className="bg-[#eb3838] hover:bg-[#d32f2f] text-white"
                 >
                   {t("search.resetFilters")}
                 </Button>
@@ -603,7 +604,7 @@ function SearchContent() {
                     style={{ transitionDelay: `${index * 50}ms` }}
                   >
                     <Card
-                      className={`group overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white border border-gray-200 hover:border-[#C9A227]/50 ${
+                      className={`group overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white border border-gray-200 hover:border-[#eb3838]/50 ${
                         viewMode === "list" ? "flex flex-row" : ""
                       }`}
                     >
@@ -628,7 +629,7 @@ function SearchContent() {
 
                         {/* Badges */}
                         <div className="absolute top-2 left-2 flex flex-col gap-1">
-                          <div className="bg-[#C9A227] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
+                          <div className="bg-[#eb3838] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
                             {property.propertyType === "Condo"
                               ? t("search.condo")
                               : property.propertyType === "Townhouse"
@@ -690,25 +691,25 @@ function SearchContent() {
                             </div>
                           )}
 
-                          <h3 className={`font-bold text-gray-900 mb-2 group-hover:text-[#C9A227] transition-colors ${viewMode === "list" ? "line-clamp-1" : "line-clamp-2"}`}>
+                          <h3 className={`font-bold text-gray-900 mb-2 group-hover:text-[#eb3838] transition-colors ${viewMode === "list" ? "line-clamp-1" : "line-clamp-2"}`}>
                             {getPropertyTitle(property)}
                           </h3>
 
                           <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 pb-3 border-b border-gray-100">
                             <div className="flex items-center gap-1">
-                              <Bed className="w-3 h-3 text-[#C9A227]" />
+                              <Bed className="w-3 h-3 text-[#eb3838]" />
                               <span className="font-semibold">
                                 {property.bedRoomNum}
                               </span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Bath className="w-3 h-3 text-[#C9A227]" />
+                              <Bath className="w-3 h-3 text-[#eb3838]" />
                               <span className="font-semibold">
                                 {property.bathRoomNum}
                               </span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Maximize className="w-3 h-3 text-[#C9A227]" />
+                              <Maximize className="w-3 h-3 text-[#eb3838]" />
                               <span className="font-semibold">
                                 {getSize(property)} {t("common.sqm")}
                               </span>
@@ -720,7 +721,7 @@ function SearchContent() {
                         <div>
                           {property.rentalRateNum != null &&
                             property.rentalRateNum > 0 && (
-                              <div className={`font-bold text-[#C9A227] ${viewMode === "list" ? "text-base" : "text-lg"}`}>
+                              <div className={`font-bold text-[#eb3838] ${viewMode === "list" ? "text-base" : "text-lg"}`}>
                                 <span className="text-xs font-normal text-gray-500 mr-1">{t("property.forRent")}:</span>
                                 ฿{formatPrice(property.rentalRateNum)}
                                 <span className="text-xs font-normal text-gray-400">
@@ -730,7 +731,7 @@ function SearchContent() {
                             )}
                           {property.sellPriceNum != null &&
                             property.sellPriceNum > 0 && (
-                              <div className={`font-bold text-[#C9A227] ${property.rentalRateNum != null && property.rentalRateNum > 0 ? "text-sm mt-1" : viewMode === "list" ? "text-base" : "text-lg"}`}>
+                              <div className={`font-bold text-[#eb3838] ${property.rentalRateNum != null && property.rentalRateNum > 0 ? "text-sm mt-1" : viewMode === "list" ? "text-base" : "text-lg"}`}>
                                 <span className="text-xs font-normal text-gray-500 mr-1">{t("property.forSale")}:</span>
                                 ฿{formatPrice(property.sellPriceNum)}
                               </div>
@@ -761,24 +762,24 @@ function SearchContent() {
 function SearchSkeleton() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-[#152238] shadow-sm py-4">
+      <header className="bg-white shadow-sm py-4">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#1B2D44] rounded animate-pulse" />
-            <div className="w-32 h-6 bg-[#1B2D44] rounded animate-pulse" />
+            <div className="w-8 h-8 bg-gray-200 rounded animate-pulse" />
+            <div className="w-32 h-6 bg-gray-200 rounded animate-pulse" />
           </div>
         </div>
       </header>
-      <section className="bg-gradient-to-r from-[#C9A227] to-[#A88B1F] py-12">
+      <section className="bg-white border-b border-gray-100 py-12">
         <div className="container mx-auto px-4 text-center">
-          <div className="w-64 h-10 bg-white/30 rounded mx-auto mb-4 animate-pulse" />
-          <div className="w-48 h-6 bg-white/30 rounded mx-auto animate-pulse" />
+          <div className="w-64 h-10 bg-gray-200 rounded mx-auto mb-4 animate-pulse" />
+          <div className="w-48 h-6 bg-gray-200 rounded mx-auto animate-pulse" />
         </div>
       </section>
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-80 bg-[#152238] rounded-xl animate-pulse" />
+            <div key={i} className="h-80 bg-gray-200 rounded-xl animate-pulse" />
           ))}
         </div>
       </div>

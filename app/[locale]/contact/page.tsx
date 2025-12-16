@@ -13,6 +13,7 @@ import {
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 import { useTranslations } from "next-intl";
 
 export default function ContactPage() {
@@ -29,9 +30,9 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: t("contactPage.phone"),
-      details: ["063-956-2446"],
-      color: "from-green-500 to-green-600",
-      links: ["tel:0639562446"],
+      details: ["061-259-6657"],
+      color: "from-[#eb3838] to-[#d32f2f]",
+      links: ["tel:0612596657"],
     },
     {
       icon: MapPin,
@@ -41,14 +42,14 @@ export default function ContactPage() {
         t("contactPage.addressLine1"),
         t("contactPage.addressLine2"),
       ],
-      color: "from-red-500 to-red-600",
+      color: "from-gray-700 to-gray-800",
       links: [],
     },
     {
       icon: Clock,
       title: t("contactPage.businessHours"),
       details: [t("contactPage.daysOpen"), t("contactPage.hoursOpen")],
-      color: "from-purple-500 to-purple-600",
+      color: "from-gray-600 to-gray-700",
       links: [],
     },
   ];
@@ -63,7 +64,7 @@ export default function ContactPage() {
   const socialLinks = [
     {
       name: "Facebook",
-      href: "https://www.facebook.com/share/1BqpBqLF4x/",
+      href: "https://web.facebook.com/p/Property-By-Ta-168-100093155621525/",
       color: "bg-blue-600 hover:bg-blue-700",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -72,19 +73,8 @@ export default function ContactPage() {
       ),
     },
     {
-      name: "Instagram",
-      href: "https://www.instagram.com/skyproproperty?igsh=dmQ3NzkwMGMzNjI5",
-      color:
-        "bg-gradient-to-br from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600",
-      icon: (
-        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-        </svg>
-      ),
-    },
-    {
       name: "TikTok",
-      href: "https://www.tiktok.com/@skyproproperty?_r=1&_t=ZS-9291zppaPLT",
+      href: "https://www.tiktok.com/@propertybyta",
       color: "bg-black hover:bg-gray-800",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -95,25 +85,12 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A0E1A]">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="h-16" />
 
-      {/* Hero Section - Dark Premium Style */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A227' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          />
-        </div>
-
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E1A] via-transparent to-[#0A0E1A]" />
-
+      {/* Hero Section - Light with Red Accent */}
+      <section className="relative py-16 md:py-20 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4 relative z-10">
           <div
             className={`text-center transition-all duration-700 ${
@@ -122,13 +99,13 @@ export default function ContactPage() {
                 : "opacity-0 translate-y-5"
             }`}
           >
-            {/* Gold Line */}
-            <div className="w-20 h-1 bg-gradient-to-r from-[#C9A227] to-[#E8D48B] mx-auto mb-6" />
+            {/* Red Line */}
+            <div className="w-20 h-1 bg-[#eb3838] mx-auto mb-6" />
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
               {t("contactPage.title")}
             </h1>
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               {t("contactPage.subtitle")}
               <br className="hidden md:block" />
               {t("contactPage.subtitle2")}
@@ -138,13 +115,13 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Cards Section */}
-      <section className="py-10 md:py-16 bg-gradient-to-b from-[#0A0E1A] to-gray-900">
+      <section className="py-10 md:py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
             {contactInfo.map((info, index) => (
               <div
                 key={info.title}
-                className={`group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl md:rounded-2xl p-5 md:p-8 hover:bg-white/10 transition-all duration-500 ${
+                className={`group relative bg-white border border-gray-200 rounded-xl md:rounded-2xl p-5 md:p-8 hover:shadow-lg hover:border-[#eb3838]/30 transition-all duration-500 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
@@ -160,7 +137,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex-1">
-                    <h3 className="text-lg md:text-xl font-bold text-white mb-1 md:mb-3">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-1 md:mb-3">
                       {info.title}
                     </h3>
 
@@ -169,12 +146,12 @@ export default function ContactPage() {
                         <a
                           key={i}
                           href={info.links[i]}
-                          className="block text-[#C9A227] md:text-gray-400 hover:text-[#C9A227] transition-colors text-base md:text-lg font-medium md:font-normal"
+                          className="block text-[#eb3838] hover:text-[#d32f2f] transition-colors text-base md:text-lg font-medium"
                         >
                           {detail}
                         </a>
                       ) : (
-                        <p key={i} className="text-gray-400 text-xs md:text-sm leading-relaxed">
+                        <p key={i} className="text-gray-500 text-xs md:text-sm leading-relaxed">
                           {detail}
                         </p>
                       )
@@ -188,13 +165,13 @@ export default function ContactPage() {
       </section>
 
       {/* Line & Social Section */}
-      <section className="py-10 md:py-16 bg-gray-900">
+      <section className="py-10 md:py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
               {/* Line QR Code */}
               <div
-                className={`bg-gradient-to-br from-[#00B900]/20 to-[#00B900]/5 border border-[#00B900]/30 rounded-xl md:rounded-2xl p-6 md:p-8 text-center transition-all duration-700 ${
+                className={`bg-gradient-to-br from-[#00B900]/10 to-[#00B900]/5 border border-[#00B900]/30 rounded-xl md:rounded-2xl p-6 md:p-8 text-center transition-all duration-700 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
@@ -211,16 +188,16 @@ export default function ContactPage() {
                   </svg>
                 </div>
 
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
                   {t("footerNav.lineOfficial")}
                 </h3>
-                <p className="text-gray-400 text-sm md:text-base mb-4 md:mb-6">
+                <p className="text-gray-500 text-sm md:text-base mb-4 md:mb-6">
                   {t("contactPage.scanQr")}
                 </p>
 
-                <div className="bg-white p-3 md:p-4 rounded-xl inline-block mb-3 md:mb-4">
+                <div className="bg-white p-3 md:p-4 rounded-xl inline-block mb-3 md:mb-4 shadow-sm">
                   <Image
-                    src="/skyproqrcode.png"
+                    src="/line.png"
                     alt="Line QR Code"
                     width={150}
                     height={150}
@@ -228,21 +205,21 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <p className="text-[#00B900] font-medium text-sm md:text-base">@skyproproperty</p>
+                <p className="text-[#00B900] font-medium text-sm md:text-base">@propertybyta168</p>
               </div>
 
               {/* Social & Map */}
               <div className="space-y-4 md:space-y-6">
                 {/* Social Media */}
                 <div
-                  className={`bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-5 md:p-8 transition-all duration-700 ${
+                  className={`bg-gray-50 border border-gray-200 rounded-xl md:rounded-2xl p-5 md:p-8 transition-all duration-700 ${
                     isVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-10"
                   }`}
                   style={{ transitionDelay: "400ms" }}
                 >
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-6">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">
                     {t("contactPage.followUs")}
                   </h3>
 
@@ -269,20 +246,20 @@ export default function ContactPage() {
 
                 {/* Map */}
                 <div
-                  className={`bg-white/5 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden transition-all duration-700 ${
+                  className={`bg-gray-100 border border-gray-200 rounded-xl md:rounded-2xl overflow-hidden transition-all duration-700 ${
                     isVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-10"
                   }`}
                   style={{ transitionDelay: "500ms" }}
                 >
-                  <div className="h-36 md:h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative">
+                  <div className="h-36 md:h-48 flex items-center justify-center relative">
                     <div className="text-center">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-[#C9A227]/20 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
-                        <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#C9A227]" />
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-[#eb3838]/10 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
+                        <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#eb3838]" />
                       </div>
-                      <p className="text-white font-medium text-sm md:text-base">
-                        Sky Pro Property
+                      <p className="text-gray-900 font-medium text-sm md:text-base">
+                        Property by TA168
                       </p>
                       <p className="text-gray-500 text-xs md:text-sm">
                         {t("contactPage.location")}
@@ -297,19 +274,19 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-[#0A0E1A]">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
-              <div className="w-16 h-1 bg-gradient-to-r from-[#C9A227] to-[#E8D48B] mx-auto mb-6" />
-              <h2 className="text-3xl font-bold text-white">{t("contactPage.faq")}</h2>
+              <div className="w-16 h-1 bg-[#eb3838] mx-auto mb-6" />
+              <h2 className="text-3xl font-bold text-gray-900">{t("contactPage.faq")}</h2>
             </div>
 
             <div className="space-y-4">
               {faqs.map((faq, index) => (
                 <div
                   key={index}
-                  className={`border border-white/10 rounded-xl overflow-hidden transition-all duration-500 ${
+                  className={`border border-gray-200 rounded-xl overflow-hidden bg-white transition-all duration-500 ${
                     isVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-10"
@@ -318,13 +295,13 @@ export default function ContactPage() {
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full flex items-center justify-between p-6 text-left bg-white/5 hover:bg-white/10 transition-colors"
+                    className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
                   >
-                    <span className="font-semibold text-white pr-4">
+                    <span className="font-semibold text-gray-900 pr-4">
                       {faq.q}
                     </span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#C9A227] flex-shrink-0 transition-transform duration-300 ${
+                      className={`w-5 h-5 text-[#eb3838] flex-shrink-0 transition-transform duration-300 ${
                         openFaq === index ? "rotate-180" : ""
                       }`}
                     />
@@ -334,7 +311,7 @@ export default function ContactPage() {
                       openFaq === index ? "max-h-40" : "max-h-0"
                     }`}
                   >
-                    <p className="p-6 pt-0 text-gray-400 leading-relaxed">
+                    <p className="p-6 pt-0 text-gray-600 leading-relaxed">
                       {faq.a}
                     </p>
                   </div>
@@ -346,29 +323,19 @@ export default function ContactPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-[#C9A227] to-[#A88B1F] relative overflow-hidden">
-        {/* Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000' fill-opacity='1'%3E%3Cpath d='M20 20h20v20H20V20zM0 0h20v20H0V0z'/%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          />
-        </div>
-
+      <section className="py-20 bg-gray-900 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t("contactPage.ctaTitle")}
           </h2>
-          <p className="text-white/90 mb-8 max-w-xl mx-auto text-lg">
+          <p className="text-gray-400 mb-8 max-w-xl mx-auto text-lg">
             {t("contactPage.ctaSubtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
             <Link href="/search">
               <Button
                 size="lg"
-                className="w-full sm:w-auto !bg-white !text-gray-900 hover:!bg-gray-100 px-8 sm:px-10 py-5 sm:py-6 text-base sm:text-lg font-semibold rounded-xl"
+                className="w-full sm:w-auto !bg-[#eb3838] !text-white hover:!bg-[#d32f2f] px-8 sm:px-10 py-5 sm:py-6 text-base sm:text-lg font-semibold rounded-xl"
               >
                 {t("contactPage.searchProperty")}
               </Button>
@@ -386,23 +353,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#0A0E1A] border-t border-white/10 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Building2 className="w-10 h-10 text-[#C9A227]" />
-            <span className="text-2xl font-bold text-white">
-              Sky Pro Property
-            </span>
-          </div>
-          <p className="text-gray-500 mb-2">
-            Premium Real Estate Solutions | Chiangmai, Thailand
-          </p>
-          <p className="text-gray-600 text-sm">
-            © 2025 บริษัท สกายโปรพร้อมเพอร์ตี้ จำกัด. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

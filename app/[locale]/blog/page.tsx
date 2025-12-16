@@ -150,19 +150,19 @@ export default function BlogPage() {
       <Header />
       <div className="h-16" />
 
-      {/* Hero Section - Dark */}
-      <section className="relative py-16 bg-[#0d1117]">
+      {/* Hero Section - Light with Red Accent */}
+      <section className="relative py-16 bg-white border-b border-gray-100">
         <div
           className={`container mx-auto px-4 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
           }`}
         >
           <div className="max-w-3xl">
-            <p className="text-[#C9A227] text-xs uppercase tracking-widest mb-3">BLOG & NEWS</p>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <p className="text-[#eb3838] text-xs uppercase tracking-widest mb-3 font-semibold">BLOG & NEWS</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t("title")}
             </h1>
-            <p className="text-gray-400">
+            <p className="text-gray-600">
               {t("subtitle")}
             </p>
           </div>
@@ -255,7 +255,7 @@ export default function BlogPage() {
                       isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
                     }`}
                   >
-                    <div className="relative rounded-xl overflow-hidden bg-white border border-gray-200 hover:border-[#C9A227]/50 hover:shadow-lg transition-all">
+                    <div className="relative rounded-xl overflow-hidden bg-white border border-gray-200 hover:border-[#eb3838]/50 hover:shadow-lg transition-all">
                       {/* Featured Image */}
                       <div className="relative h-72 md:h-96 overflow-hidden">
                         {featuredBlog.coverImage ? (
@@ -276,7 +276,7 @@ export default function BlogPage() {
 
                         {/* Featured Badge */}
                         <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 bg-[#C9A227] text-[#111928] text-xs font-semibold rounded-full flex items-center gap-1">
+                          <span className="px-3 py-1 bg-[#eb3838] text-[#111928] text-xs font-semibold rounded-full flex items-center gap-1">
                             <TrendingUp className="w-3 h-3" />
                             FEATURED
                           </span>
@@ -285,7 +285,7 @@ export default function BlogPage() {
 
                       {/* Content */}
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h2 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-[#C9A227] transition-colors line-clamp-2">
+                        <h2 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-[#eb3838] transition-colors line-clamp-2">
                           {getLocalizedTitle(featuredBlog)}
                         </h2>
 
@@ -302,7 +302,7 @@ export default function BlogPage() {
                               {formatDate(featuredBlog.publishedAt)}
                             </span>
                           )}
-                          <span className="flex items-center gap-1 text-[#C9A227]">
+                          <span className="flex items-center gap-1 text-[#eb3838]">
                             {t("readMore")}
                             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                           </span>
@@ -323,7 +323,7 @@ export default function BlogPage() {
                       }`}
                       style={{ transitionDelay: `${(index + 1) * 100}ms` }}
                     >
-                      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-[#C9A227]/50 transition-all h-full">
+                      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-[#eb3838]/50 transition-all h-full">
                         {/* Image */}
                         <div className="relative h-44 overflow-hidden">
                           {blog.coverImage ? (
@@ -344,7 +344,7 @@ export default function BlogPage() {
 
                         {/* Content */}
                         <div className="p-4">
-                          <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-[#C9A227] transition-colors line-clamp-2 text-sm">
+                          <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-[#eb3838] transition-colors line-clamp-2 text-sm">
                             {getLocalizedTitle(blog)}
                           </h3>
 
@@ -367,7 +367,7 @@ export default function BlogPage() {
                   {/* Popular Articles */}
                   <div className="bg-white rounded-xl border border-gray-200 p-5">
                     <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
-                      <TrendingUp className="w-4 h-4 text-[#C9A227]" />
+                      <TrendingUp className="w-4 h-4 text-[#eb3838]" />
                       Popular Articles
                     </h3>
                     <div className="space-y-4">
@@ -394,7 +394,7 @@ export default function BlogPage() {
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-gray-900 text-xs font-medium line-clamp-2 group-hover:text-[#C9A227] transition-colors">
+                            <h4 className="text-gray-900 text-xs font-medium line-clamp-2 group-hover:text-[#eb3838] transition-colors">
                               {getLocalizedTitle(blog)}
                             </h4>
                             {blog.publishedAt && (
@@ -417,8 +417,8 @@ export default function BlogPage() {
                         onClick={() => setSelectedCategory(null)}
                         className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                           selectedCategory === null
-                            ? "bg-[#C9A227] text-white border-[#C9A227]"
-                            : "bg-gray-100 text-gray-600 border-gray-200 hover:border-[#C9A227]/50 hover:text-[#C9A227]"
+                            ? "bg-[#eb3838] text-white border-[#eb3838]"
+                            : "bg-gray-100 text-gray-600 border-gray-200 hover:border-[#eb3838]/50 hover:text-[#eb3838]"
                         }`}
                       >
                         All
@@ -429,8 +429,8 @@ export default function BlogPage() {
                           onClick={() => setSelectedCategory(category.slug)}
                           className={`px-3 py-1 text-xs rounded-full border transition-colors ${
                             selectedCategory === category.slug
-                              ? "text-white border-[#C9A227]"
-                              : "bg-gray-100 text-gray-600 border-gray-200 hover:border-[#C9A227]/50 hover:text-[#C9A227]"
+                              ? "text-white border-[#eb3838]"
+                              : "bg-gray-100 text-gray-600 border-gray-200 hover:border-[#eb3838]/50 hover:text-[#eb3838]"
                           }`}
                           style={{
                             backgroundColor: selectedCategory === category.slug ? category.color : undefined,
@@ -446,7 +446,7 @@ export default function BlogPage() {
                   </div>
 
                   {/* Newsletter CTA */}
-                  <div className="bg-gradient-to-br from-[#C9A227]/20 to-[#C9A227]/5 rounded-xl border border-[#C9A227]/30 p-5">
+                  <div className="bg-gradient-to-br from-[#eb3838]/20 to-[#eb3838]/5 rounded-xl border border-[#eb3838]/30 p-5">
                     <h3 className="text-gray-900 font-semibold mb-2">{t("needHelp")}</h3>
                     <p className="text-gray-600 text-xs mb-4">{t("needHelpDesc")}</p>
                     <Link href="/contact">

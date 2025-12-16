@@ -30,17 +30,17 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0D1B2A",
+  themeColor: "#eb3838",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skyproproperties.com"),
+  metadataBase: new URL("https://propertybyta168.com"),
   title: {
-    default: "Sky Pro Property - Premium Real Estate Chiangmai",
-    template: "%s | Sky Pro Property",
+    default: "PropertyByTA168 - Premium Real Estate Chiangmai",
+    template: "%s | PropertyByTA168",
   },
   description:
-    "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok. Professional real estate consulting services.",
+    "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai. Professional real estate consulting services.",
   keywords: [
     "real estate",
     "condo",
@@ -51,17 +51,16 @@ export const metadata: Metadata = {
     "Chiangmai condo",
     "house for rent",
     "house for sale",
-    "Sky Pro Property",
+    "PropertyByTA168",
+    "Property By TA168",
     "real estate Chiangmai",
-    "Sukhumvit",
-    "Thonglor",
-    "Ekkamai",
-    "Sathorn",
-    "Silom",
+    "บ้านเชียงใหม่",
+    "คอนโดเชียงใหม่",
+    "อสังหาริมทรัพย์เชียงใหม่",
   ],
-  authors: [{ name: "Sky Pro Property" }],
-  creator: "Sky Pro Property",
-  publisher: "Sky Pro Property",
+  authors: [{ name: "PropertyByTA168" }],
+  creator: "PropertyByTA168",
+  publisher: "PropertyByTA168",
   formatDetection: {
     email: false,
     address: false,
@@ -70,9 +69,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "th_TH",
-    url: "https://skyproproperties.com",
-    siteName: "Sky Pro Property",
-    title: "Sky Pro Property - Premium Real Estate Chiangmai",
+    url: "https://propertybyta168.com",
+    siteName: "PropertyByTA168",
+    title: "PropertyByTA168 - Premium Real Estate Chiangmai",
     description:
       "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai.",
     images: [
@@ -80,13 +79,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Sky Pro Property - Premium Real Estate Chiangmai",
+        alt: "PropertyByTA168 - Premium Real Estate Chiangmai",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sky Pro Property - Premium Real Estate Chiangmai",
+    title: "PropertyByTA168 - Premium Real Estate Chiangmai",
     description:
       "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai.",
     images: ["/og-image.jpg"],
@@ -106,12 +105,11 @@ export const metadata: Metadata = {
     google: "google-site-verification-code",
   },
   alternates: {
-    canonical: "https://skyproproperties.com",
+    canonical: "https://propertybyta168.com",
     languages: {
-      "th-TH": "https://skyproproperties.com",
-      "en-US": "https://skyproproperties.com/en",
-      "zh-CN": "https://skyproproperties.com/zh",
-      "ja-JP": "https://skyproproperties.com/ja",
+      "th-TH": "https://propertybyta168.com",
+      "en-US": "https://propertybyta168.com/en",
+      "zh-CN": "https://propertybyta168.com/zh",
     },
   },
   category: "real estate",
@@ -146,9 +144,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <link rel="icon" href="/header-logo.png" sizes="any" />
-        <link rel="icon" href="/header-logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/header-logo.png" />
+        <link rel="icon" href="/logo.png" sizes="any" />
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${kanit.variable} ${orbitron.variable} font-sans antialiased`}>

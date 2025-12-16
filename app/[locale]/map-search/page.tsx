@@ -345,7 +345,7 @@ export default function MapSearchPage() {
             {/* Filter Header */}
             <div className="flex items-center justify-between mb-3 md:mb-4">
               <div className="flex items-center gap-2 md:gap-3">
-                <SlidersHorizontal className="w-4 h-4 md:w-5 md:h-5 text-[#C9A227]" />
+                <SlidersHorizontal className="w-4 h-4 md:w-5 md:h-5 text-[#eb3838]" />
                 <h2 className="text-base md:text-lg font-semibold text-gray-900">
                   {t("search.filters")}
                 </h2>
@@ -357,7 +357,7 @@ export default function MapSearchPage() {
                 variant="ghost"
                 size="sm"
                 onClick={handleClearFilters}
-                className="text-xs text-[#C9A227] hover:text-[#C9A227]/80"
+                className="text-xs text-[#eb3838] hover:text-[#eb3838]/80"
               >
                 {t("search.clearAll")}
               </Button>
@@ -547,7 +547,7 @@ export default function MapSearchPage() {
               <div className="col-span-2 lg:col-span-1">
                 <Button
                   onClick={handleApplySearch}
-                  className="h-9 w-full bg-[#C9A227] hover:bg-[#A88B1F] text-white px-4"
+                  className="h-9 w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white px-4"
                 >
                   <Search className="w-4 h-4 mr-2" />
                   ค้นหา
@@ -563,7 +563,7 @@ export default function MapSearchPage() {
           <SheetHeader className="sticky top-0 bg-white z-10">
             <div className="flex items-center justify-between">
               <SheetTitle className="flex items-center gap-2">
-                <SlidersHorizontal className="w-5 h-5 text-[#C9A227]" />
+                <SlidersHorizontal className="w-5 h-5 text-[#eb3838]" />
                 {t("search.filters")}
               </SheetTitle>
               <SheetClose />
@@ -580,7 +580,7 @@ export default function MapSearchPage() {
                 variant="ghost"
                 size="sm"
                 onClick={handleClearFilters}
-                className="text-xs text-[#C9A227] hover:text-[#C9A227]/80"
+                className="text-xs text-[#eb3838] hover:text-[#eb3838]/80"
               >
                 {t("search.clearAll")}
               </Button>
@@ -810,7 +810,7 @@ export default function MapSearchPage() {
                   onClick={() => handlePropertyClick(property)}
                   className="block"
                 >
-                  <div className="group overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white border border-gray-200 hover:border-[#C9A227]/50 rounded-lg">
+                  <div className="group overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white border border-gray-200 hover:border-[#eb3838]/50 rounded-lg">
                     {/* Property Image */}
                     <div className="relative h-48 overflow-hidden bg-gray-100">
                       {property.imageUrls && property.imageUrls.length > 0 ? (
@@ -828,7 +828,7 @@ export default function MapSearchPage() {
 
                       {/* Property Type Badge */}
                       <div className="absolute top-2 left-2">
-                        <div className="bg-[#C9A227] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
+                        <div className="bg-[#eb3838] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
                           {property.propertyType === "Condo"
                             ? t("search.condo")
                             : property.propertyType === "Townhouse"
@@ -879,21 +879,21 @@ export default function MapSearchPage() {
                         </div>
                       )}
 
-                      <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#C9A227] transition-colors">
+                      <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#eb3838] transition-colors">
                         {getPropertyTitle(property)}
                       </h3>
 
                       <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 pb-3 border-b border-gray-100">
                         <div className="flex items-center gap-1">
-                          <Bed className="w-3 h-3 text-[#C9A227]" />
+                          <Bed className="w-3 h-3 text-[#eb3838]" />
                           <span className="font-semibold">{property.bedRoomNum}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <Bath className="w-3 h-3 text-[#C9A227]" />
+                          <Bath className="w-3 h-3 text-[#eb3838]" />
                           <span className="font-semibold">{property.bathRoomNum}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <Maximize className="w-3 h-3 text-[#C9A227]" />
+                          <Maximize className="w-3 h-3 text-[#eb3838]" />
                           <span className="font-semibold">
                             {getSize(property)} {t("common.sqm")}
                           </span>
@@ -903,7 +903,7 @@ export default function MapSearchPage() {
                       {/* Price */}
                       <div>
                         {property.rentalRateNum != null && property.rentalRateNum > 0 && (
-                          <div className="text-lg font-bold text-[#C9A227]">
+                          <div className="text-lg font-bold text-[#eb3838]">
                             <span className="text-xs font-normal text-gray-500 mr-1">
                               {t("property.forRent")}:
                             </span>
@@ -915,7 +915,7 @@ export default function MapSearchPage() {
                         )}
                         {property.sellPriceNum != null && property.sellPriceNum > 0 && (
                           <div
-                            className={`font-bold text-[#C9A227] ${
+                            className={`font-bold text-[#eb3838] ${
                               property.rentalRateNum != null && property.rentalRateNum > 0
                                 ? "text-sm mt-1"
                                 : "text-lg"
@@ -937,7 +937,7 @@ export default function MapSearchPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full mt-3 border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-white"
+                          className="w-full mt-3 border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
                         >
                           {t("property.viewDetails")}
                         </Button>

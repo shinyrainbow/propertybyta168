@@ -114,14 +114,14 @@ export default function ListPropertyPage() {
                     details: "",
                   });
                 }}
-                variant="gold"
+                className="bg-[#eb3838] hover:bg-[#d32f2f] text-white"
               >
                 {t("submitNew")}
               </Button>
               <Link href="/">
                 <Button
                   variant="outline"
-                  className="border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-white w-full"
+                  className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white w-full"
                 >
                   {t("backHome")}
                 </Button>
@@ -139,19 +139,17 @@ export default function ListPropertyPage() {
       <Header />
       <div className="h-16" />
 
-      {/* Hero Section */}
-      <section className="relative py-16 overflow-hidden">
-        {/* Gold gradient background - matching Learn More button */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#9A7B06] via-[#8A6B05] to-[#7A5B04]" />
-        {/* Pattern overlay */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+      {/* Hero Section - Light with Red Accent */}
+      <section className="relative py-16 md:py-20 bg-white border-b border-gray-100">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          {/* Red Line */}
+          <div className="w-20 h-1 bg-[#eb3838] mx-auto mb-6" />
 
-        <div className="container mx-auto px-4 text-center text-white relative z-10">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <FileText className="w-10 h-10" />
-            <h1 className="text-3xl md:text-4xl font-bold">{t("title")}</h1>
+            <FileText className="w-10 h-10 text-[#eb3838]" />
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{t("title")}</h1>
           </div>
-          <p className="text-lg text-white/95 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             {t("subtitle")}
           </p>
         </div>
@@ -169,7 +167,7 @@ export default function ListPropertyPage() {
               {/* Contact Info */}
               <div className="space-y-4">
                 <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-[#C9A227]" />
+                  <Phone className="w-4 h-4 text-[#eb3838]" />
                   {t("contactInfo")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -218,7 +216,7 @@ export default function ListPropertyPage() {
               {/* Property Info */}
               <div className="space-y-4">
                 <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                  <Home className="w-4 h-4 text-[#C9A227]" />
+                  <Home className="w-4 h-4 text-[#eb3838]" />
                   {t("propertyInfo")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -274,7 +272,7 @@ export default function ListPropertyPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    <MapPin className="w-4 h-4 inline mr-1 text-[#C9A227]" />
+                    <MapPin className="w-4 h-4 inline mr-1 text-[#eb3838]" />
                     {t("location")}
                   </label>
                   <Input
@@ -288,7 +286,7 @@ export default function ListPropertyPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      <Maximize className="w-4 h-4 inline mr-1 text-[#C9A227]" />
+                      <Maximize className="w-4 h-4 inline mr-1 text-[#eb3838]" />
                       {t("size")}
                     </label>
                     <Input
@@ -301,7 +299,7 @@ export default function ListPropertyPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      <DollarSign className="w-4 h-4 inline mr-1 text-[#C9A227]" />
+                      <DollarSign className="w-4 h-4 inline mr-1 text-[#eb3838]" />
                       {t("price")}
                     </label>
                     <Input
@@ -331,8 +329,7 @@ export default function ListPropertyPage() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                variant="gold"
-                className="w-full py-3"
+                className="w-full py-3 bg-[#eb3838] hover:bg-[#d32f2f] text-white"
                 disabled={loading}
               >
                 {loading ? (
@@ -361,8 +358,8 @@ export default function ListPropertyPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               <div className="text-center">
-                <div className="w-12 h-12 bg-[#C9A227]/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Building2 className="w-6 h-6 text-[#C9A227]" />
+                <div className="w-12 h-12 bg-[#eb3838]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Building2 className="w-6 h-6 text-[#eb3838]" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">
                   {t("benefit1Title")}
@@ -372,8 +369,8 @@ export default function ListPropertyPage() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-[#C9A227]/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <MapPin className="w-6 h-6 text-[#C9A227]" />
+                <div className="w-12 h-12 bg-[#eb3838]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <MapPin className="w-6 h-6 text-[#eb3838]" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">
                   {t("benefit2Title")}
@@ -383,8 +380,8 @@ export default function ListPropertyPage() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-[#C9A227]/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Phone className="w-6 h-6 text-[#C9A227]" />
+                <div className="w-12 h-12 bg-[#eb3838]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Phone className="w-6 h-6 text-[#eb3838]" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">
                   {t("benefit3Title")}
