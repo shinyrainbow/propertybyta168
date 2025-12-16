@@ -121,19 +121,29 @@ function SearchContent() {
 
   // Sync state with URL params when they change (e.g., navigating from homepage)
   useEffect(() => {
-    setSearchText(searchParams.get("q") || "");
-    setSelectedProject(searchParams.get("project") || "");
-    setPropertyType(searchParams.get("propertyType") || "");
-    setListingType(searchParams.get("listingType") || "");
-    setBedrooms(searchParams.get("bedrooms") || "");
-    setMinPrice(searchParams.get("minPrice") || "");
-    setMaxPrice(searchParams.get("maxPrice") || "");
+    const newSearchText = searchParams.get("q") || "";
+    const newProject = searchParams.get("project") || "";
+    const newPropertyType = searchParams.get("propertyType") || "";
+    const newListingType = searchParams.get("listingType") || "";
+    const newBedrooms = searchParams.get("bedrooms") || "";
+    const newMinPrice = searchParams.get("minPrice") || "";
+    const newMaxPrice = searchParams.get("maxPrice") || "";
+
+    setSearchText(newSearchText);
+    setSelectedProject(newProject);
+    setPropertyType(newPropertyType);
+    setListingType(newListingType);
+    setBedrooms(newBedrooms);
+    setMinPrice(newMinPrice);
+    setMaxPrice(newMaxPrice);
+
+    // Trigger search when URL params change (e.g., from header dropdown)
+    setSearchTrigger(prev => prev + 1);
   }, [searchParams]);
 
-  // Animation trigger and initial search
+  // Animation trigger
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
-    setSearchTrigger(1); // Trigger initial search
     return () => clearTimeout(timer);
   }, []);
 
@@ -142,16 +152,24 @@ function SearchContent() {
   useEffect(() => {
     const loadData = async () => {
       try {
+        // Use URL params directly for accurate filtering
+        const currentSearchText = searchParams.get("q") || "";
+        const currentPropertyType = searchParams.get("propertyType") || "";
+        const currentListingType = searchParams.get("listingType") || "";
+        const currentBedrooms = searchParams.get("bedrooms") || "";
+        const currentMinPrice = searchParams.get("minPrice") || "";
+        const currentMaxPrice = searchParams.get("maxPrice") || "";
+
         console.log("📡 Loading properties... searchTrigger:", searchTrigger);
         setLoading(true);
         const params: FetchPropertiesParams = {
           limit: 100,
-          ...(searchText && { q: searchText }), // API does conditional search when propertyType is specified
-          ...(propertyType && propertyType !== "all" && { propertyType: propertyType as any }),
-          ...(listingType && listingType !== "all" && { listingType: listingType as any }),
-          ...(bedrooms && bedrooms !== "all" && { bedrooms: parseInt(bedrooms) }),
-          ...(minPrice && { minPrice: parseInt(minPrice) }),
-          ...(maxPrice && { maxPrice: parseInt(maxPrice) }),
+          ...(currentSearchText && { q: currentSearchText }),
+          ...(currentPropertyType && currentPropertyType !== "all" && { propertyType: currentPropertyType as any }),
+          ...(currentListingType && currentListingType !== "all" && { listingType: currentListingType as any }),
+          ...(currentBedrooms && currentBedrooms !== "all" && { bedrooms: parseInt(currentBedrooms) }),
+          ...(currentMinPrice && { minPrice: parseInt(currentMinPrice) }),
+          ...(currentMaxPrice && { maxPrice: parseInt(currentMaxPrice) }),
         };
         console.log("🚀 API call params:", params);
         const response = await fetchPropertiesFromAPI(params);
@@ -194,7 +212,7 @@ function SearchContent() {
     };
 
     loadData();
-  }, [searchTrigger]); // Only search when searchTrigger changes
+  }, [searchTrigger, searchParams]); // Search when searchTrigger or URL params change
 
   // Handle search button click
   const handleSearch = () => {
