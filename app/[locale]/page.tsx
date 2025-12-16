@@ -42,7 +42,6 @@ import Image from "next/image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import PartnersSection from "@/components/sections/partners";
-import ListPropertyPopup from "@/components/ui/ListPropertyPopup";
 import { useFavorites } from "@/hooks/useFavorites";
 import { toast } from "sonner";
 import {
@@ -323,9 +322,6 @@ export default function PublicPropertiesPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-
-      {/* List Property Popup - Shows after 1 minute */}
-      <ListPropertyPopup delayMs={60000} />
 
       {/* Hero Section - Modern Light Design */}
       <section className="relative min-h-[90vh] flex items-center pt-20">
@@ -811,7 +807,7 @@ export default function PublicPropertiesPage() {
                           </div>
                         )}
 
-                        <div className="absolute top-3 right-3">
+                        <div className="absolute top-3 right-3 flex items-center gap-2">
                           {property.rentalRateNum && property.rentalRateNum > 0 ? (
                             <span className="px-2 py-1 bg-[#eb3838] text-white text-xs font-medium rounded">
                               {t("property.forRent")}
@@ -821,6 +817,22 @@ export default function PublicPropertiesPage() {
                               {t("property.forSale")}
                             </span>
                           )}
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleFavorite(property.id);
+                            }}
+                            className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md"
+                          >
+                            <Heart
+                              className={`w-4 h-4 transition-colors ${
+                                isFavorite(property.id)
+                                  ? "fill-[#eb3838] text-[#eb3838]"
+                                  : "text-gray-400 hover:text-[#eb3838]"
+                              }`}
+                            />
+                          </button>
                         </div>
                       </div>
 

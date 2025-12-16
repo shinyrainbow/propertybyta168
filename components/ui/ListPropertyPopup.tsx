@@ -18,6 +18,7 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
     name: "",
     phone: "",
     lineId: "",
+    listingType: "",
     propertyType: "",
     message: "",
   });
@@ -56,13 +57,21 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/inquiries", {
+      // Build details with lineId and message
+      const detailsParts = [];
+      if (formData.lineId) detailsParts.push(`Line ID: ${formData.lineId}`);
+      if (formData.message) detailsParts.push(formData.message);
+      detailsParts.push("(จากป๊อปอัพ)"); // Mark as from popup
+
+      const response = await fetch("/api/public/property-listings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
-          type: "list-property",
-          source: "popup",
+          name: formData.name,
+          phone: formData.phone,
+          listingType: formData.listingType || "sell",
+          propertyType: formData.propertyType || "Other",
+          details: detailsParts.join("\n"),
         }),
       });
 
@@ -180,18 +189,19 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("lineIdLabel")}
+                      {t("listingTypeLabel")}
                     </label>
-                    <div className="relative">
-                      <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        value={formData.lineId}
-                        onChange={(e) => setFormData({ ...formData, lineId: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
-                        placeholder={t("lineIdPlaceholder")}
-                      />
-                    </div>
+                    <select
+                      required
+                      value={formData.listingType}
+                      onChange={(e) => setFormData({ ...formData, listingType: e.target.value })}
+                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
+                    >
+                      <option value="">{t("listingTypePlaceholder")}</option>
+                      <option value="sell">{t("forSale")}</option>
+                      <option value="rent">{t("forRent")}</option>
+                      <option value="both">{t("forBoth")}</option>
+                    </select>
                   </div>
 
                   <div>
@@ -199,6 +209,7 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                       {t("propertyTypeLabel")}
                     </label>
                     <select
+                      required
                       value={formData.propertyType}
                       onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
                       className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
@@ -216,6 +227,22 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                       <option value="Building">{t("building")}</option>
                       <option value="Apartment">{t("apartment")}</option>
                     </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    {t("lineIdLabel")}
+                  </label>
+                  <div className="relative">
+                    <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      type="text"
+                      value={formData.lineId}
+                      onChange={(e) => setFormData({ ...formData, lineId: e.target.value })}
+                      className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                      placeholder={t("lineIdPlaceholder")}
+                    />
                   </div>
                 </div>
 

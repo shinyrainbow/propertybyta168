@@ -24,7 +24,9 @@ import {
   List,
   ArrowUpDown,
   Building2,
+  Heart,
 } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import Header from "@/components/layout/header";
@@ -58,6 +60,7 @@ interface Property {
 export default function PropertiesPage() {
   const t = useTranslations();
   const locale = useLocale();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   // Helper functions for language-based field selection
   const useEnglish = locale === "en" || locale === "zh";
@@ -440,7 +443,7 @@ export default function PropertiesPage() {
                                 </span>
                               )}
                             </div>
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 flex items-center gap-2">
                               <span
                                 className={`px-2 py-1 rounded-full text-xs font-semibold text-white ${
                                   property.listingType === "rent"
@@ -456,6 +459,22 @@ export default function PropertiesPage() {
                                   ? t("propertiesPage.sale")
                                   : t("propertiesPage.rentSale")}
                               </span>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleFavorite(property.id);
+                                }}
+                                className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md"
+                              >
+                                <Heart
+                                  className={`w-4 h-4 transition-colors ${
+                                    isFavorite(property.id)
+                                      ? "fill-[#eb3838] text-[#eb3838]"
+                                      : "text-gray-400 hover:text-[#eb3838]"
+                                  }`}
+                                />
+                              </button>
                             </div>
 
                             {/* Property Type */}
@@ -595,6 +614,24 @@ export default function PropertiesPage() {
                                     : t("propertiesPage.rentSale")}
                                 </span>
                               </div>
+
+                              {/* Favorite Button */}
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleFavorite(property.id);
+                                }}
+                                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md"
+                              >
+                                <Heart
+                                  className={`w-4 h-4 transition-colors ${
+                                    isFavorite(property.id)
+                                      ? "fill-[#eb3838] text-[#eb3838]"
+                                      : "text-gray-400 hover:text-[#eb3838]"
+                                  }`}
+                                />
+                              </button>
                             </div>
 
                             {/* Details */}

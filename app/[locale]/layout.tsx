@@ -12,6 +12,7 @@ import { ConfirmDialogProvider } from "@/components/ui/confirm-dialog";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { locales, type Locale } from "@/i18n/config";
 import FloatingLine from "@/components/layout/floating-line";
+import ListPropertyPopup from "@/components/ui/ListPropertyPopup";
 
 const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700"],
@@ -158,6 +159,7 @@ export default async function LocaleLayout({
               <ConfirmDialogProvider>
                 {children}
                 <FloatingLine />
+                <ListPropertyPopup />
               </ConfirmDialogProvider>
             </FavoritesProvider>
           </AuthSessionProvider>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import { useFavorites } from "@/hooks/useFavorites";
 import {
   Heart,
   Bed,
@@ -49,8 +50,8 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property, locale = "th" }: PropertyCardProps) {
   const t = useTranslations("property");
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const images = property.images?.length > 0 ? property.images : ["/placeholder-property.jpg"];
@@ -67,10 +68,10 @@ export default function PropertyCard({ property, locale = "th" }: PropertyCardPr
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  const toggleFavorite = (e: React.MouseEvent) => {
+  const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
+    toggleFavorite(property.id);
   };
 
   const displayTitle = locale === "th" && property.titleTh ? property.titleTh : property.title;
@@ -167,12 +168,12 @@ export default function PropertyCard({ property, locale = "th" }: PropertyCardPr
               {displayTitle}
             </h3>
             <button
-              onClick={toggleFavorite}
+              onClick={handleToggleFavorite}
               className="flex-shrink-0 p-1"
             >
               <Heart
                 className={`w-6 h-6 transition-colors ${
-                  isFavorite ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-300 hover:text-gray-400"
+                  isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-300 hover:text-gray-400"
                 }`}
               />
             </button>

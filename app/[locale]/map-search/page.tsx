@@ -30,7 +30,9 @@ import {
   MapPin,
   Search,
   SlidersHorizontal,
+  Heart,
 } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import type { NainaHubProperty } from "@/lib/nainahub";
@@ -50,6 +52,7 @@ const PropertyMap = dynamic(() => import("@/components/map/PropertyMap"), {
 export default function MapSearchPage() {
   const t = useTranslations();
   const locale = useLocale();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   // Helper functions for language-based field selection
   const useEnglish = locale === "en" || locale === "zh";
@@ -868,6 +871,24 @@ export default function MapSearchPage() {
                           </div>
                         )}
                       </div>
+
+                      {/* Favorite Button */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(property.id);
+                        }}
+                        className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md z-10"
+                      >
+                        <Heart
+                          className={`w-4 h-4 transition-colors ${
+                            isFavorite(property.id)
+                              ? "fill-[#eb3838] text-[#eb3838]"
+                              : "text-gray-400 hover:text-[#eb3838]"
+                          }`}
+                        />
+                      </button>
                     </div>
 
                     {/* Property Details */}
