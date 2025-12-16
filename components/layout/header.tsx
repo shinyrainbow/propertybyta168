@@ -116,10 +116,10 @@ export default function Header({ transparent = false }: HeaderProps) {
 
         <div className="container mx-auto px-4 relative">
           {/* Desktop: Logo left, nav center, contact + language right */}
-          <div className="hidden md:grid md:grid-cols-3 items-center py-2">
+          <div className="hidden md:grid md:grid-cols-3 items-center py-1">
             {/* Left - Logo */}
             <Link href="/" className="flex items-center group">
-              <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-12" : "h-14"} w-auto`}>
+              <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-10" : "h-11"} w-auto`}>
                 <Image
                   src="/logo.png"
                   alt="Property by TA168"
@@ -303,9 +303,9 @@ export default function Header({ transparent = false }: HeaderProps) {
           </div>
 
           {/* Mobile: Logo left, menu right */}
-          <div className="flex md:hidden items-center justify-between py-3">
+          <div className="flex md:hidden items-center justify-between py-2">
             <Link href="/" className="flex items-center">
-              <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-10" : "h-11"} w-auto`}>
+              <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-8" : "h-9"} w-auto`}>
                 <Image
                   src="/logo.png"
                   alt="Property by TA168"
@@ -321,13 +321,13 @@ export default function Header({ transparent = false }: HeaderProps) {
               {/* Favorites - Mobile */}
               <Link
                 href="/favorites"
-                className={`relative p-2 rounded-lg transition-colors ${
+                className={`relative p-1.5 rounded-lg transition-colors ${
                   isScrolled || !transparent
                     ? "hover:bg-gray-100 text-gray-700"
                     : "hover:bg-white/10 text-white"
                 }`}
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4" />
                 {favoritesCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#eb3838] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {favoritesCount > 9 ? "9+" : favoritesCount}
@@ -336,14 +336,14 @@ export default function Header({ transparent = false }: HeaderProps) {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#eb3838] text-white text-sm font-medium rounded-lg hover:bg-[#d32f2f] transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#eb3838] text-white text-xs font-medium rounded-lg hover:bg-[#d32f2f] transition-colors"
               >
-                <Phone className="w-3.5 h-3.5" />
+                <Phone className="w-3 h-3" />
                 <span className="hidden xs:inline">{t("contact")}</span>
               </Link>
               <LanguageSwitcher variant={isScrolled || !transparent ? "dark" : "light"} compact />
               <button
-                className={`p-2 rounded-lg transition-colors ${
+                className={`p-1.5 rounded-lg transition-colors ${
                   isScrolled || !transparent
                     ? "hover:bg-gray-100 text-gray-700"
                     : "hover:bg-white/10 text-white"

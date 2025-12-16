@@ -204,11 +204,17 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                       className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
                     >
                       <option value="">{t("propertyTypePlaceholder")}</option>
-                      <option value="condo">{t("condo")}</option>
-                      <option value="house">{t("house")}</option>
-                      <option value="townhouse">{t("townhouse")}</option>
-                      <option value="land">{t("land")}</option>
-                      <option value="commercial">{t("commercial")}</option>
+                      <option value="Condo">{t("condo")}</option>
+                      <option value="SingleHouse">{t("singleHouse")}</option>
+                      <option value="Townhouse">{t("townhouse")}</option>
+                      <option value="Villa">{t("villa")}</option>
+                      <option value="Land">{t("land")}</option>
+                      <option value="Office">{t("office")}</option>
+                      <option value="Store">{t("store")}</option>
+                      <option value="Factory">{t("factory")}</option>
+                      <option value="Hotel">{t("hotel")}</option>
+                      <option value="Building">{t("building")}</option>
+                      <option value="Apartment">{t("apartment")}</option>
                     </select>
                   </div>
                 </div>
