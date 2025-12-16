@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Home, Phone, User, MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
@@ -13,7 +13,7 @@ interface ListPropertyPopupProps {
 export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopupProps) {
   const t = useTranslations("listPropertyPopup");
   const [isOpen, setIsOpen] = useState(false);
-  const [hasShown, setHasShown] = useState(false);
+  const hasShownRef = useRef(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -25,24 +25,27 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    // Skip if already shown
+    if (hasShownRef.current) return;
+
     // Check if popup was already shown in this session
     const alreadyShown = sessionStorage.getItem("list-property-popup-shown");
     if (alreadyShown) {
-      setHasShown(true);
+      hasShownRef.current = true;
       return;
     }
 
     // Show popup after delay
     const timer = setTimeout(() => {
-      if (!hasShown) {
+      if (!hasShownRef.current) {
+        hasShownRef.current = true;
         setIsOpen(true);
-        setHasShown(true);
         sessionStorage.setItem("list-property-popup-shown", "true");
       }
     }, delayMs);
 
     return () => clearTimeout(timer);
-  }, [delayMs, hasShown]);
+  }, [delayMs]);
 
   const handleClose = () => {
     setIsOpen(false);

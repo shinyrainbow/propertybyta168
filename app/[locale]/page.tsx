@@ -279,9 +279,18 @@ export default function PublicPropertiesPage() {
     loadInitialData();
   }, [checkSliderScroll]);
 
-  const formatPrice = (price: number | null) => {
-    if (!price) return null;
+  const formatPrice = (price: number | null | undefined) => {
+    if (!price || price <= 0 || isNaN(price)) return null;
     return new Intl.NumberFormat("th-TH").format(price);
+  };
+
+  // Helper to get valid price (rent or sale)
+  const getValidPrice = (property: Property) => {
+    const rent = property.rentalRateNum;
+    const sale = property.sellPriceNum;
+    if (rent && rent > 0 && !isNaN(rent)) return { price: rent, isRent: true };
+    if (sale && sale > 0 && !isNaN(sale)) return { price: sale, isRent: false };
+    return null;
   };
 
   const formatPriceInput = (value: string) => {
@@ -801,14 +810,16 @@ export default function PublicPropertiesPage() {
                       </div>
 
                       <div className="p-4">
-                        <div className="mb-2">
-                          <span className="text-lg font-bold text-gray-900">
-                            ฿{formatPrice(property.rentalRateNum || property.sellPriceNum)}
-                          </span>
-                          {property.rentalRateNum && (
-                            <span className="text-sm text-gray-500">/{t("property.month")}</span>
-                          )}
-                        </div>
+                        {getValidPrice(property) && (
+                          <div className="mb-2">
+                            <span className="text-lg font-bold text-gray-900">
+                              ฿{formatPrice(getValidPrice(property)!.price)}
+                            </span>
+                            {getValidPrice(property)!.isRent && (
+                              <span className="text-sm text-gray-500">/{t("property.month")}</span>
+                            )}
+                          </div>
+                        )}
 
                         <h3 className="font-medium text-gray-900 line-clamp-1 mb-1 text-sm">
                           {getProjectName(property.project) || getPropertyTitle(property)}
@@ -962,11 +973,13 @@ export default function PublicPropertiesPage() {
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <p className="text-white font-bold text-lg line-clamp-1 drop-shadow-lg">
-                        ฿{formatPrice(property.sellPriceNum || property.rentalRateNum)}
-                      </p>
-                    </div>
+                    {getValidPrice(property) && (
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <p className="text-white font-bold text-lg line-clamp-1 drop-shadow-lg">
+                          ฿{formatPrice(getValidPrice(property)!.price)}
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-gray-900 line-clamp-1 mb-1">
