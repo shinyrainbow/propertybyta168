@@ -66,6 +66,7 @@
     "blog": "บล็อก",
     "about": "เกี่ยวกับเรา",
     "contact": "ติดต่อ",
+    "favorites": "รายการโปรด",
     "premiumRealEstate": "Premium Real Estate"
   },
   "about": {
@@ -620,6 +621,19 @@
     "ctaSubtitle": "ให้เราช่วยคุณหาทรัพย์สินในฝัน เหมือนที่ช่วยลูกค้าหลายร้อยคนมาแล้ว",
     "contactUs": "ติดต่อเรา",
     "backHome": "กลับหน้าหลัก"
+  },
+  "favoritesPage": {
+    "title": "รายการโปรด",
+    "subtitle": "ทรัพย์สินที่คุณบันทึกไว้",
+    "noFavorites": "ยังไม่มีรายการโปรด",
+    "noFavoritesDesc": "เริ่มค้นหาทรัพย์สินและกดไอคอนหัวใจเพื่อบันทึกไว้ที่นี่",
+    "browseProperties": "ค้นหาทรัพย์สิน",
+    "remove": "ลบออก",
+    "viewDetails": "ดูรายละเอียด",
+    "clearAll": "ล้างทั้งหมด",
+    "clearConfirm": "คุณแน่ใจหรือไม่ที่จะลบรายการโปรดทั้งหมด?",
+    "properties": "รายการ",
+    "property": "รายการ"
   },
   "propertiesPage": {
     "title": "ค้นหาอสังหาริมทรัพย์",

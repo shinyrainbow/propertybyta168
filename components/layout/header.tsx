@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { X, Phone, ChevronDown, Building2, Home, LandPlot, Store } from "lucide-react";
+import { X, Phone, ChevronDown, Building2, Home, LandPlot, Store, Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./language-switcher";
+import { useFavorites } from "@/hooks/useFavorites";
 
 interface HeaderProps {
   transparent?: boolean;
@@ -15,6 +16,7 @@ export default function Header({ transparent = false }: HeaderProps) {
   const t = useTranslations("nav");
   const tSearch = useTranslations("search");
   const tPropertyTypes = useTranslations("propertyTypes");
+  const { count: favoritesCount } = useFavorites();
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -270,8 +272,25 @@ export default function Header({ transparent = false }: HeaderProps) {
               ))}
             </div>
 
-            {/* Right - Contact Button + Language Switcher */}
-            <div className="flex items-center justify-end gap-4">
+            {/* Right - Favorites + Contact Button + Language Switcher */}
+            <div className="flex items-center justify-end gap-3">
+              {/* Favorites */}
+              <Link
+                href="/favorites"
+                className={`relative p-2 rounded-lg transition-colors ${
+                  isScrolled || !transparent
+                    ? "hover:bg-gray-100 text-gray-700"
+                    : "hover:bg-white/10 text-white"
+                }`}
+                title={t("favorites")}
+              >
+                <Heart className="w-5 h-5" />
+                {favoritesCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#eb3838] text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {favoritesCount > 9 ? "9+" : favoritesCount}
+                  </span>
+                )}
+              </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#eb3838] text-white font-medium rounded-lg hover:bg-[#d32f2f] transition-all duration-200 shadow-sm hover:shadow-md"
@@ -298,7 +317,23 @@ export default function Header({ transparent = false }: HeaderProps) {
               </div>
             </Link>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              {/* Favorites - Mobile */}
+              <Link
+                href="/favorites"
+                className={`relative p-2 rounded-lg transition-colors ${
+                  isScrolled || !transparent
+                    ? "hover:bg-gray-100 text-gray-700"
+                    : "hover:bg-white/10 text-white"
+                }`}
+              >
+                <Heart className="w-5 h-5" />
+                {favoritesCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#eb3838] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {favoritesCount > 9 ? "9+" : favoritesCount}
+                  </span>
+                )}
+              </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#eb3838] text-white text-sm font-medium rounded-lg hover:bg-[#d32f2f] transition-colors"
@@ -372,6 +407,24 @@ export default function Header({ transparent = false }: HeaderProps) {
 
           {/* Nav Links */}
           <div className="px-4 py-6 space-y-1">
+            {/* Favorites Link */}
+            <Link
+              href="/favorites"
+              className={`flex items-center gap-3 py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-[#eb3838] rounded-lg transition-all duration-200 font-medium text-sm ${
+                mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
+              }`}
+              style={{ transitionDelay: mobileMenuOpen ? "80ms" : "0ms" }}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Heart className="w-4 h-4" />
+              {t("favorites")}
+              {favoritesCount > 0 && (
+                <span className="ml-auto bg-[#eb3838] text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  {favoritesCount}
+                </span>
+              )}
+            </Link>
+
             {allNavLinks.filter(link => link.href !== "/map-search").map((link, index) => (
               <Link
                 key={link.href}
@@ -379,7 +432,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                 className={`block py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-[#eb3838] rounded-lg transition-all duration-200 font-medium text-sm ${
                   mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
                 }`}
-                style={{ transitionDelay: mobileMenuOpen ? `${index * 40 + 80}ms` : "0ms" }}
+                style={{ transitionDelay: mobileMenuOpen ? `${(index + 1) * 40 + 80}ms` : "0ms" }}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}

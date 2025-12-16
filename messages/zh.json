@@ -66,6 +66,7 @@
     "blog": "博客",
     "about": "关于我们",
     "contact": "联系我们",
+    "favorites": "收藏夹",
     "premiumRealEstate": "高端房产"
   },
   "about": {
@@ -563,6 +564,19 @@
     "ctaSubtitle": "让我们帮您找到梦想的房产,就像我们已经帮助过数百位客户一样",
     "contactUs": "联系我们",
     "backHome": "返回首页"
+  },
+  "favoritesPage": {
+    "title": "我的收藏",
+    "subtitle": "您保存的房产",
+    "noFavorites": "暂无收藏",
+    "noFavoritesDesc": "开始浏览房产并点击心形图标将其保存在这里。",
+    "browseProperties": "浏览房产",
+    "remove": "移除",
+    "viewDetails": "查看详情",
+    "clearAll": "清空全部",
+    "clearConfirm": "您确定要移除所有收藏吗？",
+    "properties": "处房产",
+    "property": "处房产"
   },
   "propertiesPage": {
     "title": "搜索房产",

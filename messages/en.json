@@ -66,6 +66,7 @@
     "blog": "Blog",
     "about": "About Us",
     "contact": "Contact",
+    "favorites": "Favorites",
     "premiumRealEstate": "Premium Real Estate"
   },
   "about": {
@@ -620,6 +621,19 @@
     "ctaSubtitle": "Let us help you find your dream property, just like we've helped hundreds of customers",
     "contactUs": "Contact Us",
     "backHome": "Back to Home"
+  },
+  "favoritesPage": {
+    "title": "My Favorites",
+    "subtitle": "Properties you've saved for later",
+    "noFavorites": "No favorites yet",
+    "noFavoritesDesc": "Start browsing properties and tap the heart icon to save them here.",
+    "browseProperties": "Browse Properties",
+    "remove": "Remove",
+    "viewDetails": "View Details",
+    "clearAll": "Clear All",
+    "clearConfirm": "Are you sure you want to remove all favorites?",
+    "properties": "properties",
+    "property": "property"
   },
   "propertiesPage": {
     "title": "Search Properties",

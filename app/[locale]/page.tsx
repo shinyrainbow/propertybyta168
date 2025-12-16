@@ -43,6 +43,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import PartnersSection from "@/components/sections/partners";
 import ListPropertyPopup from "@/components/ui/ListPropertyPopup";
+import { useFavorites } from "@/hooks/useFavorites";
 import { toast } from "sonner";
 import {
   type NainaHubProperty,
@@ -93,6 +94,7 @@ export default function PublicPropertiesPage() {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const useEnglish = locale === "en" || locale === "zh";
   const getProjectName = (project: { projectNameTh?: string; projectNameEn?: string } | null | undefined) => {
@@ -445,6 +447,12 @@ export default function PublicPropertiesPage() {
                       <SelectItem value="Townhouse">{t("search.townhouse")}</SelectItem>
                       <SelectItem value="Villa">{t("search.villa")}</SelectItem>
                       <SelectItem value="Land">{t("search.land")}</SelectItem>
+                      <SelectItem value="Office">{t("search.office")}</SelectItem>
+                      <SelectItem value="Store">{t("search.store")}</SelectItem>
+                      <SelectItem value="Factory">{t("search.factory")}</SelectItem>
+                      <SelectItem value="Hotel">{t("search.hotel")}</SelectItem>
+                      <SelectItem value="Building">{t("search.building")}</SelectItem>
+                      <SelectItem value="Apartment">{t("search.apartment")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -610,8 +618,15 @@ export default function PublicPropertiesPage() {
                     </div>
 
                     {/* Favorite */}
-                    <button className="absolute bottom-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors">
-                      <Heart className="w-5 h-5 text-gray-400" />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleFavorite(property.id);
+                      }}
+                      className="absolute bottom-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                    >
+                      <Heart className={`w-5 h-5 transition-colors ${isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-400"}`} />
                     </button>
 
                     {/* Image Count */}
