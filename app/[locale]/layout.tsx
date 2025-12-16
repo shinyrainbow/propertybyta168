@@ -36,11 +36,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://propertybyta168.com"),
   title: {
-    default: "propertybyta168 - Premium Real Estate Chiangmai",
+    default: "propertybyta168 - Premium Real Estate Bangkok",
     template: "%s | propertybyta168",
   },
   description:
-    "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai. Professional real estate consulting services.",
+    "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok. Professional real estate consulting services.",
   keywords: [
     "real estate",
     "condo",
@@ -48,15 +48,15 @@ export const metadata: Metadata = {
     "townhouse",
     "condo for rent",
     "buy condo",
-    "Chiangmai condo",
+    "Bangkok condo",
     "house for rent",
     "house for sale",
     "propertybyta168",
     "Property By TA168",
-    "real estate Chiangmai",
-    "บ้านเชียงใหม่",
-    "คอนโดเชียงใหม่",
-    "อสังหาริมทรัพย์เชียงใหม่",
+    "real estate Bangkok",
+    "บ้านกรุงเทพ",
+    "คอนโดกรุงเทพ",
+    "อสังหาริมทรัพย์กรุงเทพ",
   ],
   authors: [{ name: "propertybyta168" }],
   creator: "propertybyta168",
@@ -71,23 +71,23 @@ export const metadata: Metadata = {
     locale: "th_TH",
     url: "https://propertybyta168.com",
     siteName: "propertybyta168",
-    title: "propertybyta168 - Premium Real Estate Chiangmai",
+    title: "propertybyta168 - Premium Real Estate Bangkok",
     description:
-      "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai.",
+      "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "propertybyta168 - Premium Real Estate Chiangmai",
+        alt: "propertybyta168 - Premium Real Estate Bangkok",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "propertybyta168 - Premium Real Estate Chiangmai",
+    title: "propertybyta168 - Premium Real Estate Bangkok",
     description:
-      "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai.",
+      "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok.",
     images: ["/og-image.jpg"],
   },
   robots: {

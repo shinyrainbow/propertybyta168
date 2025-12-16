@@ -237,7 +237,7 @@ export default function SignInPage() {
           <Link href="/" className="inline-flex items-center gap-3 mb-4">
             <Building2 className="w-12 h-12 text-[#C9A227]" />
             <span className="text-3xl font-bold text-gray-900">
-              Sky Pro Property
+              propertybyta168
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">

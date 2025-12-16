@@ -10,18 +10,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Return static metadata for mock data site
   return {
     title: `รายละเอียดทรัพย์สิน - ${id}`,
-    description: "ดูรายละเอียดอสังหาริมทรัพย์จาก Sky Pro Property - บริการอสังหาริมทรัพย์ครบวงจร",
-    keywords: ["คอนโด", "บ้าน", "อสังหาริมทรัพย์", "เช่า", "ขาย", "Sky Pro Property"],
+    description: "ดูรายละเอียดอสังหาริมทรัพย์จาก propertybyta168 - บริการอสังหาริมทรัพย์ครบวงจร",
+    keywords: ["คอนโด", "บ้าน", "อสังหาริมทรัพย์", "เช่า", "ขาย", "propertybyta168"],
     openGraph: {
-      title: `รายละเอียดทรัพย์สิน | Sky Pro Property`,
-      description: "ดูรายละเอียดอสังหาริมทรัพย์จาก Sky Pro Property",
-      url: `https://budgetwiseproperty.com/property/${id}`,
+      title: `รายละเอียดทรัพย์สิน | propertybyta168`,
+      description: "ดูรายละเอียดอสังหาริมทรัพย์จาก propertybyta168",
+      url: `https://propertybyta168.com/property/${id}`,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `รายละเอียดทรัพย์สิน | Sky Pro Property`,
-      description: "ดูรายละเอียดอสังหาริมทรัพย์จาก Sky Pro Property",
+      title: `รายละเอียดทรัพย์สิน | propertybyta168`,
+      description: "ดูรายละเอียดอสังหาริมทรัพย์จาก propertybyta168",
     },
   };
 }

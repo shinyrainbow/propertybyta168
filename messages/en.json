@@ -70,8 +70,8 @@
   },
   "about": {
     "hero": {
-      "title": "About SKYPRO PROPERTY",
-      "subtitle": "Comprehensive real estate consultancy in Chiang Mai. Providing buy-sell-rent services, property management, and professional investment management with the goal to \"Elevate your real estate experience beyond others in the market.\""
+      "title": "About propertybyta168",
+      "subtitle": "Comprehensive real estate consultancy in Bangkok. Providing buy-sell-rent services, property management, and professional investment management with the goal to \"Elevate your real estate experience beyond others in the market.\""
     },
     "stats": {
       "properties": "Properties Sold",
@@ -83,7 +83,7 @@
       "title": "About Us",
       "paragraph1": "We view real estate not just as buying and selling, but as planning, investing, and making important life decisions.",
       "paragraph2": "We have developed a service system that meets the needs of investors, general individuals, foreigners, as well as project owners who want a management team that can deliver real results.",
-      "paragraph3": "Skypro Property – Making your real estate decisions easier and delivering real results."
+      "paragraph3": "propertybyta168 – Making your real estate decisions easier and delivering real results."
     },
     "valuesSection": {
       "title": "What We're Expert At",
@@ -91,7 +91,7 @@
     },
     "values": {
       "trust": {
-        "title": "Buy-Sell-Rent Chiang Mai Real Estate",
+        "title": "Buy-Sell-Rent Bangkok Real Estate",
         "description": "We analyze location, market prices, deals, and growth opportunities to help clients make informed decisions."
       },
       "excellence": {
@@ -109,11 +109,11 @@
     },
     "whyChooseUs": {
       "title": "Why Clients Choose Us",
-      "subtitle": "What makes Skypro Property different from competitors in the market.",
+      "subtitle": "What makes propertybyta168 different from competitors in the market.",
       "reasons": {
         "marketKnowledge": {
-          "title": "Deep & Real Understanding of Chiang Mai Market",
-          "description": "We have in-depth knowledge of the Chiang Mai real estate market, including locations, prices, and growth opportunities."
+          "title": "Deep & Real Understanding of Bangkok Market",
+          "description": "We have in-depth knowledge of the Bangkok real estate market, including locations, prices, and growth opportunities."
         },
         "experience": {
           "title": "Extensive Experience with Foreign Investors",
@@ -162,7 +162,7 @@
     "title2": "Property",
     "title": "Find Your Dream",
     "titleHighlight": "Property",
-    "subtitle": "Discover premium quality properties in the best locations of Chiangmai",
+    "subtitle": "Discover premium quality properties in the best locations of Bangkok",
     "stats": {
       "properties": "Properties",
       "happyClients": "Happy Clients",
@@ -316,7 +316,7 @@
     "subtitle": "Contact us today for consultation and special offers"
   },
   "footer": {
-    "tagline": "Premium Real Estate Solutions | Chiang Mai, Thailand",
+    "tagline": "Premium Real Estate Solutions | Bangkok, Thailand",
     "copyright": "© 2025 Property by TA168 Co., Ltd. All rights reserved."
   },
   "review": {
@@ -384,7 +384,7 @@
     "apartment": "Apartment",
     "other": "Other",
     "location": "Location",
-    "locationPlaceholder": "e.g. Rama 9, Sukhumvit, Chiang Mai",
+    "locationPlaceholder": "e.g. Rama 9, Sukhumvit, Bangkok",
     "size": "Size",
     "sizePlaceholder": "e.g. 35 sqm, 100 sq.wa",
     "price": "Desired Price",
@@ -404,7 +404,7 @@
     "benefit1Title": "Professional Team",
     "benefit1Desc": "We have an experienced team ready to help you",
     "benefit2Title": "Full Coverage",
-    "benefit2Desc": "Service covers both Chiangmai and provinces",
+    "benefit2Desc": "Service covers both Bangkok and provinces",
     "benefit3Title": "Easy Contact",
     "benefit3Desc": "Track progress anytime"
   },
@@ -560,12 +560,13 @@
     "awardsGained": "Awards Gained",
     "propertiesListed": "Properties Listed",
     "happyClients": "Happy Clients",
-    "realEstateGuru": "Real Estate Guru In Chiangmai",
+    "realEstateGuru": "Real Estate Guru In Bangkok",
     "buyAnd": "Buy, Sell, Rent - House, Condo, Land, Pool Villa",
     "contactUs": "Contact us, we're happy to provide free consultation"
   },
   "footerNav": {
     "quickLinks": "Quick Links",
+    "propertyTypes": "Property Types",
     "contact": "Contact",
     "connect": "Connect",
     "addLineSupport": "Add us on LINE for instant support",
@@ -574,7 +575,8 @@
     "phone": "Phone",
     "email": "Email",
     "address": "Address",
-    "lineOfficial": "Line Official"
+    "lineOfficial": "Line Official",
+    "callUs": "Call Us"
   },
   "contactPage": {
     "title": "Contact Us",
@@ -585,13 +587,13 @@
     "businessHours": "Business Hours",
     "companyName": "propertybyta168",
     "addressLine1": "111 Moo 2, Chai Sathan Subdistrict",
-    "addressLine2": "Saraphi District, Chiang Mai 50140",
+    "addressLine2": "Bangkok 10110",
     "daysOpen": "Monday - Sunday",
     "hoursOpen": "09:00 - 18:00",
     "scanQr": "Scan QR Code to contact us via Line",
     "followUs": "Follow Us",
     "followUsDesc": "Stay updated with our latest news and promotions",
-    "location": "Chiang Mai, Thailand",
+    "location": "Bangkok, Thailand",
     "faq": "Frequently Asked Questions",
     "faq1Q": "What are your office hours?",
     "faq1A": "Our office is open Monday - Sunday from 09:00 - 18:00.",

@@ -1149,7 +1149,7 @@ export default function PropertyDetailPage() {
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900">
-                        Sky Pro Property
+                        propertybyta168
                       </div>
                       <div className="text-sm text-gray-500">
                         {t("propertyDetail.agent")}
@@ -1191,7 +1191,7 @@ export default function PropertyDetailPage() {
                       className="w-full border-gray-300 text-gray-600 hover:bg-gray-100 py-6 text-base font-medium rounded-xl transition-all"
                       onClick={() =>
                         copyToClipboard(
-                          "skyproofficial88@gmail.com",
+                          "propertybyta168@gmail.com",
                           "email"
                         )
                       }

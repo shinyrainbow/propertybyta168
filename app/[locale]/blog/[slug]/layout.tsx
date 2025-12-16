@@ -46,13 +46,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : blog.excerpt;
 
   return {
-    title: `${title} | Sky Pro Property`,
+    title: `${title} | propertybyta168`,
     description: description || undefined,
     openGraph: {
       title,
       description: description || undefined,
       type: "article",
-      url: `https://skyproproperties.com/${locale}/blog/${slug}`,
+      url: `https://propertybyta168.com/${locale}/blog/${slug}`,
       images: blog.coverImage
         ? [
             {
@@ -78,11 +78,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: blog.coverImage ? [blog.coverImage] : ["/og-image.jpg"],
     },
     alternates: {
-      canonical: `https://skyproproperties.com/${locale}/blog/${slug}`,
+      canonical: `https://propertybyta168.com/${locale}/blog/${slug}`,
       languages: {
-        "th-TH": `https://skyproproperties.com/th/blog/${slug}`,
-        "en-US": `https://skyproproperties.com/en/blog/${slug}`,
-        "zh-CN": `https://skyproproperties.com/zh/blog/${slug}`,
+        "th-TH": `https://propertybyta168.com/th/blog/${slug}`,
+        "en-US": `https://propertybyta168.com/en/blog/${slug}`,
+        "zh-CN": `https://propertybyta168.com/zh/blog/${slug}`,
       },
     },
   };

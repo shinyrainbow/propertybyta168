@@ -869,14 +869,14 @@ export default function PropertiesPage() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <Building2 className="w-8 h-8 text-[#C9A227]" />
             <span className="text-xl font-bold text-white">
-              Sky Pro Property
+              propertybyta168
             </span>
           </div>
           <p className="mb-2 text-sm">
-            Premium Real Estate Solutions | Chiang Mai, Thailand
+            Premium Real Estate Solutions | Bangkok, Thailand
           </p>
           <p className="text-xs">
-            © 2025 บริษัท สกายโปรพร้อมเพอร์ตี้ จำกัด. All rights reserved.
+            © 2025 propertybyta168. All rights reserved.
           </p>
         </div>
       </footer>

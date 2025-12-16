@@ -70,7 +70,7 @@ export default function MapSearchPage() {
   const [loading, setLoading] = useState(true);
 
   // Map state
-  const [mapCenter, setMapCenter] = useState<[number, number]>([18.7883, 98.9853]); // Chiang Mai center
+  const [mapCenter, setMapCenter] = useState<[number, number]>([13.7563, 100.5018]); // Bangkok center
   const [mapZoom, setMapZoom] = useState(12);
   const [isDesktop, setIsDesktop] = useState(false);
 

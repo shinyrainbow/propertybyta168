@@ -220,7 +220,7 @@ export default function PropertyMap({
 
   const validCenter: [number, number] = isCenterValid
     ? center
-    : [18.7883, 98.9853]; // Default to Chiang Mai center
+    : [13.7563, 100.5018]; // Default to Bangkok center
 
   // Group properties by coordinates
   const groupedProperties = properties

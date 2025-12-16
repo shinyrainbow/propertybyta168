@@ -336,9 +336,9 @@ export default function PublicPropertiesPage() {
               />
             </div>
           ))}
-          {/* Light overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/40" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/80" />
+          {/* Light overlay - darkened for better image visibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/65 to-white/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/70" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -493,7 +493,7 @@ export default function PublicPropertiesPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center p-6">
@@ -621,7 +621,7 @@ export default function PublicPropertiesPage() {
                     </h3>
                     <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" />
-                      {property.project?.locationTh || property.project?.locationEn || "Chiangmai"}
+                      {property.project?.locationTh || property.project?.locationEn || "Bangkok"}
                     </p>
 
                     {/* Price */}
@@ -673,7 +673,7 @@ export default function PublicPropertiesPage() {
       <section
         id="projects"
         ref={(el) => { observerRefs.current["projects"] = el; }}
-        className="py-16 bg-gray-50"
+        className="py-16 bg-gray-100"
       >
         <div className="container mx-auto px-4">
           <div className={`text-center mb-10 transition-all duration-700 ${
@@ -884,7 +884,7 @@ export default function PublicPropertiesPage() {
       <section
         id="closed-deals"
         ref={(el) => { observerRefs.current["closed-deals"] = el; }}
-        className="py-16 bg-gray-50"
+        className="py-16 bg-gray-100"
       >
         <div className="container mx-auto px-4">
           <div className={`flex items-center justify-between mb-8 transition-all duration-1000 ${

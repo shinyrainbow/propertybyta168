@@ -10,10 +10,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "seo" });
 
   const titles: Record<string, string> = {
-    th: "ค้นหาอสังหาริมทรัพย์บนแผนที่ | Sky Pro Property",
-    en: "Map Search Properties | Sky Pro Property",
-    ja: "地図で物件検索 | Sky Pro Property",
-    zh: "地图搜索房产 | Sky Pro Property",
+    th: "ค้นหาอสังหาริมทรัพย์บนแผนที่ | propertybyta168",
+    en: "Map Search Properties | propertybyta168",
+    ja: "地図で物件検索 | propertybyta168",
+    zh: "地图搜索房产 | propertybyta168",
   };
 
   const descriptions: Record<string, string> = {
@@ -36,18 +36,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "condo search",
       "house search",
       "Bangkok property",
-      "Chiang Mai property",
       "Thailand real estate",
       "ค้นหาแผนที่",
       "ค้นหาอสังหาริมทรัพย์",
-      "คอนโดเชียงใหม่",
-      "บ้านเชียงใหม่",
+      "คอนโดกรุงเทพ",
+      "บ้านกรุงเทพ",
     ],
     openGraph: {
       title,
       description,
       type: "website",
-      url: `https://skyproproperties.com/${locale}/map-search`,
+      url: `https://propertybyta168.com/${locale}/map-search`,
       images: [
         {
           url: "/og-image.jpg",
@@ -64,12 +63,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: ["/og-image.jpg"],
     },
     alternates: {
-      canonical: `https://skyproproperties.com/${locale}/map-search`,
+      canonical: `https://propertybyta168.com/${locale}/map-search`,
       languages: {
-        "th-TH": "https://skyproproperties.com/th/map-search",
-        "en-US": "https://skyproproperties.com/en/map-search",
-        "ja-JP": "https://skyproproperties.com/ja/map-search",
-        "zh-CN": "https://skyproproperties.com/zh/map-search",
+        "th-TH": "https://propertybyta168.com/th/map-search",
+        "en-US": "https://propertybyta168.com/en/map-search",
+        "zh-CN": "https://propertybyta168.com/zh/map-search",
       },
     },
   };

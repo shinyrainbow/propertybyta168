@@ -36,7 +36,7 @@ export function PropertyJsonLd({ property }: PropertyJsonLdProps) {
     "@type": "RealEstateListing",
     name: property.propertyTitleTh || property.propertyTitleEn,
     description: property.descriptionTh || property.descriptionEn || "",
-    url: `https://skyproproperties.com/property/${property.id}`,
+    url: `https://propertybyta168.com/property/${property.id}`,
     image: property.imageUrls,
     offers: {
       "@type": "Offer",
@@ -85,16 +85,16 @@ interface OrganizationJsonLdProps {
 }
 
 export function OrganizationJsonLd({
-  name = "Sky Pro Property",
+  name = "propertybyta168",
 }: OrganizationJsonLdProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
     name: name,
-    url: "https://skyproproperties.com",
-    logo: "https://skyproproperties.com/header-logo.png",
+    url: "https://propertybyta168.com",
+    logo: "https://propertybyta168.com/logo.png",
     description:
-      "บริการที่ปรึกษาอสังหาริมทรัพย์ คอนโด บ้าน ทาวน์เฮ้าส์ ให้เช่าและขาย ในเชียงใหม่",
+      "บริการที่ปรึกษาอสังหาริมทรัพย์ คอนโด บ้าน ทาวน์เฮ้าส์ ให้เช่าและขาย ในกรุงเทพฯ",
     areaServed: {
       "@type": "City",
       name: "Bangkok",
@@ -102,13 +102,13 @@ export function OrganizationJsonLd({
     },
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Chiangmai",
+      addressLocality: "Bangkok",
       addressCountry: "TH",
     },
     sameAs: [
-      "https://www.facebook.com/skyproproperties",
-      "https://www.instagram.com/skyproproperties",
-      "https://line.me/ti/p/@skypro",
+      "https://www.facebook.com/p/Property-By-Ta-168-100093155621525/",
+      "https://www.tiktok.com/@propertybyta",
+      "https://line.me/ti/p/@propertybyta168",
     ],
   };
 

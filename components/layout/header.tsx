@@ -81,7 +81,6 @@ export default function Header({ transparent = false }: HeaderProps) {
 
   const rightNavLinks = [
     { href: "/list-property", label: t("listProperty") },
-    { href: "/about", label: t("about") },
     { href: "/blog", label: t("blog") },
   ];
 
@@ -244,6 +243,17 @@ export default function Header({ transparent = false }: HeaderProps) {
                 </div>
               </div>
 
+              {/* Map Search link */}
+              <Link
+                href="/map-search"
+                className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                  isScrolled || !transparent
+                    ? "text-gray-700 hover:text-[#eb3838]"
+                    : "text-white hover:text-[#eb3838]"
+                }`}
+              >
+                {t("mapSearch")}
+              </Link>
               {/* Other nav links without dropdown */}
               {rightNavLinks.map((link) => (
                 <Link
@@ -258,17 +268,6 @@ export default function Header({ transparent = false }: HeaderProps) {
                   {link.label}
                 </Link>
               ))}
-              {/* Map Search link */}
-              <Link
-                href="/map-search"
-                className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                  isScrolled || !transparent
-                    ? "text-gray-700 hover:text-[#eb3838]"
-                    : "text-white hover:text-[#eb3838]"
-                }`}
-              >
-                {t("mapSearch")}
-              </Link>
             </div>
 
             {/* Right - Contact Button + Language Switcher */}
@@ -373,7 +372,7 @@ export default function Header({ transparent = false }: HeaderProps) {
 
           {/* Nav Links */}
           <div className="px-4 py-6 space-y-1">
-            {allNavLinks.map((link, index) => (
+            {allNavLinks.filter(link => link.href !== "/map-search").map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}

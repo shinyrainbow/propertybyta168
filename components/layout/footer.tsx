@@ -14,7 +14,6 @@ export default function Footer() {
     { href: "/search?listingType=rent", label: tNav("rent") },
     { href: "/search?listingType=sale", label: tNav("sale") },
     { href: "/blog", label: tNav("blog") },
-    { href: "/about", label: tNav("about") },
     { href: "/contact", label: tNav("contact") },
   ];
 
@@ -42,7 +41,7 @@ export default function Footer() {
                 alt="Property by TA168"
                 width={180}
                 height={60}
-                className="object-contain brightness-0 invert"
+                className="object-contain"
                 unoptimized
               />
             </div>
@@ -167,8 +166,7 @@ export default function Footer() {
                   <p className="text-gray-500 text-xs mb-0.5">{tFooter("address") || "Address"}</p>
                   <p className="text-gray-400 text-sm leading-relaxed">
                     propertybyta168<br />
-                    111 หมู่ที่ 2 ตำบลไชยสถาน<br />
-                    อำเภอสารภี จังหวัดเชียงใหม่ 50140
+                    กรุงเทพมหานคร 10110
                   </p>
                 </div>
               </li>

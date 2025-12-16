@@ -70,8 +70,8 @@
   },
   "about": {
     "hero": {
-      "title": "关于 SkyPro Property",
-      "subtitle": "清迈全方位房地产咨询公司。提供买卖租赁服务、物业管理和专业投资管理，目标是\"将您的房地产体验提升到市场领先水平。\""
+      "title": "关于 propertybyta168",
+      "subtitle": "曼谷全方位房地产咨询公司。提供买卖租赁服务、物业管理和专业投资管理，目标是\"将您的房地产体验提升到市场领先水平。\""
     },
     "stats": {
       "properties": "已售房产",
@@ -83,7 +83,7 @@
       "title": "关于我们",
       "paragraph1": "我们认为房地产不仅仅是买卖，而是规划、投资和人生重要决策。",
       "paragraph2": "我们开发了满足投资者、普通个人、外国人以及需要能够交付真实成果的管理团队的项目业主需求的服务系统。",
-      "paragraph3": "Skypro Property - 让您的房地产决策更简单，并交付真实成果。"
+      "paragraph3": "propertybyta168 - 让您的房地产决策更简单，并交付真实成果。"
     },
     "valuesSection": {
       "title": "我们的专长",
@@ -91,7 +91,7 @@
     },
     "values": {
       "trust": {
-        "title": "清迈房地产买卖租赁",
+        "title": "曼谷房地产买卖租赁",
         "description": "我们分析地段、市场价格、交易和增长机会，帮助客户做出明智决策。"
       },
       "excellence": {
@@ -109,11 +109,11 @@
     },
     "whyChooseUs": {
       "title": "客户为何选择我们",
-      "subtitle": "Skypro Property在市场上与竞争对手的差异。",
+      "subtitle": "propertybyta168在市场上与竞争对手的差异。",
       "reasons": {
         "marketKnowledge": {
-          "title": "对清迈市场的深入了解",
-          "description": "我们对清迈房地产市场有深入的了解，包括地段、价格和增长机会。"
+          "title": "对曼谷市场的深入了解",
+          "description": "我们对曼谷房地产市场有深入的了解，包括地段、价格和增长机会。"
         },
         "experience": {
           "title": "丰富的外国投资者服务经验",
@@ -284,7 +284,7 @@
     "subtitle": "今天就联系我们，获取咨询和特别优惠"
   },
   "footer": {
-    "tagline": "高端房产解决方案 | 泰国清迈",
+    "tagline": "高端房产解决方案 | 泰国曼谷",
     "copyright": "© 2025 propertybyta168. 保留所有权利。"
   },
   "review": {
@@ -352,7 +352,7 @@
     "apartment": "公寓楼",
     "other": "其他",
     "location": "位置",
-    "locationPlaceholder": "例如：Rama 9, Sukhumvit, Chiang Mai",
+    "locationPlaceholder": "例如：Rama 9, Sukhumvit, 曼谷",
     "size": "面积",
     "sizePlaceholder": "例如：35平方米，100平方哇",
     "price": "期望价格",
@@ -503,12 +503,13 @@
     "awardsGained": "获得奖项",
     "propertiesListed": "房产上市",
     "happyClients": "满意客户",
-    "realEstateGuru": "清迈房地产专家",
+    "realEstateGuru": "曼谷房地产专家",
     "buyAnd": "买卖租 - 房屋、公寓、土地、泳池别墅",
     "contactUs": "欢迎联系我们，免费咨询服务"
   },
   "footerNav": {
     "quickLinks": "快速链接",
+    "propertyTypes": "房产类型",
     "contact": "联系方式",
     "connect": "联系我们",
     "addLineSupport": "在LINE上添加我们以获得即时支持",
@@ -517,7 +518,8 @@
     "phone": "电话",
     "email": "邮箱",
     "address": "地址",
-    "lineOfficial": "Line 官方"
+    "lineOfficial": "Line 官方",
+    "callUs": "联系电话"
   },
   "contactPage": {
     "title": "联系我们",
@@ -528,13 +530,13 @@
     "businessHours": "营业时间",
     "companyName": "propertybyta168",
     "addressLine1": "111 Moo 2, Chai Sathan 街道",
-    "addressLine2": "Saraphi 区, 清迈 50140",
+    "addressLine2": "曼谷 10110",
     "daysOpen": "周一 - 周日",
     "hoursOpen": "09:00 - 18:00",
     "scanQr": "扫描二维码通过Line联系我们",
     "followUs": "关注我们",
     "followUsDesc": "获取最新消息和优惠活动",
-    "location": "清迈, 泰国",
+    "location": "曼谷, 泰国",
     "faq": "常见问题",
     "faq1Q": "办公时间是什么时候?",
     "faq1A": "我们的办公室周一至周日 09:00 - 18:00 开放。",
