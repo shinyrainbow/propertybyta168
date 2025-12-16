@@ -281,7 +281,7 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-[#C9A227] to-[#A8841F]">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <h2 className="text-4xl font-bold text-black mb-6">
             {t("cta.title")}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">

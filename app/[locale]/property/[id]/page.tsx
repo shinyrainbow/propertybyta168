@@ -1145,7 +1145,7 @@ export default function PropertyDetailPage() {
                   {/* Agent Info */}
                   <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
                     <div className="w-14 h-14 bg-[#C9A227] rounded-full flex items-center justify-center">
-                      <span className="text-xl font-bold text-gray-900">PW</span>
+                      <span className="text-xl font-bold text-gray-900">PBT</span>
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900">

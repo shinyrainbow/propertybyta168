@@ -1092,7 +1092,7 @@ export default function PublicPropertiesPage() {
           <div className={`text-center transition-all duration-700 ${
             isVisible["contact"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 ">
               {t("cta.title")}
             </h2>
             <p className="text-white/80 mb-8 max-w-lg mx-auto">
@@ -1101,7 +1101,7 @@ export default function PublicPropertiesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => { navigator.clipboard.writeText("0612596657"); toast.success(t("common.copiedPhone")); }}
-                className="bg-white text-[#eb3838] hover:bg-gray-100 font-medium px-8"
+                className="bg-white text-black hover:bg-gray-100 font-medium px-8"
               >
                 <Phone className="w-5 h-5 mr-2" />
                 061-259-6657
