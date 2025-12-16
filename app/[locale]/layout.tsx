@@ -9,6 +9,7 @@ import AuthSessionProvider from "@/components/providers/session-provider";
 import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import { Toaster } from "@/components/ui/toaster";
 import { ConfirmDialogProvider } from "@/components/ui/confirm-dialog";
+import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { locales, type Locale } from "@/i18n/config";
 import FloatingLine from "@/components/layout/floating-line";
 
@@ -153,10 +154,12 @@ export default async function LocaleLayout({
         <OrganizationJsonLd />
         <NextIntlClientProvider messages={messages}>
           <AuthSessionProvider>
-            <ConfirmDialogProvider>
-              {children}
-              <FloatingLine />
-            </ConfirmDialogProvider>
+            <FavoritesProvider>
+              <ConfirmDialogProvider>
+                {children}
+                <FloatingLine />
+              </ConfirmDialogProvider>
+            </FavoritesProvider>
           </AuthSessionProvider>
         </NextIntlClientProvider>
         <Toaster />
