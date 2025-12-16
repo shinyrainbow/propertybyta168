@@ -621,7 +621,7 @@ export default function PublicPropertiesPage() {
                     </h3>
                     <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" />
-                      {property.project?.locationTh || property.project?.locationEn || "Bangkok"}
+                      {property.project?.projectLocationText || property.propertyLocationText || "Bangkok"}
                     </p>
 
                     {/* Price */}
