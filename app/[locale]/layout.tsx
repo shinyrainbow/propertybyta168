@@ -36,8 +36,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://propertybyta168.com"),
   title: {
-    default: "PropertyByTA168 - Premium Real Estate Chiangmai",
-    template: "%s | PropertyByTA168",
+    default: "propertybyta168 - Premium Real Estate Chiangmai",
+    template: "%s | propertybyta168",
   },
   description:
     "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai. Professional real estate consulting services.",
@@ -51,16 +51,16 @@ export const metadata: Metadata = {
     "Chiangmai condo",
     "house for rent",
     "house for sale",
-    "PropertyByTA168",
+    "propertybyta168",
     "Property By TA168",
     "real estate Chiangmai",
     "บ้านเชียงใหม่",
     "คอนโดเชียงใหม่",
     "อสังหาริมทรัพย์เชียงใหม่",
   ],
-  authors: [{ name: "PropertyByTA168" }],
-  creator: "PropertyByTA168",
-  publisher: "PropertyByTA168",
+  authors: [{ name: "propertybyta168" }],
+  creator: "propertybyta168",
+  publisher: "propertybyta168",
   formatDetection: {
     email: false,
     address: false,
@@ -70,8 +70,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "th_TH",
     url: "https://propertybyta168.com",
-    siteName: "PropertyByTA168",
-    title: "PropertyByTA168 - Premium Real Estate Chiangmai",
+    siteName: "propertybyta168",
+    title: "propertybyta168 - Premium Real Estate Chiangmai",
     description:
       "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai.",
     images: [
@@ -79,13 +79,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "PropertyByTA168 - Premium Real Estate Chiangmai",
+        alt: "propertybyta168 - Premium Real Estate Chiangmai",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PropertyByTA168 - Premium Real Estate Chiangmai",
+    title: "propertybyta168 - Premium Real Estate Chiangmai",
     description:
       "Find condos, single houses, townhouses for rent and sale in the best locations of Chiangmai.",
     images: ["/og-image.jpg"],
