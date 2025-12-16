@@ -108,14 +108,14 @@ export default function AdminLayout({
         }`}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-          <Link href="/admin-dashboard" className="flex items-center gap-2">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 bg-[#ec3938]">
+          <Link href="/admin-dashboard" className="flex items-center gap-2 mx-auto">
             <Image
               src="/logo.png"
               alt="propertybyta168"
-              width={40}
+              width={140}
               height={40}
-              className="w-10 h-10 object-contain"
+              className="object-cover mx-auto"
               unoptimized
             />
             {/* <Image
