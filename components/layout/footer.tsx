@@ -37,7 +37,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-6">
               <Image
-                src="/logo.png"
+                src="/logo-trans.png"
                 alt="Property by TA168"
                 width={180}
                 height={60}

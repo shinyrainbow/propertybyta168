@@ -401,7 +401,7 @@ export default function PublicPropertiesPage() {
             </div>
           ))}
           {/* Light overlay */}
-          <div className="absolute inset-0 bg-white opacity-[0.68]" />
+          <div className="absolute inset-0 bg-white opacity-[0.65]" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -440,7 +440,7 @@ export default function PublicPropertiesPage() {
 
             {/* Search Box */}
             <div
-              className={`bg-white rounded-2xl shadow-xl p-6 mb-8 transition-all duration-700 ${
+              className={`relative z-50 bg-white rounded-2xl shadow-xl p-6 mb-8 transition-all duration-700 ${
                 heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
               }`}
               style={{ transitionDelay: "300ms" }}

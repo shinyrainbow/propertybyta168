@@ -121,13 +121,21 @@ export default function Header({ transparent = false }: HeaderProps) {
           <div className="hidden md:grid md:grid-cols-3 items-center py-1">
             {/* Left - Logo */}
             <Link href="/" className="flex items-center group">
-              <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-10" : "h-11"} w-auto`}>
+              <div className="flex items-center gap-2 transition-all duration-500 ease-out">
                 <Image
-                  src={isScrolled || !transparent ? "/logo-trans.png" : "/logo-red.png"}
+                  src={isScrolled || !transparent ? "/logo-img-white.png" : "/logo-img.png"}
                   alt="Property by TA168"
-                  height={56}
-                  width={168}
-                  className="object-contain h-full w-auto rounded-lg transition-all duration-300"
+                  height={44}
+                  width={44}
+                  className="object-contain rounded-lg"
+                  unoptimized
+                />
+                <Image
+                  src={isScrolled || !transparent ? "/logo-text-white.png" : "/logo-text.png"}
+                  alt="Property by TA168"
+                  height={36}
+                  width={140}
+                  className="object-contain"
                   unoptimized
                 />
               </div>
@@ -291,13 +299,21 @@ export default function Header({ transparent = false }: HeaderProps) {
           {/* Mobile: Logo left, menu right */}
           <div className="flex md:hidden items-center justify-between py-2">
             <Link href="/" className="flex items-center">
-              <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-8" : "h-9"} w-auto`}>
+              <div className="flex items-center gap-1.5 transition-all duration-500 ease-out">
                 <Image
-                  src={isScrolled || !transparent ? "/logo-trans.png" : "/logo-red.png"}
+                  src={isScrolled || !transparent ? "/logo-img-white.png" : "/logo-img.png"}
                   alt="Property by TA168"
-                  height={44}
-                  width={132}
-                  className="object-contain h-full w-auto rounded-lg transition-all duration-300"
+                  height={36}
+                  width={36}
+                  className="object-contain rounded-lg"
+                  unoptimized
+                />
+                <Image
+                  src={isScrolled || !transparent ? "/logo-text-white.png" : "/logo-text.png"}
+                  alt="Property by TA168"
+                  height={28}
+                  width={110}
+                  className="object-contain"
                   unoptimized
                 />
               </div>
