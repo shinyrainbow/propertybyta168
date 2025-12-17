@@ -19,6 +19,7 @@ import {
   CheckCircle,
   Clock,
   ShieldCheck,
+  Calendar,
 } from "lucide-react";
 
 interface PropertyCardProps {
@@ -44,6 +45,7 @@ interface PropertyCardProps {
     isAvailableToday?: boolean;
     isExclusive?: boolean;
     isFeatured?: boolean;
+    updatedAt?: string;
   };
   locale?: string;
 }
@@ -76,6 +78,35 @@ export default function PropertyCard({ property, locale = "th" }: PropertyCardPr
 
   const displayTitle = locale === "th" && property.titleTh ? property.titleTh : property.title;
   const displayLocation = locale === "th" && property.locationTh ? property.locationTh : property.location;
+
+  const getTimeAgo = (dateString: string | null | undefined) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return t("justNow");
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return minutes === 1 ? t("minuteAgo") : t("minutesAgo", { count: minutes });
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return hours === 1 ? t("hourAgo") : t("hoursAgo", { count: hours });
+    } else if (diffInSeconds < 604800) {
+      const days = Math.floor(diffInSeconds / 86400);
+      return days === 1 ? t("dayAgo") : t("daysAgo", { count: days });
+    } else if (diffInSeconds < 2592000) {
+      const weeks = Math.floor(diffInSeconds / 604800);
+      return weeks === 1 ? t("weekAgo") : t("weeksAgo", { count: weeks });
+    } else if (diffInSeconds < 31536000) {
+      const months = Math.floor(diffInSeconds / 2592000);
+      return months === 1 ? t("monthAgo") : t("monthsAgo", { count: months });
+    } else {
+      const years = Math.floor(diffInSeconds / 31536000);
+      return years === 1 ? t("yearAgo") : t("yearsAgo", { count: years });
+    }
+  };
 
   return (
     <Link href={`/property/${property.id}`}>
@@ -242,6 +273,14 @@ export default function PropertyCard({ property, locale = "th" }: PropertyCardPr
               <span>{property.floor || "-"}</span>
             </div>
           </div>
+
+          {/* Time Ago */}
+          {property.updatedAt && (
+            <div className="mt-3 text-xs text-gray-400 flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              <span>{t("updated")} {getTimeAgo(property.updatedAt)}</span>
+            </div>
+          )}
 
           {/* CTA Button */}
           <button className="w-full mt-5 py-3.5 bg-[#eb3838] text-white font-semibold rounded-xl hover:bg-[#d32f2f] transition-colors text-base">
