@@ -391,34 +391,6 @@ function SearchContent() {
         </div>
       </section>
 
-      {/* Projects Quick Select */}
-      <section className="bg-white py-6 border-b border-gray-200">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap gap-2 justify-center">
-            {projects.map((project) => (
-              <Button
-                key={project.projectCode}
-                variant={
-                  selectedProject === project.projectCode ? "default" : "outline"
-                }
-                className={`transition-all duration-300 ${
-                  selectedProject === project.projectCode
-                    ? "bg-[#eb3838] hover:bg-[#d32f2f] text-white border-[#eb3838]"
-                    : "bg-white border-2 border-gray-200 text-gray-700 hover:border-[#eb3838] hover:bg-[#eb3838]/10 hover:text-[#eb3838]"
-                }`}
-                onClick={() => handleProjectSelect(project.projectCode)}
-              >
-                <Building2 className="w-4 h-4 mr-1" />
-                {getProjectName(project)}
-                <span className="ml-1 text-xs opacity-75">
-                  ({project.count})
-                </span>
-              </Button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="container mx-auto px-4 py-8">
         {/* Top Filter Bar */}
         <Card className="p-4 mb-6 shadow-lg bg-white border border-gray-200">
@@ -569,6 +541,33 @@ function SearchContent() {
                 </div>
               </div>
             </div>
+
+            {/* Project Tags - Horizontal Scrollable */}
+            {projects.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <label className="text-xs font-medium text-gray-700 mb-2 block">
+                  {t("common.projects")}
+                </label>
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                  {projects.map((project) => (
+                    <button
+                      key={project.projectCode}
+                      type="button"
+                      onClick={() => handleProjectSelect(project.projectCode)}
+                      className={`shrink-0 inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
+                        selectedProject === project.projectCode
+                          ? "bg-[#eb3838] text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-[#eb3838]/10 hover:text-[#eb3838]"
+                      }`}
+                    >
+                      <Building2 className="w-3 h-3" />
+                      {getProjectName(project)}
+                      <span className="opacity-70">({project.count})</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </Card>
 

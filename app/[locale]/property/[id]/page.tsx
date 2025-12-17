@@ -662,7 +662,7 @@ export default function PropertyDetailPage() {
             {t("propertyDetail.notFoundDesc")}
           </p>
           <Link href="/">
-            <Button className="bg-[#C9A227] hover:bg-[#A88B1F] text-white">
+            <Button className="bg-[#eb3838] hover:bg-[#d32f2f] text-white">
               <ArrowLeft className="w-4 h-4 mr-2" />
               {t("propertyDetail.backHome")}
             </Button>
@@ -685,7 +685,7 @@ export default function PropertyDetailPage() {
         <div className="container mx-auto px-6 py-2 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-600 hover:text-[#C9A227] transition-colors pt-6 pb-4"
+            className="flex items-center gap-2 text-gray-600 hover:text-[#eb3838] transition-colors pt-6 pb-4"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-sm font-medium">{t("propertyDetail.back")}</span>
@@ -810,7 +810,7 @@ export default function PropertyDetailPage() {
                   {/* Premium Badge */}
                   {property.featured && (
                     <div className="absolute top-4 left-4">
-                      <span className="bg-gradient-to-r from-[#C9A227] to-[#d4c07a] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg">
+                      <span className="bg-gradient-to-r from-[#eb3838] to-[#f87171] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg">
                         <Star className="w-4 h-4 fill-white" />
                         Premium
                       </span>
@@ -888,7 +888,7 @@ export default function PropertyDetailPage() {
                 }`}
               >
                 <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
-                  <span className="bg-[#C9A227] text-white px-2 py-1 rounded-full">
+                  <span className="bg-[#eb3838] text-white px-2 py-1 rounded-full">
                     {getPropertyTypeLabel(property.propertyType)}
                   </span>
                   <span>|</span>
@@ -899,12 +899,12 @@ export default function PropertyDetailPage() {
                 </h1>
                 {property.project && (
                   <div className="flex items-center text-gray-600 mb-2">
-                    <Building2 className="w-5 h-5 mr-2 text-[#C9A227]" />
+                    <Building2 className="w-5 h-5 mr-2 text-[#eb3838]" />
                     {getProjectName(property.project)}
                   </div>
                 )}
                 {/* <div className="flex items-center text-gray-600">
-                  <MapPin className="w-5 h-5 mr-2 text-[#C9A227]" />
+                  <MapPin className="w-5 h-5 mr-2 text-[#eb3838]" />
                   {[property.address, property.district, property.province]
                     .filter(Boolean)
                     .join(", ")}
@@ -913,7 +913,7 @@ export default function PropertyDetailPage() {
 
               {/* Price */}
               <Card
-                className={`p-6 shadow-lg bg-white border border-gray-200 bg-gradient-to-r from-[#C9A227]/10 to-transparent transition-all duration-700 delay-100 ${
+                className={`p-6 shadow-lg bg-white border border-gray-200 bg-gradient-to-r from-[#eb3838]/10 to-transparent transition-all duration-700 delay-100 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"
@@ -925,7 +925,7 @@ export default function PropertyDetailPage() {
                       <div className="text-sm text-gray-500 mb-1">
                         {t("propertyDetail.rentPerMonth")}
                       </div>
-                      <div className="text-3xl font-bold text-[#C9A227]">
+                      <div className="text-3xl font-bold text-[#eb3838]">
                         ฿ {formatPrice(property.rentalRateNum)}
                       </div>
                     </div>
@@ -933,7 +933,7 @@ export default function PropertyDetailPage() {
                   {property.sellPriceNum && property.sellPriceNum > 0 && (
                     <div>
                       <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.salePrice")}</div>
-                      <div className="text-3xl font-bold text-[#C9A227]">
+                      <div className="text-3xl font-bold text-[#eb3838]">
                         ฿ {formatPrice(property.sellPriceNum)}
                       </div>
                     </div>
@@ -954,8 +954,8 @@ export default function PropertyDetailPage() {
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                    <div className="p-2 bg-[#C9A227]/20 rounded-lg">
-                      <Bed className="w-6 h-6 text-[#C9A227]" />
+                    <div className="p-2 bg-[#eb3838]/20 rounded-lg">
+                      <Bed className="w-6 h-6 text-[#eb3838]" />
                     </div>
                     <div>
                       <div className="text-2xl font-bold text-gray-900">
@@ -965,8 +965,8 @@ export default function PropertyDetailPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                    <div className="p-2 bg-[#C9A227]/20 rounded-lg">
-                      <Bath className="w-6 h-6 text-[#C9A227]" />
+                    <div className="p-2 bg-[#eb3838]/20 rounded-lg">
+                      <Bath className="w-6 h-6 text-[#eb3838]" />
                     </div>
                     <div>
                       <div className="text-2xl font-bold text-gray-900">
@@ -976,8 +976,8 @@ export default function PropertyDetailPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                    <div className="p-2 bg-[#C9A227]/20 rounded-lg">
-                      <Maximize className="w-6 h-6 text-[#C9A227]" />
+                    <div className="p-2 bg-[#eb3838]/20 rounded-lg">
+                      <Maximize className="w-6 h-6 text-[#eb3838]" />
                     </div>
                     <div>
                       <div className="text-2xl font-bold text-gray-900">
@@ -988,8 +988,8 @@ export default function PropertyDetailPage() {
                   </div>
                   {property.landSizeSqw != null && property.landSizeSqw > 0 && (
                     <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                      <div className="p-2 bg-[#C9A227]/20 rounded-lg">
-                        <Home className="w-6 h-6 text-[#C9A227]" />
+                      <div className="p-2 bg-[#eb3838]/20 rounded-lg">
+                        <Home className="w-6 h-6 text-[#eb3838]" />
                       </div>
                       <div>
                         <div className="text-2xl font-bold text-gray-900">
@@ -1001,8 +1001,8 @@ export default function PropertyDetailPage() {
                   )}
                   {property.floor && (
                     <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                      <div className="p-2 bg-[#C9A227]/20 rounded-lg">
-                        <Layers className="w-6 h-6 text-[#C9A227]" />
+                      <div className="p-2 bg-[#eb3838]/20 rounded-lg">
+                        <Layers className="w-6 h-6 text-[#eb3838]" />
                       </div>
                       <div>
                         <div className="text-2xl font-bold text-gray-900">
@@ -1014,8 +1014,8 @@ export default function PropertyDetailPage() {
                   )}
                   {property.building && (
                     <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                      <div className="p-2 bg-[#C9A227]/20 rounded-lg">
-                        <Building2 className="w-6 h-6 text-[#C9A227]" />
+                      <div className="p-2 bg-[#eb3838]/20 rounded-lg">
+                        <Building2 className="w-6 h-6 text-[#eb3838]" />
                       </div>
                       <div>
                         <div className="text-2xl font-bold text-gray-900">
@@ -1061,7 +1061,7 @@ export default function PropertyDetailPage() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {property.amenities.map((amenity, index) => (
                       <div key={index} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5 text-[#C9A227]" />
+                        <CheckCircle2 className="w-5 h-5 text-[#eb3838]" />
                         <span className="text-gray-600">
                           {getAmenityLabelByLocale(amenity, locale)}
                         </span>
@@ -1081,7 +1081,7 @@ export default function PropertyDetailPage() {
                   }`}
                 >
                   <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-[#C9A227]" />
+                    <MapPin className="w-5 h-5 text-[#eb3838]" />
                     {t("propertyDetail.location")}
                   </h2>
                   <div className="rounded-xl overflow-hidden">
@@ -1107,7 +1107,7 @@ export default function PropertyDetailPage() {
                       href={`https://www.google.com/maps?q=${property.latitude},${property.longitude}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-[#C9A227] hover:text-[#A88B1F] font-medium flex items-center gap-1"
+                      className="text-sm text-[#eb3838] hover:text-[#d32f2f] font-medium flex items-center gap-1"
                     >
                       <MapPin className="w-4 h-4" />
                       เปิดใน Google Maps
@@ -1144,8 +1144,8 @@ export default function PropertyDetailPage() {
 
                   {/* Agent Info */}
                   <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
-                    <div className="w-14 h-14 bg-[#C9A227] rounded-full flex items-center justify-center">
-                      <span className="text-xl font-bold text-gray-900">PBT</span>
+                    <div className="w-14 h-14 bg-[#eb3838] rounded-full flex items-center justify-center">
+                      <span className="text-xl font-bold text-white">PBT</span>
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900">
@@ -1173,14 +1173,14 @@ export default function PropertyDetailPage() {
                     {/* Phone Button */}
                     <Button
                       onClick={() => copyToClipboard("0655558989", "phone")}
-                      className="w-full bg-[#C9A227] hover:bg-[#A88B1F] text-white py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                      className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
                     >
                       <Phone className="w-5 h-5 mr-2" />
                       {copiedText === "phone" ? "คัดลอกแล้ว!" : "065-555-8989"}
                     </Button>
                     <Button
                       variant="outline"
-                      className="w-full border-2 border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-white py-6 text-base font-semibold rounded-xl transition-all"
+                      className="w-full border-2 border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white py-6 text-base font-semibold rounded-xl transition-all"
                       onClick={() => setShowLineQR(true)}
                     >
                       <MessageCircle className="w-5 h-5 mr-2" />
@@ -1262,7 +1262,7 @@ export default function PropertyDetailPage() {
                               name: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C9A227]/50 focus:border-[#C9A227] transition-all text-gray-900 placeholder:text-gray-500"
+                          className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb3838]/50 focus:border-[#eb3838] transition-all text-gray-900 placeholder:text-gray-500"
                           disabled={formSubmitting}
                         />
                         <input
@@ -1275,7 +1275,7 @@ export default function PropertyDetailPage() {
                               phone: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C9A227]/50 focus:border-[#C9A227] transition-all text-gray-900 placeholder:text-gray-500"
+                          className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb3838]/50 focus:border-[#eb3838] transition-all text-gray-900 placeholder:text-gray-500"
                           disabled={formSubmitting}
                         />
                         <textarea
@@ -1288,7 +1288,7 @@ export default function PropertyDetailPage() {
                               message: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C9A227]/50 focus:border-[#C9A227] transition-all resize-none text-gray-900 placeholder:text-gray-500"
+                          className="w-full px-4 py-3 border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb3838]/50 focus:border-[#eb3838] transition-all resize-none text-gray-900 placeholder:text-gray-500"
                           disabled={formSubmitting}
                         />
 
@@ -1298,7 +1298,7 @@ export default function PropertyDetailPage() {
 
                         <Button
                           type="submit"
-                          className="w-full bg-[#C9A227] hover:bg-[#A88B1F] text-white py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                           disabled={formSubmitting}
                         >
                           {formSubmitting ? t("propertyDetail.sending") : t("propertyDetail.sendInfo")}
@@ -1324,7 +1324,7 @@ export default function PropertyDetailPage() {
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                   {t("propertyDetail.recommended")}
                 </h2>
-                <div className="w-16 h-1 bg-[#C9A227] mx-auto mb-3"></div>
+                <div className="w-16 h-1 bg-[#eb3838] mx-auto mb-3"></div>
                 <p className="text-gray-600">
                   {t("searchPage.subtitle")}
                 </p>
@@ -1390,7 +1390,7 @@ export default function PropertyDetailPage() {
 
                       {/* Details */}
                       <div className="p-4">
-                        <h3 className="font-bold text-gray-900 mb-2 line-clamp-1 group-hover:text-[#C9A227] transition-colors duration-300">
+                        <h3 className="font-bold text-gray-900 mb-2 line-clamp-1 group-hover:text-[#eb3838] transition-colors duration-300">
                           {getPropertyTitle(rec)}
                         </h3>
 
@@ -1405,15 +1405,15 @@ export default function PropertyDetailPage() {
 
                         <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
                           <div className="flex items-center gap-1">
-                            <Bed className="w-4 h-4 text-[#C9A227]" />
+                            <Bed className="w-4 h-4 text-[#eb3838]" />
                             <span>{rec.bedRoomNum}</span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <Bath className="w-4 h-4 text-[#C9A227]" />
+                            <Bath className="w-4 h-4 text-[#eb3838]" />
                             <span>{rec.bathRoomNum}</span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <Maximize className="w-4 h-4 text-[#C9A227]" />
+                            <Maximize className="w-4 h-4 text-[#eb3838]" />
                             <span>
                               {rec.propertyType === "Condo"
                                 ? rec.roomSizeNum || "-"
@@ -1426,7 +1426,7 @@ export default function PropertyDetailPage() {
                         <div className="pt-3 border-t border-gray-100">
                           {rec.rentalRateNum != null &&
                             rec.rentalRateNum > 0 && (
-                              <div className="text-lg font-bold text-[#C9A227]">
+                              <div className="text-lg font-bold text-[#eb3838]">
                                 <span className="text-xs font-normal text-gray-500 mr-1">
                                   {t("property.forRent")}:
                                 </span>
@@ -1438,7 +1438,7 @@ export default function PropertyDetailPage() {
                             )}
                           {rec.sellPriceNum != null && rec.sellPriceNum > 0 && (
                             <div
-                              className={`text-lg font-bold text-[#C9A227] ${
+                              className={`text-lg font-bold text-[#eb3838] ${
                                 rec.rentalRateNum != null &&
                                 rec.rentalRateNum > 0
                                   ? "text-sm mt-1"
@@ -1463,7 +1463,7 @@ export default function PropertyDetailPage() {
                 <Link href="/search">
                   <Button
                     variant="outline"
-                    className="border-2 border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105"
+                    className="border-2 border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105"
                   >
                     {t("common.viewAll")}
                   </Button>
