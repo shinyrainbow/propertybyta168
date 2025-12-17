@@ -126,6 +126,50 @@ function SearchContent() {
   const [maxPrice, setMaxPrice] = useState<string>(maxPriceParam);
   const [searchTrigger, setSearchTrigger] = useState(0); // Trigger for manual search
 
+  // Inquiry form state
+  const [inquiryForm, setInquiryForm] = useState({
+    name: "",
+    phone: "",
+    lineId: "",
+    listingType: "",
+    propertyType: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleInquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const detailsParts = [];
+      if (inquiryForm.lineId) detailsParts.push(`Line ID: ${inquiryForm.lineId}`);
+      if (inquiryForm.message) detailsParts.push(inquiryForm.message);
+      detailsParts.push("(จากหน้าค้นหา)");
+
+      const response = await fetch("/api/public/property-listings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: inquiryForm.name,
+          phone: inquiryForm.phone,
+          listingType: inquiryForm.listingType || "sell",
+          propertyType: inquiryForm.propertyType || "Other",
+          details: detailsParts.join("\n"),
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // Sync state with URL params when they change (e.g., navigating from homepage)
   useEffect(() => {
     const newSearchText = searchParams.get("q") || "";
@@ -789,6 +833,151 @@ function SearchContent() {
               </div>
             )}
           </main>
+
+          {/* Right Sidebar - Inquiry Form */}
+          <aside className="hidden lg:block lg:w-80 flex-shrink-0">
+            <Card className="p-5 sticky top-24 shadow-lg bg-white border border-gray-200">
+              {isSubmitted ? (
+                /* Success State */
+                <div className="text-center py-6">
+                  <div className="w-14 h-14 mx-auto mb-3 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg className="w-7 h-7 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{t("listPropertyPopup.successTitle")}</h3>
+                  <p className="text-gray-500 text-sm">{t("listPropertyPopup.successMessage")}</p>
+                </div>
+              ) : (
+                <>
+                  {/* Header */}
+                  <div className="text-center mb-4">
+                    <div className="w-12 h-12 mx-auto mb-3 bg-[#eb3838]/10 rounded-full flex items-center justify-center">
+                      <Home className="w-6 h-6 text-[#eb3838]" />
+                    </div>
+                    <h2 className="text-lg font-bold text-gray-900">{t("listPropertyPopup.title")}</h2>
+                    <p className="text-gray-500 text-xs mt-1">{t("listPropertyPopup.subtitle")}</p>
+                  </div>
+
+                  {/* Form */}
+                  <form onSubmit={handleInquirySubmit} className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.nameLabel")}
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          required
+                          value={inquiryForm.name}
+                          onChange={(e) => setInquiryForm({ ...inquiryForm, name: e.target.value })}
+                          className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                          placeholder={t("listPropertyPopup.namePlaceholder")}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.phoneLabel")}
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="tel"
+                          required
+                          value={inquiryForm.phone}
+                          onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
+                          className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                          placeholder={t("listPropertyPopup.phonePlaceholder")}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.listingTypeLabel")}
+                      </label>
+                      <select
+                        required
+                        value={inquiryForm.listingType}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, listingType: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
+                      >
+                        <option value="">{t("listPropertyPopup.listingTypePlaceholder")}</option>
+                        <option value="sell">{t("listPropertyPopup.forSale")}</option>
+                        <option value="rent">{t("listPropertyPopup.forRent")}</option>
+                        <option value="both">{t("listPropertyPopup.forBoth")}</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.propertyTypeLabel")}
+                      </label>
+                      <select
+                        required
+                        value={inquiryForm.propertyType}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, propertyType: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
+                      >
+                        <option value="">{t("listPropertyPopup.propertyTypePlaceholder")}</option>
+                        <option value="Condo">{t("listPropertyPopup.condo")}</option>
+                        <option value="SingleHouse">{t("listPropertyPopup.singleHouse")}</option>
+                        <option value="Townhouse">{t("listPropertyPopup.townhouse")}</option>
+                        <option value="Villa">{t("listPropertyPopup.villa")}</option>
+                        <option value="Land">{t("listPropertyPopup.land")}</option>
+                        <option value="Office">{t("listPropertyPopup.office")}</option>
+                        <option value="Store">{t("listPropertyPopup.store")}</option>
+                        <option value="Factory">{t("listPropertyPopup.factory")}</option>
+                        <option value="Hotel">{t("listPropertyPopup.hotel")}</option>
+                        <option value="Building">{t("listPropertyPopup.building")}</option>
+                        <option value="Apartment">{t("listPropertyPopup.apartment")}</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.lineIdLabel")}
+                      </label>
+                      <div className="relative">
+                        <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          value={inquiryForm.lineId}
+                          onChange={(e) => setInquiryForm({ ...inquiryForm, lineId: e.target.value })}
+                          className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                          placeholder={t("listPropertyPopup.lineIdPlaceholder")}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.messageLabel")}
+                      </label>
+                      <textarea
+                        value={inquiryForm.message}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] resize-none"
+                        placeholder={t("listPropertyPopup.messagePlaceholder")}
+                        rows={2}
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-2.5 bg-[#eb3838] text-white text-sm font-semibold rounded-lg hover:bg-[#d32f2f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? t("listPropertyPopup.submitting") : t("listPropertyPopup.submitButton")}
+                    </button>
+                  </form>
+                </>
+              )}
+            </Card>
+          </aside>
         </div>
       </div>
 
