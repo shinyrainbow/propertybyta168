@@ -277,7 +277,13 @@
     "confirmedAvailable": "CONFIRMED AVAILABLE TODAY",
     "exclusive": "Exclusive at TA168",
     "inquireNow": "Inquire Now",
-    "to": "to"
+    "to": "to",
+    "pending": "Pending",
+    "available": "Available",
+    "reserved": "Reserved",
+    "under_contract": "Under Contract",
+    "under_maintenance": "Under Maintenance",
+    "off_market": "Off Market"
   },
   "sections": {
     "featured": "Featured",
@@ -285,8 +291,11 @@
     "explore": "Explore",
     "popularProperties": "Popular Properties",
     "popularSubtitle": "Most viewed properties",
-    "popularProperties2": "Popular Properties",
-    "popularPropertiesSubtitle": "The most popular properties right now",
+    "popularProperties2": "Handpicked Properties For You",
+    "popularPropertiesSubtitle": "Quality properties curated by our team just for you",
+    "newArrivals": "New Arrivals",
+    "latestListings": "Latest Listings",
+    "latestListingsSubtitle": "Recently updated properties",
     "closedDeals": "Recently Closed Deals",
     "closedDealsSubtitle": "Properties recently sold or rented",
     "partners": "Our Partners",
@@ -310,7 +319,11 @@
     "reviews": "Customer Reviews",
     "reviewsSubtitle": "What our customers say about us",
     "noReviews": "No reviews available at this time",
-    "viewAllReviews": "View All Reviews"
+    "viewAllReviews": "View All Reviews",
+    "latestNews": "Latest News",
+    "blogTitle": "From Our Blog",
+    "blogSubtitle": "Stay updated with the latest real estate news, tips, and market insights",
+    "viewAllPosts": "View All Posts"
   },
   "cta": {
     "title": "Ready to find your dream property?",

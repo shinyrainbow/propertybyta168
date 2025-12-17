@@ -37,6 +37,8 @@ import {
   Heart,
   Images,
   CheckCircle,
+  FileText,
+  Calendar,
 } from "lucide-react";
 import Image from "next/image";
 import Header from "@/components/layout/header";
@@ -49,6 +51,7 @@ import {
   type FetchPropertiesParams,
   type NainaHubResponse,
 } from "@/lib/nainahub";
+import { SearchSuggestions } from "@/components/search/search-suggestions";
 
 // Hero background images for slideshow
 const heroImages = [
@@ -66,6 +69,19 @@ interface Project {
   projectNameTh: string;
   count: number;
   image: string;
+}
+
+interface BlogPost {
+  id: string;
+  title: string;
+  titleEn: string | null;
+  titleZh: string | null;
+  slug: string;
+  excerpt: string | null;
+  excerptEn: string | null;
+  excerptZh: string | null;
+  coverImage: string | null;
+  publishedAt: string | null;
 }
 
 async function fetchPropertiesFromAPI(params: FetchPropertiesParams = {}): Promise<NainaHubResponse> {
@@ -108,6 +124,28 @@ export default function PublicPropertiesPage() {
       : (property.propertyTitleTh || property.propertyTitleEn || "");
   };
 
+  const getBlogTitle = (blog: BlogPost) => {
+    if (locale === "en") return blog.titleEn || blog.title;
+    if (locale === "zh") return blog.titleZh || blog.title;
+    return blog.title;
+  };
+
+  const getBlogExcerpt = (blog: BlogPost) => {
+    if (locale === "en") return blog.excerptEn || blog.excerpt;
+    if (locale === "zh") return blog.excerptZh || blog.excerpt;
+    return blog.excerpt;
+  };
+
+  const formatBlogDate = (dateString: string | null) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString(locale === "th" ? "th-TH" : locale === "zh" ? "zh-CN" : "en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   const [properties, setProperties] = useState<Property[]>([]);
   const [popularProperties, setPopularProperties] = useState<Property[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -122,6 +160,9 @@ export default function PublicPropertiesPage() {
   const [closedCanScrollLeft, setClosedCanScrollLeft] = useState(false);
   const [closedCanScrollRight, setClosedCanScrollRight] = useState(false);
 
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [latestListings, setLatestListings] = useState<Property[]>([]);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroVisible, setHeroVisible] = useState(false);
 
@@ -131,6 +172,7 @@ export default function PublicPropertiesPage() {
   const [listingType, setListingType] = useState<string>("");
   const [bedrooms, setBedrooms] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -231,7 +273,7 @@ export default function PublicPropertiesPage() {
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const response = await fetchPropertiesFromAPI({ limit: 100 });
+        const response = await fetchPropertiesFromAPI({});
         setPopularProperties(response.data.slice(0, 10));
 
         const closed = response.data
@@ -272,6 +314,21 @@ export default function PublicPropertiesPage() {
             checkSliderScroll(closedDealsSliderRef, "closed");
           }
         }, 100);
+
+        // Sort by updatedAt for latest listings
+        const sortedByUpdate = [...response.data].sort((a, b) => {
+          const dateA = new Date(a.updatedAt || 0).getTime();
+          const dateB = new Date(b.updatedAt || 0).getTime();
+          return dateB - dateA;
+        });
+        setLatestListings(sortedByUpdate.slice(0, 8));
+
+        // Fetch blog posts
+        const blogRes = await fetch("/api/public/blog?limit=3");
+        const blogData = await blogRes.json();
+        if (blogData.success) {
+          setBlogPosts(blogData.data.slice(0, 3));
+        }
       } catch (error) {
         console.error("Error loading initial data:", error);
       }
@@ -321,7 +378,7 @@ export default function PublicPropertiesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header transparent />
 
       {/* Hero Section - Modern Light Design */}
       <section className="relative min-h-[90vh] flex items-center pt-20">
@@ -343,9 +400,8 @@ export default function PublicPropertiesPage() {
               />
             </div>
           ))}
-          {/* Light overlay - darkened for better image visibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/65 to-white/25" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/70" />
+          {/* Light overlay */}
+          <div className="absolute inset-0 bg-white opacity-[0.68]" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -418,14 +474,32 @@ export default function PublicPropertiesPage() {
                 <div className="md:col-span-2">
                   <label className="text-xs text-gray-500 mb-1.5 block">{t("search.search")}</label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
                     <Input
                       type="text"
                       placeholder={t("searchPage.searchPlaceholder")}
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                      onFocus={() => setShowSuggestions(true)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          setShowSuggestions(false);
+                          handleSearch();
+                        }
+                        if (e.key === "Escape") {
+                          setShowSuggestions(false);
+                        }
+                      }}
                       className="pl-10 h-12 border-gray-200 rounded-lg"
+                    />
+                    <SearchSuggestions
+                      searchText={searchText}
+                      isOpen={showSuggestions}
+                      onClose={() => setShowSuggestions(false)}
+                      onSelect={(value) => {
+                        setSearchText(value);
+                        setShowSuggestions(false);
+                      }}
                     />
                   </div>
                 </div>
@@ -541,7 +615,70 @@ export default function PublicPropertiesPage() {
         </div>
       </section>
 
-      {/* Popular Properties Section */}
+  
+
+      {/* Projects Section */}
+      <section
+        id="projects"
+        ref={(el) => { observerRefs.current["projects"] = el; }}
+        className="py-16 bg-gray-100"
+      >
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-10 transition-all duration-700 ${
+            isVisible["projects"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <span className="text-[#eb3838] text-sm font-medium">{t("sections.explore")}</span>
+            <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.popularProjects")}</h2>
+            <p className="text-gray-500 mt-2">{t("sections.popularProjectsSubtitle")}</p>
+          </div>
+
+          {/* Masonry Grid - items 0 and 3 span 2 rows */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(160px,auto)]">
+            {projects.slice(0, 8).map((project, index) => {
+              const isTall = index === 0 || index === 3;
+              return (
+                <Link
+                  key={project.projectCode}
+                  href={`/search?project=${encodeURIComponent(project.projectCode)}`}
+                  className={`group transition-all duration-500 ${
+                    isVisible["projects"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  } ${isTall ? "row-span-2" : ""}`}
+                  style={{ transitionDelay: `${index * 50}ms` }}
+                >
+                  <div className={`relative overflow-hidden rounded-xl cursor-pointer h-full ${isTall ? "min-h-[336px]" : "h-40"}`}>
+                    <Image
+                      src={project.image}
+                      alt={getProjectName(project)}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                      <h3 className={`font-semibold line-clamp-1 mb-1 ${isTall ? "text-lg" : "text-base"}`}>
+                        {getProjectName(project)}
+                      </h3>
+                      <p className="text-xs text-[#eb3838]">
+                        {project.count} {t("common.properties")}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/search">
+              <Button variant="outline" className="border-gray-300 text-gray-700 hover:border-[#eb3838] hover:text-[#eb3838]">
+                {t("sections.viewAllProjects")}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+    {/* Popular Properties Section */}
       <section
         id="popular"
         ref={(el) => { observerRefs.current["popular"] = el; }}
@@ -566,8 +703,8 @@ export default function PublicPropertiesPage() {
           </div>
 
           {/* Property Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {popularProperties.slice(0, 6).map((property, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {popularProperties.slice(0, 8).map((property, index) => (
               <Link
                 key={property.id}
                 href={`/property/${property.id}`}
@@ -592,12 +729,22 @@ export default function PublicPropertiesPage() {
                       </div>
                     )}
 
-                    {/* Badges */}
+                    {/* Status Badge */}
                     <div className="absolute top-3 left-3 flex flex-col gap-2">
-                      <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md">
-                        <CheckCircle className="w-3.5 h-3.5" />
-                        <span>{t("property.verified")}</span>
-                      </div>
+                      {property.status === "available" ? (
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          <span>{t("property.confirmedAvailable")}</span>
+                        </div>
+                      ) : property.status === "sold" || property.status === "rented" ? (
+                        <div className={`flex items-center gap-1.5 px-2.5 py-1 text-white text-xs font-medium rounded-md ${property.status === "sold" ? "bg-[#eb3838]" : "bg-blue-500"}`}>
+                          <span>{t(`property.${property.status}`)}</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-500 text-white text-xs font-medium rounded-md">
+                          <span>{t(`property.${property.status}`)}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Listing Type Badge */}
@@ -689,63 +836,160 @@ export default function PublicPropertiesPage() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Latest Listings Section */}
       <section
-        id="projects"
-        ref={(el) => { observerRefs.current["projects"] = el; }}
+        id="latest"
+        ref={(el) => { observerRefs.current["latest"] = el; }}
         className="py-16 bg-gray-100"
       >
         <div className="container mx-auto px-4">
-          <div className={`text-center mb-10 transition-all duration-700 ${
-            isVisible["projects"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          {/* Section Header */}
+          <div className={`flex flex-col md:flex-row md:items-end md:justify-between mb-10 transition-all duration-700 ${
+            isVisible["latest"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}>
-            <span className="text-[#eb3838] text-sm font-medium">{t("sections.explore")}</span>
-            <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.popularProjects")}</h2>
-            <p className="text-gray-500 mt-2">{t("sections.popularProjectsSubtitle")}</p>
-          </div>
-
-          {/* Masonry Grid - items 0 and 3 span 2 rows */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[minmax(160px,auto)]">
-            {projects.slice(0, 8).map((project, index) => {
-              const isTall = index === 0 || index === 3;
-              return (
-                <Link
-                  key={project.projectCode}
-                  href={`/search?project=${encodeURIComponent(project.projectCode)}`}
-                  className={`group transition-all duration-500 ${
-                    isVisible["projects"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  } ${isTall ? "row-span-2" : ""}`}
-                  style={{ transitionDelay: `${index * 50}ms` }}
-                >
-                  <div className={`relative overflow-hidden rounded-xl cursor-pointer h-full ${isTall ? "min-h-[336px]" : "h-40"}`}>
-                    <Image
-                      src={project.image}
-                      alt={getProjectName(project)}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                      <h3 className={`font-semibold line-clamp-1 mb-1 ${isTall ? "text-lg" : "text-base"}`}>
-                        {getProjectName(project)}
-                      </h3>
-                      <p className="text-xs text-[#eb3838]">
-                        {project.count} {t("common.properties")}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-8">
-            <Link href="/search">
-              <Button variant="outline" className="border-gray-300 text-gray-700 hover:border-[#eb3838] hover:text-[#eb3838]">
-                {t("sections.viewAllProjects")}
+            <div>
+              <span className="text-[#eb3838] text-sm font-medium">{t("sections.newArrivals")}</span>
+              <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.latestListings")}</h2>
+              <p className="text-gray-500 mt-2 max-w-lg">{t("sections.latestListingsSubtitle")}</p>
+            </div>
+            <Link href="/search" className="mt-4 md:mt-0">
+              <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
+                {t("common.viewAll")}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
+          </div>
+
+          {/* Property Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {latestListings.slice(0, 8).map((property, index) => (
+              <Link
+                key={property.id}
+                href={`/property/${property.id}`}
+                className={`block transition-all duration-500 ${
+                  isVisible["latest"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${index * 80}ms` }}
+              >
+                <div className="property-card group h-full flex flex-col">
+                  {/* Image Section */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    {property.imageUrls && property.imageUrls.length > 0 ? (
+                      <Image
+                        src={property.imageUrls[0]}
+                        alt={getPropertyTitle(property)}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                        <MapPin className="w-10 h-10 text-gray-300" />
+                      </div>
+                    )}
+
+                    {/* Status Badge */}
+                    <div className="absolute top-3 left-3 flex flex-col gap-2">
+                      {property.status === "available" ? (
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          <span>{t("property.confirmedAvailable")}</span>
+                        </div>
+                      ) : property.status === "sold" || property.status === "rented" ? (
+                        <div className={`flex items-center gap-1.5 px-2.5 py-1 text-white text-xs font-medium rounded-md ${property.status === "sold" ? "bg-[#eb3838]" : "bg-blue-500"}`}>
+                          <span>{t(`property.${property.status}`)}</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-500 text-white text-xs font-medium rounded-md">
+                          <span>{t(`property.${property.status}`)}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Listing Type Badge */}
+                    <div className="absolute top-3 right-3">
+                      {property.rentalRateNum && property.rentalRateNum > 0 ? (
+                        <span className="px-3 py-1 bg-[#eb3838] text-white text-xs font-medium rounded-md">
+                          {t("property.forRent")}
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-md">
+                          {t("property.forSale")}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Favorite */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleFavorite(property.id);
+                      }}
+                      className="absolute bottom-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                    >
+                      <Heart className={`w-5 h-5 transition-colors ${isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-400"}`} />
+                    </button>
+
+                    {/* Image Count */}
+                    {property.imageUrls && property.imageUrls.length > 1 && (
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2 py-1 bg-black/60 text-white text-xs rounded-md">
+                        <Images className="w-3.5 h-3.5" />
+                        <span>{property.imageUrls.length}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-4 flex-1">
+                    <h3 className="font-semibold text-gray-900 line-clamp-1 mb-1">
+                      {getProjectName(property.project) || getPropertyTitle(property)}
+                    </h3>
+                    <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5" />
+                      {property.project?.projectLocationText || property.propertyLocationText || "Bangkok"}
+                    </p>
+
+                    {/* Price */}
+                    <div className="mb-4">
+                      {property.rentalRateNum && property.rentalRateNum > 0 && (
+                        <div className="text-xl font-bold text-gray-900">
+                          ฿{formatPrice(property.rentalRateNum)}
+                          <span className="text-sm font-normal text-gray-500">/{t("property.month")}</span>
+                        </div>
+                      )}
+                      {property.sellPriceNum && property.sellPriceNum > 0 && (
+                        <div className={`font-bold ${property.rentalRateNum ? "text-base text-gray-600" : "text-xl text-gray-900"}`}>
+                          ฿{formatPrice(property.sellPriceNum)}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Details */}
+                    <div className="flex items-center gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-1.5">
+                        <Bed className="w-4 h-4 text-gray-400" />
+                        <span>{property.bedRoomNum}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Bath className="w-4 h-4 text-gray-400" />
+                        <span>{property.bathRoomNum}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Maximize className="w-4 h-4 text-gray-400" />
+                        <span>{getSize(property)} {t("property.sqm")}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="px-4 pb-4">
+                    <button className="w-full py-3 bg-[#eb3838] text-white font-medium rounded-lg hover:bg-[#d32f2f] transition-colors">
+                      {t("property.inquireNow")}
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -1094,6 +1338,107 @@ export default function PublicPropertiesPage() {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <section
+        id="blog"
+        ref={(el) => { observerRefs.current["blog"] = el; }}
+        className="py-16 bg-gray-100"
+      >
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <div className={`flex flex-col md:flex-row md:items-end md:justify-between mb-10 transition-all duration-700 ${
+            isVisible["blog"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div>
+              <span className="text-[#eb3838] text-sm font-medium">{t("sections.latestNews")}</span>
+              <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.blogTitle")}</h2>
+              <p className="text-gray-500 mt-2 max-w-lg">{t("sections.blogSubtitle")}</p>
+            </div>
+            <Link href="/blog" className="mt-4 md:mt-0">
+              <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
+                {t("sections.viewAllPosts")}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+
+          {/* Blog Cards Grid */}
+          {blogPosts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {blogPosts.map((blog, index) => (
+                <Link
+                  key={blog.id}
+                  href={`/blog/${blog.slug}`}
+                  className={`group block transition-all duration-500 ${
+                    isVisible["blog"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  }`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-[#eb3838]/50 hover:shadow-lg transition-all h-full flex flex-col">
+                    {/* Image */}
+                    <div className="relative h-48 overflow-hidden">
+                      {blog.coverImage ? (
+                        <Image
+                          src={blog.coverImage}
+                          alt={getBlogTitle(blog)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                          <FileText className="w-12 h-12 text-gray-300" />
+                        </div>
+                      )}
+                      <div className="absolute" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-5 flex-1 flex flex-col">
+                      {blog.publishedAt && (
+                        <div className="flex items-center gap-1 text-gray-500 text-xs mb-2">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {formatBlogDate(blog.publishedAt)}
+                        </div>
+                      )}
+                      <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-[#eb3838] transition-colors line-clamp-2">
+                        {getBlogTitle(blog)}
+                      </h3>
+                      {getBlogExcerpt(blog) && (
+                        <p className="text-gray-500 text-sm line-clamp-2 flex-1">
+                          {getBlogExcerpt(blog)}
+                        </p>
+                      )}
+                      <div className="mt-4 flex items-center text-[#eb3838] text-sm font-medium">
+                        {t("blog.readMore")}
+                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 ${
+              isVisible["blog"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-xl border border-gray-200 overflow-hidden h-full flex flex-col">
+                  <div className="relative h-48 bg-gray-100 flex items-center justify-center">
+                    <FileText className="w-12 h-12 text-gray-300" />
+                  </div>
+                  <div className="p-5 flex-1 flex flex-col">
+                    <div className="h-4 bg-gray-200 rounded w-1/3 mb-2" />
+                    <div className="h-5 bg-gray-200 rounded w-3/4 mb-2" />
+                    <div className="h-4 bg-gray-100 rounded w-full mb-1" />
+                    <div className="h-4 bg-gray-100 rounded w-2/3" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section
         id="contact"
@@ -1113,7 +1458,7 @@ export default function PublicPropertiesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => { navigator.clipboard.writeText("0612596657"); toast.success(t("common.copiedPhone")); }}
-                className="bg-white text-black hover:bg-gray-100 font-medium px-8"
+                className="bg-white text-gray-900! hover:bg-gray-100 font-medium px-8"
               >
                 <Phone className="w-5 h-5 mr-2" />
                 061-259-6657

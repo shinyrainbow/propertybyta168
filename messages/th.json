@@ -274,10 +274,16 @@
     "viewDetails": "ดูรายละเอียด",
     "sqm": "ตร.ม.",
     "verified": "ยืนยันแล้ว",
-    "confirmedAvailable": "ยืนยันว่างวันนี้",
+    "confirmedAvailable": "การยืนยันสถานะว่าง วันนี้",
     "exclusive": "พิเศษเฉพาะที่ TA168",
     "inquireNow": "สอบถามตอนนี้",
-    "to": "ถึง"
+    "to": "ถึง",
+    "pending": "รอดำเนินการ",
+    "available": "ว่าง",
+    "reserved": "จองแล้ว",
+    "under_contract": "อยู่ระหว่างทำสัญญา",
+    "under_maintenance": "อยู่ระหว่างซ่อมบำรุง",
+    "off_market": "ถอดออกจากตลาด"
   },
   "sections": {
     "featured": "แนะนำ",
@@ -285,8 +291,11 @@
     "explore": "สำรวจ",
     "popularProperties": "ทรัพย์สินยอดนิยม",
     "popularSubtitle": "Real Estate Guru In Bangkok \n(กูรูด้านอสังหาริมทรัพย์ในกรุงเทพฯ)",
-    "popularProperties2": "ทรัพย์สินยอดนิยม",
-    "popularPropertiesSubtitle": "ทรัพย์สินที่ได้รับความนิยมมากที่สุดในขณะนี้",
+    "popularProperties2": "ตัวเลือกอสังหาฯที่เราคัดสรรมาให้คุณ",
+    "popularPropertiesSubtitle": "อสังหาริมทรัพย์คุณภาพที่ทีมงานคัดเลือกมาเพื่อคุณ",
+    "newArrivals": "มาใหม่",
+    "latestListings": "ประกาศล่าสุด",
+    "latestListingsSubtitle": "อสังหาริมทรัพย์ที่เพิ่งอัปเดตล่าสุด",
     "closedDeals": "ปิดการขายล่าสุด",
     "closedDealsSubtitle": "ทรัพย์สินที่เพิ่งปิดการขายหรือเช่าสำเร็จ",
     "partners": "พันธมิตรของเรา",
@@ -310,7 +319,11 @@
     "reviews": "รีวิวจากลูกค้า",
     "reviewsSubtitle": "ความคิดเห็นจากลูกค้าที่ไว้วางใจเรา",
     "noReviews": "ยังไม่มีรีวิวในขณะนี้",
-    "viewAllReviews": "ดูรีวิวทั้งหมด"
+    "viewAllReviews": "ดูรีวิวทั้งหมด",
+    "latestNews": "ข่าวสารล่าสุด",
+    "blogTitle": "บทความจากเรา",
+    "blogSubtitle": "อัปเดตข่าวสารอสังหาริมทรัพย์ เคล็ดลับ และข้อมูลเชิงลึกของตลาด",
+    "viewAllPosts": "ดูบทความทั้งหมด"
   },
   "cta": {
     "title": "พร้อมที่จะค้นหาทรัพย์สินในฝันของคุณหรือยัง?",

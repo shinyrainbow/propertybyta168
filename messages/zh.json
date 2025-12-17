@@ -249,12 +249,27 @@
     "floor": "楼层",
     "building": "建筑",
     "noName": "未命名",
-    "viewDetails": "查看详情"
+    "viewDetails": "查看详情",
+    "sqm": "平方米",
+    "month": "月",
+    "verified": "已验证",
+    "confirmedAvailable": "今日确认空置",
+    "inquireNow": "立即咨询",
+    "pending": "待审核",
+    "available": "可用",
+    "reserved": "已预订",
+    "under_contract": "签约中",
+    "under_maintenance": "维护中",
+    "off_market": "下架"
   },
   "sections": {
     "popularProperties": "热门房产",
     "popularSubtitle": "最受关注的房产",
-    "popularProperties2": "热门房产",
+    "popularProperties2": "为您精选的房产",
+    "popularPropertiesSubtitle": "我们团队为您精心挑选的优质房产",
+    "newArrivals": "新到房源",
+    "latestListings": "最新房源",
+    "latestListingsSubtitle": "最近更新的房产",
     "closedDeals": "最新成交",
     "closedDealsSubtitle": "近期已售或已租的房产",
     "partners": "我们的合作伙伴",
@@ -278,7 +293,11 @@
     "reviews": "客户评价",
     "reviewsSubtitle": "客户对我们的评价",
     "noReviews": "暂无评价",
-    "viewAllReviews": "查看全部评价"
+    "viewAllReviews": "查看全部评价",
+    "latestNews": "最新资讯",
+    "blogTitle": "博客文章",
+    "blogSubtitle": "获取最新房地产新闻、技巧和市场洞察",
+    "viewAllPosts": "查看全部文章"
   },
   "cta": {
     "title": "准备好寻找您的梦想房产了吗？",

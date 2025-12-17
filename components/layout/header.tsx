@@ -78,7 +78,7 @@ export default function Header({ transparent = false }: HeaderProps) {
   const leftNavLinks = [
     { href: "/search?listingType=rent", label: t("rent") },
     { href: "/search?listingType=sale", label: t("sale") },
-    { href: "/map-search", label: t("mapSearch") },
+    // { href: "/map-search", label: t("mapSearch") },
   ];
 
   const rightNavLinks = [
@@ -97,9 +97,11 @@ export default function Header({ transparent = false }: HeaderProps) {
             : transparent ? "bg-transparent" : "bg-white/95 backdrop-blur-sm"
         } ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
       >
-        {/* Red accent from left - diagonal edge (desktop only) - always visible */}
+        {/* Red accent from left - diagonal edge (desktop only) - only visible when scrolled or not transparent */}
         <div
-          className="hidden md:block absolute top-0 bottom-0 left-0 overflow-hidden pointer-events-none"
+          className={`hidden md:block absolute top-0 bottom-0 left-0 overflow-hidden pointer-events-none transition-all duration-500 ${
+            isScrolled || !transparent ? "opacity-100" : "opacity-0"
+          }`}
           style={{
             width: isScrolled ? "380px" : "340px",
             transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -121,11 +123,11 @@ export default function Header({ transparent = false }: HeaderProps) {
             <Link href="/" className="flex items-center group">
               <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-10" : "h-11"} w-auto`}>
                 <Image
-                  src="/logo.png"
+                  src={isScrolled || !transparent ? "/logo-trans.png" : "/logo-red.png"}
                   alt="Property by TA168"
                   height={56}
                   width={168}
-                  className="object-contain h-full w-auto"
+                  className="object-contain h-full w-auto rounded-lg transition-all duration-300"
                   unoptimized
                 />
               </div>
@@ -141,11 +143,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               >
                 <Link
                   href="/search?listingType=rent"
-                  className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap flex items-center gap-1 ${
-                    isScrolled || !transparent
-                      ? "text-gray-700 hover:text-[#eb3838]"
-                      : "text-white hover:text-[#eb3838]"
-                  }`}
+                  className="text-sm font-medium transition-colors duration-200 whitespace-nowrap flex items-center gap-1 text-gray-700 hover:text-[#eb3838]"
                 >
                   {t("rent")}
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "rent" ? "rotate-180" : ""}`} />
@@ -197,11 +195,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               >
                 <Link
                   href="/search?listingType=sale"
-                  className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap flex items-center gap-1 ${
-                    isScrolled || !transparent
-                      ? "text-gray-700 hover:text-[#eb3838]"
-                      : "text-white hover:text-[#eb3838]"
-                  }`}
+                  className="text-sm font-medium transition-colors duration-200 whitespace-nowrap flex items-center gap-1 text-gray-700 hover:text-[#eb3838]"
                 >
                   {t("sale")}
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "sale" ? "rotate-180" : ""}`} />
@@ -246,7 +240,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               </div>
 
               {/* Map Search link */}
-              <Link
+              {/* <Link
                 href="/map-search"
                 className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
                   isScrolled || !transparent
@@ -255,17 +249,13 @@ export default function Header({ transparent = false }: HeaderProps) {
                 }`}
               >
                 {t("mapSearch")}
-              </Link>
+              </Link> */}
               {/* Other nav links without dropdown */}
               {rightNavLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                    isScrolled || !transparent
-                      ? "text-gray-700 hover:text-[#eb3838]"
-                      : "text-white hover:text-[#eb3838]"
-                  }`}
+                  className="text-sm font-medium transition-colors duration-200 whitespace-nowrap text-gray-700 hover:text-[#eb3838]"
                 >
                   {link.label}
                 </Link>
@@ -277,11 +267,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               {/* Favorites */}
               <Link
                 href="/favorites"
-                className={`relative p-2 rounded-lg transition-colors ${
-                  isScrolled || !transparent
-                    ? "hover:bg-gray-100 text-gray-700"
-                    : "hover:bg-white/10 text-white"
-                }`}
+                className="relative p-2 rounded-lg transition-colors hover:bg-gray-100 text-gray-700"
                 title={t("favorites")}
               >
                 <Heart className="w-5 h-5" />
@@ -293,12 +279,12 @@ export default function Header({ transparent = false }: HeaderProps) {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#eb3838] text-white font-medium rounded-lg hover:bg-[#d32f2f] transition-all duration-200 shadow-sm hover:shadow-md"
+                className="inline-flex items-center gap-2 px-5 py-2.5 font-medium rounded-lg transition-all duration-200 bg-[#eb3838] text-white hover:bg-[#d32f2f] shadow-sm hover:shadow-md"
               >
                 <Phone className="w-4 h-4" />
                 {t("contact")}
               </Link>
-              <LanguageSwitcher variant={isScrolled || !transparent ? "dark" : "light"} compact />
+              <LanguageSwitcher variant="dark" compact />
             </div>
           </div>
 
@@ -307,11 +293,11 @@ export default function Header({ transparent = false }: HeaderProps) {
             <Link href="/" className="flex items-center">
               <div className={`relative transition-all duration-500 ease-out ${isScrolled ? "h-8" : "h-9"} w-auto`}>
                 <Image
-                  src="/logo.png"
+                  src={isScrolled || !transparent ? "/logo-trans.png" : "/logo-red.png"}
                   alt="Property by TA168"
                   height={44}
                   width={132}
-                  className="object-contain h-full w-auto"
+                  className="object-contain h-full w-auto rounded-lg transition-all duration-300"
                   unoptimized
                 />
               </div>
@@ -321,11 +307,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               {/* Favorites - Mobile */}
               <Link
                 href="/favorites"
-                className={`relative p-1.5 rounded-lg transition-colors ${
-                  isScrolled || !transparent
-                    ? "hover:bg-gray-100 text-gray-700"
-                    : "hover:bg-white/10 text-white"
-                }`}
+                className="relative p-1.5 rounded-lg transition-colors hover:bg-gray-100 text-gray-700"
               >
                 <Heart className="w-4 h-4" />
                 {favoritesCount > 0 && (
@@ -336,30 +318,20 @@ export default function Header({ transparent = false }: HeaderProps) {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#eb3838] text-white text-xs font-medium rounded-lg hover:bg-[#d32f2f] transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors bg-[#eb3838] text-white hover:bg-[#d32f2f]"
               >
                 <Phone className="w-3 h-3" />
                 <span className="hidden xs:inline">{t("contact")}</span>
               </Link>
-              <LanguageSwitcher variant={isScrolled || !transparent ? "dark" : "light"} compact />
+              <LanguageSwitcher variant="dark" compact />
               <button
-                className={`p-1.5 rounded-lg transition-colors ${
-                  isScrolled || !transparent
-                    ? "hover:bg-gray-100 text-gray-700"
-                    : "hover:bg-white/10 text-white"
-                }`}
+                className="p-1.5 rounded-lg transition-colors hover:bg-gray-100 text-gray-700"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
                 <div className="relative w-5 h-5">
-                  <span className={`absolute left-0 block h-0.5 w-5 transform transition-all duration-200 ${
-                    isScrolled || !transparent ? "bg-gray-700" : "bg-white"
-                  } ${mobileMenuOpen ? "top-2.5 rotate-45" : "top-1"}`} />
-                  <span className={`absolute left-0 top-2.5 block h-0.5 w-5 transition-all duration-200 ${
-                    isScrolled || !transparent ? "bg-gray-700" : "bg-white"
-                  } ${mobileMenuOpen ? "opacity-0" : "opacity-100"}`} />
-                  <span className={`absolute left-0 block h-0.5 w-5 transform transition-all duration-200 ${
-                    isScrolled || !transparent ? "bg-gray-700" : "bg-white"
-                  } ${mobileMenuOpen ? "top-2.5 -rotate-45" : "top-4"}`} />
+                  <span className={`absolute left-0 block h-0.5 w-5 bg-gray-700 transform transition-all duration-200 ${mobileMenuOpen ? "top-2.5 rotate-45" : "top-1"}`} />
+                  <span className={`absolute left-0 top-2.5 block h-0.5 w-5 bg-gray-700 transition-all duration-200 ${mobileMenuOpen ? "opacity-0" : "opacity-100"}`} />
+                  <span className={`absolute left-0 block h-0.5 w-5 bg-gray-700 transform transition-all duration-200 ${mobileMenuOpen ? "top-2.5 -rotate-45" : "top-4"}`} />
                 </div>
               </button>
             </div>
@@ -399,7 +371,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                 alt="Property by TA168"
                 width={140}
                 height={46}
-                className="object-contain"
+                className="object-contain rounded-lg"
                 unoptimized
               />
             </div>

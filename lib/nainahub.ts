@@ -137,3 +137,55 @@ export async function fetchNainaHubPropertyById(
   const response = await fetchNainaHubProperties({ limit: 100 });
   return response.data.find((p) => p.id === id) || null;
 }
+
+// Suggestions API types
+export interface SuggestionProject {
+  nameEn: string;
+  nameTh: string;
+}
+
+export interface SuggestionLocation {
+  text: string;
+  type: "condo" | "property";
+}
+
+export interface SuggestionsData {
+  projects: SuggestionProject[];
+  locations: SuggestionLocation[];
+}
+
+export interface SuggestionsResponse {
+  success: boolean;
+  data: SuggestionsData;
+}
+
+const NAINAHUB_SUGGESTIONS_URL = "https://nainahub.com/api/public/properties/suggestions";
+
+/**
+ * Fetch search suggestions from NainaHub API
+ */
+export async function fetchNainaHubSuggestions(): Promise<SuggestionsResponse> {
+  const apiKey = process.env["X_API_KEY"];
+
+  if (!apiKey) {
+    throw new Error("X_API_KEY environment variable is not set");
+  }
+
+  const searchParams = new URLSearchParams();
+  searchParams.set("userId", NAINAHUB_USER_ID);
+
+  const url = `${NAINAHUB_SUGGESTIONS_URL}?${searchParams.toString()}`;
+
+  const response = await fetch(url, {
+    headers: {
+      "x-api-key": apiKey,
+    },
+    next: { revalidate: 300 }, // Cache for 5 minutes
+  });
+
+  if (!response.ok) {
+    throw new Error(`NainaHub Suggestions API error: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+}
