@@ -822,13 +822,13 @@ export default function PublicPropertiesPage() {
 
                     {/* Price */}
                     <div className="mb-4">
-                      {property.rentalRateNum && property.rentalRateNum > 0 && (
+                      {property.rentalRateNum != null && property.rentalRateNum > 0 && (
                         <div className="text-xl font-bold text-gray-900">
                           ฿{formatPrice(property.rentalRateNum)}
                           <span className="text-sm font-normal text-gray-500">/{t("property.month")}</span>
                         </div>
                       )}
-                      {property.sellPriceNum && property.sellPriceNum > 0 && (
+                      {property.sellPriceNum != null && property.sellPriceNum > 0 && (
                         <div className={`font-bold ${property.rentalRateNum ? "text-base text-gray-600" : "text-xl text-gray-900"}`}>
                           ฿{formatPrice(property.sellPriceNum)}
                         </div>
@@ -988,13 +988,13 @@ export default function PublicPropertiesPage() {
 
                     {/* Price */}
                     <div className="mb-4">
-                      {property.rentalRateNum && property.rentalRateNum > 0 && (
+                      {property.rentalRateNum != null && property.rentalRateNum > 0 && (
                         <div className="text-xl font-bold text-gray-900">
                           ฿{formatPrice(property.rentalRateNum)}
                           <span className="text-sm font-normal text-gray-500">/{t("property.month")}</span>
                         </div>
                       )}
-                      {property.sellPriceNum && property.sellPriceNum > 0 && (
+                      {property.sellPriceNum != null && property.sellPriceNum > 0 && (
                         <div className={`font-bold ${property.rentalRateNum ? "text-base text-gray-600" : "text-xl text-gray-900"}`}>
                           ฿{formatPrice(property.sellPriceNum)}
                         </div>

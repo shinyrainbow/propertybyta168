@@ -31,6 +31,7 @@ import {
   Search,
   SlidersHorizontal,
   Heart,
+  Calendar,
 } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import Image from "next/image";

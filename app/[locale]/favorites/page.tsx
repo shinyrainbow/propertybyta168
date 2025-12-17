@@ -12,6 +12,7 @@ import {
   Bath,
   Maximize,
   MapPin,
+  Calendar,
 } from "lucide-react";
 import Image from "next/image";
 import Header from "@/components/layout/header";
@@ -42,6 +43,35 @@ export default function FavoritesPage() {
     return useEnglish
       ? project.projectNameEn || project.projectNameTh || ""
       : project.projectNameTh || project.projectNameEn || "";
+  };
+
+  const getTimeAgo = (dateString: string | null | undefined) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return t("property.justNow");
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return minutes === 1 ? t("property.minuteAgo") : t("property.minutesAgo", { count: minutes });
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return hours === 1 ? t("property.hourAgo") : t("property.hoursAgo", { count: hours });
+    } else if (diffInSeconds < 604800) {
+      const days = Math.floor(diffInSeconds / 86400);
+      return days === 1 ? t("property.dayAgo") : t("property.daysAgo", { count: days });
+    } else if (diffInSeconds < 2592000) {
+      const weeks = Math.floor(diffInSeconds / 604800);
+      return weeks === 1 ? t("property.weekAgo") : t("property.weeksAgo", { count: weeks });
+    } else if (diffInSeconds < 31536000) {
+      const months = Math.floor(diffInSeconds / 2592000);
+      return months === 1 ? t("property.monthAgo") : t("property.monthsAgo", { count: months });
+    } else {
+      const years = Math.floor(diffInSeconds / 31536000);
+      return years === 1 ? t("property.yearAgo") : t("property.yearsAgo", { count: years });
+    }
   };
 
   useEffect(() => {
@@ -291,6 +321,14 @@ export default function FavoritesPage() {
                               </div>
                             )}
                           </div>
+
+                          {/* Time Ago */}
+                          {property.updatedAt && (
+                            <div className="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              <span>{t("property.updated")} {getTimeAgo(property.updatedAt)}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </Link>
