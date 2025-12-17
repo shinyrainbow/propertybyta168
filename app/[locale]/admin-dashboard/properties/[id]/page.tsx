@@ -459,11 +459,11 @@ export default function PropertyDetailsPage() {
           <Card className="p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">สถานะพิเศษ</h2>
 
-            {/* Popular Toggle */}
+            {/* Recommend Toggle */}
             <div className="flex items-center justify-between py-3 border-b">
               <div className="flex items-center gap-2">
                 <Flame className="w-5 h-5 text-orange-500" />
-                <span>Popular</span>
+                <span>Recommend</span>
               </div>
               <button
                 type="button"

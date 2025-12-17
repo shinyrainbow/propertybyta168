@@ -341,7 +341,7 @@ export default function PropertiesListPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">รายการทรัพย์สิน</h1>
           <p className="text-gray-600 mt-1">
-            จัดการทรัพย์สินจาก NainaHub - กำหนด Popular
+            จัดการทรัพย์สินจาก NainaHub - กำหนด Recommend
           </p>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-500">
@@ -397,7 +397,7 @@ export default function PropertiesListPage() {
                 <SelectItem value="popular">
                   <span className="flex items-center gap-2">
                     <Flame className="w-4 h-4 text-orange-500" />
-                    Popular
+                    Recommend
                   </span>
                 </SelectItem>
                 <SelectItem value="closed_deal">
@@ -465,7 +465,7 @@ export default function PropertiesListPage() {
                     {property.extension?.isFeaturedPopular && (
                       <span className="bg-orange-500 text-white px-2 py-0.5 rounded-full text-xs font-bold flex items-center gap-1">
                         <Flame className="w-3 h-3" />
-                        Popular
+                        Recommend
                       </span>
                     )}
                     {(property.status === "sold" || property.status === "rented") && (
@@ -571,7 +571,7 @@ export default function PropertiesListPage() {
 
                 {/* Actions */}
                 <div className="flex lg:flex-col gap-2 flex-shrink-0 flex-wrap">
-                  {/* Toggle Popular */}
+                  {/* Toggle Recommend */}
                   <Button
                     variant={property.extension?.isFeaturedPopular ? "default" : "outline"}
                     size="sm"
@@ -580,7 +580,7 @@ export default function PropertiesListPage() {
                     className={property.extension?.isFeaturedPopular ? "bg-orange-500 hover:bg-orange-600" : "text-gray-900"}
                   >
                     <Flame className="w-4 h-4 mr-1" />
-                    Popular
+                    Recommend
                   </Button>
 
 
