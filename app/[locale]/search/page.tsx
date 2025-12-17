@@ -27,6 +27,10 @@ import {
   Building2,
   CheckCircle,
   Heart,
+  Home,
+  Phone,
+  User,
+  MessageCircle,
 } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import Image from "next/image";
@@ -372,161 +376,159 @@ function SearchContent() {
       </section>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Mobile Filter Toggle */}
-        <div className="lg:hidden mb-4">
-          <Button
-            variant="outline"
-            className="w-full border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <SlidersHorizontal className="w-4 h-4 mr-2" />
-            {showFilters ? t("searchPage.hideFilters") : t("searchPage.showFilters")}
-          </Button>
-        </div>
+        {/* Top Filter Bar */}
+        <Card className="p-4 mb-6 shadow-lg bg-white border border-gray-200">
+          {/* Mobile Filter Toggle */}
+          <div className="lg:hidden mb-4">
+            <Button
+              variant="outline"
+              className="w-full border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              <SlidersHorizontal className="w-4 h-4 mr-2" />
+              {showFilters ? t("searchPage.hideFilters") : t("searchPage.showFilters")}
+            </Button>
+          </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar Filters */}
-          <aside
-            className={`lg:w-72 ${
-              showFilters ? "block" : "hidden"
-            } lg:block transition-all duration-300`}
-          >
-            <Card className="p-6 sticky top-24 shadow-lg bg-white border border-gray-200">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-900">{t("searchPage.filters")}</h2>
+          <div className={`${showFilters ? "block" : "hidden"} lg:block`}>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-gray-900">{t("searchPage.filters")}</h2>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-0 text-[#eb3838] hover:text-[#d32f2f] hover:bg-transparent"
+                onClick={handleResetFilters}
+              >
+                {t("search.resetFilters")}
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+              {/* Text Search */}
+              <div className="lg:col-span-2">
+                <label className="text-xs font-medium text-gray-700 mb-1.5 block">
+                  {t("common.search")}
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder={t("searchPage.searchPlaceholder")}
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
+                    className="pl-10 h-10 border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+                  />
+                </div>
+              </div>
+
+              {/* Property Type */}
+              <div>
+                <label className="text-xs font-medium text-gray-700 mb-1.5 block">
+                  {t("search.propertyType")}
+                </label>
+                <Select value={propertyType} onValueChange={setPropertyType}>
+                  <SelectTrigger className="h-10 border-gray-200 bg-gray-50 text-gray-900">
+                    <SelectValue placeholder={t("search.all")} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-gray-200">
+                    <SelectItem value="all">{t("search.all")}</SelectItem>
+                    <SelectItem value="Condo">{t("search.condo")}</SelectItem>
+                    <SelectItem value="Townhouse">{t("search.townhouse")}</SelectItem>
+                    <SelectItem value="SingleHouse">{t("search.singleHouse")}</SelectItem>
+                    <SelectItem value="Villa">{t("search.villa")}</SelectItem>
+                    <SelectItem value="Land">{t("search.land")}</SelectItem>
+                    <SelectItem value="Office">{t("search.office")}</SelectItem>
+                    <SelectItem value="Store">{t("search.store")}</SelectItem>
+                    <SelectItem value="Factory">{t("search.factory")}</SelectItem>
+                    <SelectItem value="Hotel">{t("search.hotel")}</SelectItem>
+                    <SelectItem value="Building">{t("search.building")}</SelectItem>
+                    <SelectItem value="Apartment">{t("search.apartment")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Listing Type */}
+              <div>
+                <label className="text-xs font-medium text-gray-700 mb-1.5 block">
+                  {t("search.listingType")}
+                </label>
+                <Select value={listingType} onValueChange={setListingType}>
+                  <SelectTrigger className="h-10 border-gray-200 bg-gray-50 text-gray-900">
+                    <SelectValue placeholder={t("search.all")} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-gray-200">
+                    <SelectItem value="all">{t("search.all")}</SelectItem>
+                    <SelectItem value="rent">{t("search.rent")}</SelectItem>
+                    <SelectItem value="sale">{t("search.sale")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Bedrooms */}
+              <div>
+                <label className="text-xs font-medium text-gray-700 mb-1.5 block">
+                  {t("search.bedrooms")}
+                </label>
+                <Select value={bedrooms} onValueChange={setBedrooms}>
+                  <SelectTrigger className="h-10 border-gray-200 bg-gray-50 text-gray-900">
+                    <SelectValue placeholder={t("common.notSpecified")} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-gray-200">
+                    <SelectItem value="all">{t("common.notSpecified")}</SelectItem>
+                    <SelectItem value="1">1 {t("common.room")}</SelectItem>
+                    <SelectItem value="2">2 {t("common.rooms")}</SelectItem>
+                    <SelectItem value="3">3 {t("common.rooms")}</SelectItem>
+                    <SelectItem value="4">4 {t("common.rooms")}</SelectItem>
+                    <SelectItem value="5">5+ {t("common.rooms")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Search Button */}
+              <div className="flex items-end">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-0 text-[#eb3838] hover:text-[#d32f2f] hover:bg-transparent"
-                  onClick={handleResetFilters}
+                  onClick={handleSearch}
+                  className="w-full h-10 bg-[#eb3838] hover:bg-[#d32f2f] text-white"
                 >
-                  {t("search.resetFilters")}
+                  <Search className="w-4 h-4 mr-2" />
+                  {t("search.searchButton")}
                 </Button>
               </div>
+            </div>
 
-              <div className="space-y-5">
-                {/* Text Search */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    {t("common.search")}
-                  </label>
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <Input
-                      type="text"
-                      placeholder={t("searchPage.searchPlaceholder")}
-                      value={searchText}
-                      onChange={(e) => setSearchText(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          handleSearch();
-                        }
-                      }}
-                      className="pl-10 border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
-                    />
-                  </div>
-                </div>
-
-                {/* Property Type */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    {t("search.propertyType")}
-                  </label>
-                  <Select value={propertyType} onValueChange={setPropertyType}>
-                    <SelectTrigger className="border-gray-200 bg-gray-50 text-gray-900">
-                      <SelectValue placeholder={t("search.all")} />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-gray-200">
-                      <SelectItem value="all">{t("search.all")}</SelectItem>
-                      <SelectItem value="Condo">{t("search.condo")}</SelectItem>
-                      <SelectItem value="Townhouse">{t("search.townhouse")}</SelectItem>
-                      <SelectItem value="SingleHouse">{t("search.singleHouse")}</SelectItem>
-                      <SelectItem value="Villa">{t("search.villa")}</SelectItem>
-                      <SelectItem value="Land">{t("search.land")}</SelectItem>
-                      <SelectItem value="Office">{t("search.office")}</SelectItem>
-                      <SelectItem value="Store">{t("search.store")}</SelectItem>
-                      <SelectItem value="Factory">{t("search.factory")}</SelectItem>
-                      <SelectItem value="Hotel">{t("search.hotel")}</SelectItem>
-                      <SelectItem value="Building">{t("search.building")}</SelectItem>
-                      <SelectItem value="Apartment">{t("search.apartment")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Listing Type */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    {t("search.listingType")}
-                  </label>
-                  <Select value={listingType} onValueChange={setListingType}>
-                    <SelectTrigger className="border-gray-200 bg-gray-50 text-gray-900">
-                      <SelectValue placeholder={t("search.all")} />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-gray-200">
-                      <SelectItem value="all">{t("search.all")}</SelectItem>
-                      <SelectItem value="rent">{t("search.rent")}</SelectItem>
-                      <SelectItem value="sale">{t("search.sale")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Bedrooms */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    {t("search.bedrooms")}
-                  </label>
-                  <Select value={bedrooms} onValueChange={setBedrooms}>
-                    <SelectTrigger className="border-gray-200 bg-gray-50 text-gray-900">
-                      <SelectValue placeholder={t("common.notSpecified")} />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-gray-200">
-                      <SelectItem value="all">{t("common.notSpecified")}</SelectItem>
-                      <SelectItem value="1">1 {t("common.room")}</SelectItem>
-                      <SelectItem value="2">2 {t("common.rooms")}</SelectItem>
-                      <SelectItem value="3">3 {t("common.rooms")}</SelectItem>
-                      <SelectItem value="4">4 {t("common.rooms")}</SelectItem>
-                      <SelectItem value="5">5+ {t("common.rooms")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Price Range */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    {t("search.minPrice")} - {t("search.maxPrice")}
-                  </label>
-                  <div className="flex gap-2">
-                    <Input
-                      type="text"
-                      placeholder={t("search.minPrice")}
-                      value={formatPriceInput(minPrice)}
-                      onChange={(e) => setMinPrice(parsePriceInput(e.target.value))}
-                      className="border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
-                    />
-                    <Input
-                      type="text"
-                      placeholder={t("search.maxPrice")}
-                      value={formatPriceInput(maxPrice)}
-                      onChange={(e) => setMaxPrice(parsePriceInput(e.target.value))}
-                      className="border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
-                    />
-                  </div>
-                </div>
-
-                {/* Search Button */}
-                <div className="mt-4">
-                  <Button
-                    onClick={handleSearch}
-                    className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white"
-                  >
-                    <Search className="w-4 h-4 mr-2" />
-                    {t("search.searchButton")}
-                  </Button>
+            {/* Price Range - Second Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mt-4">
+              <div className="lg:col-span-2">
+                <label className="text-xs font-medium text-gray-700 mb-1.5 block">
+                  {t("search.minPrice")} - {t("search.maxPrice")}
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder={t("search.minPrice")}
+                    value={formatPriceInput(minPrice)}
+                    onChange={(e) => setMinPrice(parsePriceInput(e.target.value))}
+                    className="h-10 border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+                  />
+                  <Input
+                    type="text"
+                    placeholder={t("search.maxPrice")}
+                    value={formatPriceInput(maxPrice)}
+                    onChange={(e) => setMaxPrice(parsePriceInput(e.target.value))}
+                    className="h-10 border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+                  />
                 </div>
               </div>
-            </Card>
-          </aside>
+            </div>
+          </div>
+        </Card>
 
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Main Content */}
           <main className="flex-1">
             {/* Results Header */}

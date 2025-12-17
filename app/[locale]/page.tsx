@@ -146,6 +146,35 @@ export default function PublicPropertiesPage() {
     });
   };
 
+  const getTimeAgo = (dateString: string | null | undefined) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return t("property.justNow");
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return minutes === 1 ? t("property.minuteAgo") : t("property.minutesAgo", { count: minutes });
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return hours === 1 ? t("property.hourAgo") : t("property.hoursAgo", { count: hours });
+    } else if (diffInSeconds < 604800) {
+      const days = Math.floor(diffInSeconds / 86400);
+      return days === 1 ? t("property.dayAgo") : t("property.daysAgo", { count: days });
+    } else if (diffInSeconds < 2592000) {
+      const weeks = Math.floor(diffInSeconds / 604800);
+      return weeks === 1 ? t("property.weekAgo") : t("property.weeksAgo", { count: weeks });
+    } else if (diffInSeconds < 31536000) {
+      const months = Math.floor(diffInSeconds / 2592000);
+      return months === 1 ? t("property.monthAgo") : t("property.monthsAgo", { count: months });
+    } else {
+      const years = Math.floor(diffInSeconds / 31536000);
+      return years === 1 ? t("property.yearAgo") : t("property.yearsAgo", { count: years });
+    }
+  };
+
   const [properties, setProperties] = useState<Property[]>([]);
   const [popularProperties, setPopularProperties] = useState<Property[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -810,17 +839,25 @@ export default function PublicPropertiesPage() {
                     <div className="flex items-center gap-4 text-sm text-gray-600">
                       <div className="flex items-center gap-1.5">
                         <Bed className="w-4 h-4 text-gray-400" />
-                        <span>{property.bedRoomNum}</span>
+                        <span>{property.bedRoomNum || 0}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Bath className="w-4 h-4 text-gray-400" />
-                        <span>{property.bathRoomNum}</span>
+                        <span>{property.bathRoomNum || 0}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Maximize className="w-4 h-4 text-gray-400" />
                         <span>{getSize(property)} {t("property.sqm")}</span>
                       </div>
                     </div>
+
+                    {/* Time Ago */}
+                    {property.updatedAt && (
+                      <div className="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{t("property.updated")} {getTimeAgo(property.updatedAt)}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* CTA */}
@@ -968,17 +1005,25 @@ export default function PublicPropertiesPage() {
                     <div className="flex items-center gap-4 text-sm text-gray-600">
                       <div className="flex items-center gap-1.5">
                         <Bed className="w-4 h-4 text-gray-400" />
-                        <span>{property.bedRoomNum}</span>
+                        <span>{property.bedRoomNum || 0}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Bath className="w-4 h-4 text-gray-400" />
-                        <span>{property.bathRoomNum}</span>
+                        <span>{property.bathRoomNum || 0}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Maximize className="w-4 h-4 text-gray-400" />
                         <span>{getSize(property)} {t("property.sqm")}</span>
                       </div>
                     </div>
+
+                    {/* Time Ago */}
+                    {property.updatedAt && (
+                      <div className="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{t("property.updated")} {getTimeAgo(property.updatedAt)}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* CTA */}

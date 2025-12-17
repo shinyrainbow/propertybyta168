@@ -97,13 +97,13 @@ export default function Header({ transparent = false }: HeaderProps) {
             : transparent ? "bg-transparent" : "bg-white/95 backdrop-blur-sm"
         } ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
       >
-        {/* Red accent from left - diagonal edge (desktop only) - only visible when scrolled or not transparent */}
+        {/* Red accent from left - diagonal edge - only visible when scrolled or not transparent */}
         <div
-          className={`hidden md:block absolute top-0 bottom-0 left-0 overflow-hidden pointer-events-none transition-all duration-500 ${
+          className={`absolute top-0 bottom-0 left-0 overflow-hidden pointer-events-none transition-all duration-500 ${
             isScrolled || !transparent ? "opacity-100" : "opacity-0"
           }`}
           style={{
-            width: isScrolled ? "380px" : "340px",
+            width: isScrolled ? "clamp(200px, 45vw, 380px)" : "clamp(185px, 42vw, 340px)",
             transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
           }}
         >
@@ -133,8 +133,8 @@ export default function Header({ transparent = false }: HeaderProps) {
                 <Image
                   src={isScrolled || !transparent ? "/logo-text-white.png" : "/logo-text.png"}
                   alt="Property by TA168"
-                  height={36}
-                  width={140}
+                  height={30}
+                  width={115}
                   className="object-contain"
                   unoptimized
                 />
@@ -311,8 +311,8 @@ export default function Header({ transparent = false }: HeaderProps) {
                 <Image
                   src={isScrolled || !transparent ? "/logo-text-white.png" : "/logo-text.png"}
                   alt="Property by TA168"
-                  height={28}
-                  width={110}
+                  height={24}
+                  width={95}
                   className="object-contain"
                   unoptimized
                 />

@@ -146,9 +146,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <link rel="icon" href="/logo.png" sizes="any" />
-        <link rel="icon" href="/logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="icon" href="/logo-img-white.png" sizes="any" />
+        <link rel="icon" href="/logo-img-white.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo-img-white.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${kanit.variable} ${orbitron.variable} font-sans antialiased`}>

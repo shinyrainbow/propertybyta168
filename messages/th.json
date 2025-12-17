@@ -158,7 +158,7 @@
     }
   },
   "hero": {
-    "badge": "ยินดีต้อนรับสู่ Property by TA168",
+    "badge": "ยินดีต้อนรับสู่ property by ta168",
     "title1": "ค้นหาอสังหาริมทรัพย์",
     "title2": "ในฝันของคุณ",
     "title": "ค้นหาอสังหาริมทรัพย์",
@@ -283,7 +283,24 @@
     "reserved": "จองแล้ว",
     "under_contract": "อยู่ระหว่างทำสัญญา",
     "under_maintenance": "อยู่ระหว่างซ่อมบำรุง",
-    "off_market": "ถอดออกจากตลาด"
+    "off_market": "ถอดออกจากตลาด",
+    "created": "สร้าง",
+    "updated": "อัพเดท",
+    "ago": "ที่แล้ว",
+    "justNow": "เมื่อสักครู่",
+    "secondsAgo": "{count} วินาทีที่แล้ว",
+    "minuteAgo": "1 นาทีที่แล้ว",
+    "minutesAgo": "{count} นาทีที่แล้ว",
+    "hourAgo": "1 ชั่วโมงที่แล้ว",
+    "hoursAgo": "{count} ชั่วโมงที่แล้ว",
+    "dayAgo": "1 วันที่แล้ว",
+    "daysAgo": "{count} วันที่แล้ว",
+    "weekAgo": "1 สัปดาห์ที่แล้ว",
+    "weeksAgo": "{count} สัปดาห์ที่แล้ว",
+    "monthAgo": "1 เดือนที่แล้ว",
+    "monthsAgo": "{count} เดือนที่แล้ว",
+    "yearAgo": "1 ปีที่แล้ว",
+    "yearsAgo": "{count} ปีที่แล้ว"
   },
   "sections": {
     "featured": "แนะนำ",
