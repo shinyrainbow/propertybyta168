@@ -573,7 +573,15 @@
     "baths": "ห้องน้ำ",
     "area": "พื้นที่",
     "learnMore": "ดูเพิ่มเติม",
-    "note": "หมายเหตุ"
+    "note": "หมายเหตุ",
+    "projectInfo": "ข้อมูลโครงการ",
+    "projectNameEn": "ชื่อโครงการ (EN)",
+    "projectNameTh": "ชื่อโครงการ (TH)",
+    "addressRoad": "ที่อยู่ (ถนน)",
+    "subDistrict": "แขวง/ตำบล",
+    "district": "เขต/อำเภอ",
+    "province": "จังหวัด",
+    "zipcode": "รหัสไปรษณีย์"
   },
   "homePage": {
     "sellOrRent": "ขายหรือเช่า",

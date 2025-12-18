@@ -573,7 +573,15 @@
     "baths": "Baths",
     "area": "Area",
     "learnMore": "LEARN MORE",
-    "note": "Note"
+    "note": "Note",
+    "projectInfo": "Project Information",
+    "projectNameEn": "Project Name (EN)",
+    "projectNameTh": "Project Name (TH)",
+    "addressRoad": "Address (Road)",
+    "subDistrict": "Sub-district",
+    "district": "District",
+    "province": "Province",
+    "zipcode": "Zipcode"
   },
   "homePage": {
     "sellOrRent": "Sell or rent",

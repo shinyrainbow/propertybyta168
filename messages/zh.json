@@ -573,7 +573,15 @@
     "baths": "浴室",
     "area": "面积",
     "learnMore": "了解更多",
-    "note": "备注"
+    "note": "备注",
+    "projectInfo": "项目信息",
+    "projectNameEn": "项目名称 (EN)",
+    "projectNameTh": "项目名称 (TH)",
+    "addressRoad": "地址 (道路)",
+    "subDistrict": "分区",
+    "district": "区",
+    "province": "省",
+    "zipcode": "邮编"
   },
   "homePage": {
     "sellOrRent": "出售或出租",

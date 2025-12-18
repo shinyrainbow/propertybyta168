@@ -1028,12 +1028,12 @@ export default function PropertyDetailPage() {
                     {getProjectName(property.project)}
                   </div>
                 )}
-                {/* <div className="flex items-center text-gray-600">
-                  <MapPin className="w-5 h-5 mr-2 text-[#eb3838]" />
-                  {[property.address, property.district, property.province]
-                    .filter(Boolean)
-                    .join(", ")}
-                </div> */}
+                {getPropertyAddressString(property) && (
+                  <div className="flex items-center text-gray-600">
+                    <MapPin className="w-5 h-5 mr-2 text-[#eb3838]" />
+                    {getPropertyAddressString(property)}
+                  </div>
+                )}
               </div>
 
               {/* Price */}
@@ -1168,6 +1168,87 @@ export default function PropertyDetailPage() {
                   <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                     {property.descriptionTh || property.descriptionEn}
                   </p>
+                </Card>
+              )}
+
+              {/* Project Info for Condo */}
+              {property.propertyType === "Condo" && property.project && (
+                <Card
+                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-[320ms] ${
+                    isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8"
+                  }`}
+                >
+                  <h2 className="text-lg font-bold text-gray-900 mb-4">
+                    {t("propertyDetail.projectInfo")}
+                  </h2>
+
+                  {/* Map */}
+                  {(() => {
+                    const coords = getPropertyCoordinates(property);
+                    if (!coords) return null;
+                    return (
+                      <div className="rounded-xl overflow-hidden mb-6">
+                        <iframe
+                          src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1938.5!2d${coords.lng}!3d${coords.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM${coords.lat}!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth`}
+                          width="100%"
+                          height="250"
+                          style={{ border: 0 }}
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          className="rounded-xl"
+                        />
+                      </div>
+                    );
+                  })()}
+
+                  {/* Project Details Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {property.project.projectNameEn && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.projectNameEn")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.projectNameEn}</div>
+                      </div>
+                    )}
+                    {property.project.projectNameTh && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.projectNameTh")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.projectNameTh}</div>
+                      </div>
+                    )}
+                    {property.project.addressNumberRoad && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.addressRoad")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.addressNumberRoad}</div>
+                      </div>
+                    )}
+                    {property.project.addressSubDistrict && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.subDistrict")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.addressSubDistrict}</div>
+                      </div>
+                    )}
+                    {property.project.addressDistrict && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.district")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.addressDistrict}</div>
+                      </div>
+                    )}
+                    {property.project.addressProvince && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.province")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.addressProvince}</div>
+                      </div>
+                    )}
+                    {property.project.addressZipcode && (
+                      <div className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.zipcode")}</div>
+                        <div className="font-semibold text-gray-900">{property.project.addressZipcode}</div>
+                      </div>
+                    )}
+                  </div>
                 </Card>
               )}
 
