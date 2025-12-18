@@ -156,8 +156,7 @@ export default function Footer() {
                 <div>
                   <p className="text-gray-500 text-xs mb-0.5">{tFooter("address") || "Address"}</p>
                   <p className="text-gray-400 text-sm leading-relaxed">
-                    propertybyta168<br />
-                    กรุงเทพมหานคร 10110
+                    propertybyta168
                   </p>
                 </div>
               </li>
