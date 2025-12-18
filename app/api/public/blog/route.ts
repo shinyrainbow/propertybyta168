@@ -6,7 +6,6 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const categorySlug = searchParams.get("category");
-    const limit = parseInt(searchParams.get("limit") || "20");
 
     const whereClause: any = {
       isPublished: true,
@@ -48,7 +47,6 @@ export async function GET(request: Request) {
       orderBy: {
         publishedAt: "desc",
       },
-      take: Math.min(limit, 50), // Limit to requested amount, max 50
     });
 
     return NextResponse.json({
