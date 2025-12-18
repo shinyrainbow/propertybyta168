@@ -1249,40 +1249,22 @@ export default function PropertyDetailPage() {
 
                   {/* Project Details Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {property.project.projectNameEn && (
+                    {getProjectName(property.project) && (
                       <div className="bg-gray-50 rounded-xl p-4">
-                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.projectNameEn")}</div>
-                        <div className="font-semibold text-gray-900">{property.project.projectNameEn}</div>
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.projectName")}</div>
+                        <div className="font-semibold text-gray-900">{getProjectName(property.project)}</div>
                       </div>
                     )}
-                    {property.project.projectNameTh && (
+                    {getPropertyAddressString(property, locale) && (
                       <div className="bg-gray-50 rounded-xl p-4">
-                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.projectNameTh")}</div>
-                        <div className="font-semibold text-gray-900">{property.project.projectNameTh}</div>
+                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.location")}</div>
+                        <div className="font-semibold text-gray-900">{getPropertyAddressString(property, locale)}</div>
                       </div>
                     )}
                     {property.project.addressNumberRoad && (
                       <div className="bg-gray-50 rounded-xl p-4">
                         <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.addressRoad")}</div>
                         <div className="font-semibold text-gray-900">{property.project.addressNumberRoad}</div>
-                      </div>
-                    )}
-                    {property.project.addressSubDistrict && (
-                      <div className="bg-gray-50 rounded-xl p-4">
-                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.subDistrict")}</div>
-                        <div className="font-semibold text-gray-900">{property.project.addressSubDistrict}</div>
-                      </div>
-                    )}
-                    {property.project.addressDistrict && (
-                      <div className="bg-gray-50 rounded-xl p-4">
-                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.district")}</div>
-                        <div className="font-semibold text-gray-900">{property.project.addressDistrict}</div>
-                      </div>
-                    )}
-                    {property.project.addressProvince && (
-                      <div className="bg-gray-50 rounded-xl p-4">
-                        <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.province")}</div>
-                        <div className="font-semibold text-gray-900">{property.project.addressProvince}</div>
                       </div>
                     )}
                     {property.project.addressZipcode && (
