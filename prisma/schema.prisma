@@ -154,7 +154,7 @@ model PropertyListing {
   email        String?  // Optional email
   listingType  String   // "rent" or "sale"
   propertyType String   // "condo", "house", etc.
-  location     String   // Property location
+  location     String?  // Property location (optional)
   size         String?  // Property size
   price        String?  // Expected price/rent
   details      String?  @db.Text // Additional details

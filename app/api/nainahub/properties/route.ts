@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { fetchNainaHubProperties, type FetchPropertiesParams } from "@/lib/nainahub";
+import { type FetchPropertiesParams } from "@/lib/nainahub";
+import { getEnhancedProperties } from "@/lib/property-extensions";
 
 export async function GET(request: Request) {
   try {
@@ -31,7 +32,8 @@ export async function GET(request: Request) {
     if (minPrice) params.minPrice = parseInt(minPrice);
     if (maxPrice) params.maxPrice = parseInt(maxPrice);
 
-    const response = await fetchNainaHubProperties(params);
+    // Use getEnhancedProperties to merge with local extensions (recommend, tags, etc.)
+    const response = await getEnhancedProperties(params, { includeHidden: true });
 
     return NextResponse.json(response);
   } catch (error) {

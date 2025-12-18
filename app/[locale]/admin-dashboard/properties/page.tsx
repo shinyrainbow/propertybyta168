@@ -120,9 +120,12 @@ export default function PropertiesListPage() {
   const fetchProperties = async () => {
     setLoading(true);
     try {
+      // When filtering by extension (popular, closed_deal), fetch more properties since filtering is client-side
+      const needsMoreData = extensionFilter && extensionFilter !== "all";
+      const fetchLimit = needsMoreData ? "100" : "10";
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: "10",
+        limit: fetchLimit,
         ...(typeFilter && typeFilter !== "all" && { propertyType: typeFilter }),
       });
 
