@@ -16,12 +16,9 @@ export default function TermsOfServicePage() {
       <section className="bg-white border-b border-gray-100 py-12">
         <div className="container mx-auto px-4 text-center">
           <div className="w-16 h-1 bg-[#eb3838] mx-auto mb-6" />
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
             {t("title")}
           </h1>
-          <p className="text-gray-600">
-            {t("lastUpdated")}: 18 ธันวาคม 2567
-          </p>
         </div>
       </section>
 
