@@ -38,7 +38,7 @@ export default function Footer() {
             <div className="mb-6">
               <Image
                 src="/logo-trans.png"
-                alt="Property by TA168"
+                alt="property by ta168"
                 width={180}
                 height={60}
                 className="object-contain"

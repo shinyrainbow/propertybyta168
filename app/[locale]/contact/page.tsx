@@ -259,7 +259,7 @@ export default function ContactPage() {
                         <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#eb3838]" />
                       </div>
                       <p className="text-gray-900 font-medium text-sm md:text-base">
-                        Property by TA168
+                        property by ta168
                       </p>
                       <p className="text-gray-500 text-xs md:text-sm">
                         {t("contactPage.location")}

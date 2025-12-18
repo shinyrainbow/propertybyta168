@@ -124,7 +124,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               <div className="flex items-center gap-2 transition-all duration-500 ease-out">
                 <Image
                   src={isScrolled || !transparent ? "/logo-img-white.png" : "/logo-img.png"}
-                  alt="Property by TA168"
+                  alt="property by ta168"
                   height={44}
                   width={44}
                   className="object-contain rounded-lg"
@@ -132,7 +132,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                 />
                 <Image
                   src={isScrolled || !transparent ? "/logo-text-white.png" : "/logo-text.png"}
-                  alt="Property by TA168"
+                  alt="property by ta168"
                   height={30}
                   width={115}
                   className="object-contain"
@@ -302,7 +302,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               <div className="flex items-center gap-1.5 transition-all duration-500 ease-out">
                 <Image
                   src={isScrolled || !transparent ? "/logo-img-white.png" : "/logo-img.png"}
-                  alt="Property by TA168"
+                  alt="property by ta168"
                   height={36}
                   width={36}
                   className="object-contain rounded-lg"
@@ -310,7 +310,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                 />
                 <Image
                   src={isScrolled || !transparent ? "/logo-text-white.png" : "/logo-text.png"}
-                  alt="Property by TA168"
+                  alt="property by ta168"
                   height={24}
                   width={95}
                   className="object-contain"
@@ -384,7 +384,7 @@ export default function Header({ transparent = false }: HeaderProps) {
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="Property by TA168"
+                alt="property by ta168"
                 width={140}
                 height={46}
                 className="object-contain rounded-lg"
