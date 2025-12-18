@@ -195,10 +195,27 @@ export function getPropertyAddress(property: NainaHubProperty): {
 
 /**
  * Get formatted address string based on property type
+ * Falls back to locationText fields if address fields are empty
  */
 export function getPropertyAddressString(property: NainaHubProperty): string {
-  const { subDistrict, district, province } = getPropertyAddress(property);
-  return [subDistrict, district, province].filter(Boolean).join(", ");
+  const { district, province } = getPropertyAddress(property);
+  const addressFromFields = [district, province].filter(Boolean).join(", ");
+
+  // If address fields are populated, use them
+  if (addressFromFields) {
+    return addressFromFields;
+  }
+
+  // Fall back to locationText fields
+  if (property.propertyType === "Condo" && property.project?.projectLocationText) {
+    return property.project.projectLocationText;
+  }
+
+  if (property.propertyLocationText) {
+    return property.propertyLocationText;
+  }
+
+  return "";
 }
 
 /**
