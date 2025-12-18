@@ -66,12 +66,17 @@ interface Property {
   createdAt: string;
   updatedAt: string;
   project: {
+    projectCode?: string;
     projectNameEn: string;
     projectNameTh: string;
+    projectLatitude?: number | null;
+    projectLongitude?: number | null;
     // Address fields for Condo types
+    addressNumberRoad?: string;
     addressSubDistrict?: string;
     addressDistrict?: string;
     addressProvince?: string;
+    addressZipcode?: string;
   } | null;
   amenities?: string[];
   note: string | null;
@@ -81,15 +86,17 @@ interface Property {
 
 /**
  * Get property address based on property type
- * - Condo: use project's address fields
+ * - Condo: use project's address fields (including addressNumberRoad)
  * - Other types: use property's address fields
  */
 function getPropertyAddressString(property: Property): string {
   if (property.propertyType === "Condo" && property.project) {
     return [
+      property.project.addressNumberRoad,
       property.project.addressSubDistrict,
       property.project.addressDistrict,
       property.project.addressProvince,
+      property.project.addressZipcode,
     ].filter(Boolean).join(", ");
   }
   return [
@@ -97,6 +104,23 @@ function getPropertyAddressString(property: Property): string {
     property.propertyDistrict,
     property.propertyProvince,
   ].filter(Boolean).join(", ");
+}
+
+/**
+ * Get coordinates for property
+ * - For Condo: use project coordinates if property coordinates not available
+ * - For other types: use property coordinates
+ */
+function getPropertyCoordinates(property: Property): { lat: number; lng: number } | null {
+  // First try property's own coordinates
+  if (property.latitude && property.longitude) {
+    return { lat: property.latitude, lng: property.longitude };
+  }
+  // For Condo, fallback to project coordinates
+  if (property.propertyType === "Condo" && property.project?.projectLatitude && property.project?.projectLongitude) {
+    return { lat: property.project.projectLatitude, lng: property.project.projectLongitude };
+  }
+  return null;
 }
 
 // Mock property data for new projects
@@ -1191,47 +1215,50 @@ export default function PropertyDetailPage() {
               )}
 
               {/* Location Map */}
-              {property.latitude && property.longitude && (
-                <Card
-                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-[500ms] ${
-                    isVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-8"
-                  }`}
-                >
-                  <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-[#eb3838]" />
-                    {t("propertyDetail.location")}
-                  </h2>
-                  <div className="rounded-xl overflow-hidden">
-                    <iframe
-                      src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1938.5!2d${property.longitude}!3d${property.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM${property.latitude}!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth`}
-                      width="100%"
-                      height="350"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="rounded-xl"
-                    />
-                  </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
-                      {/* <span className="font-medium">ที่อยู่: </span> */}
-                      {getPropertyAddressString(property)}
+              {(() => {
+                const coords = getPropertyCoordinates(property);
+                if (!coords) return null;
+                return (
+                  <Card
+                    className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-[500ms] ${
+                      isVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-8"
+                    }`}
+                  >
+                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-[#eb3838]" />
+                      {t("propertyDetail.location")}
+                    </h2>
+                    <div className="rounded-xl overflow-hidden">
+                      <iframe
+                        src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1938.5!2d${coords.lng}!3d${coords.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM${coords.lat}!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth`}
+                        width="100%"
+                        height="350"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        className="rounded-xl"
+                      />
                     </div>
-                    <a
-                      href={`https://www.google.com/maps?q=${property.latitude},${property.longitude}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-[#eb3838] hover:text-[#d32f2f] font-medium flex items-center gap-1"
-                    >
-                      <MapPin className="w-4 h-4" />
-                      เปิดใน Google Maps
-                    </a>
-                  </div>
-                </Card>
-              )}
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="text-sm text-gray-600">
+                        {getPropertyAddressString(property)}
+                      </div>
+                      <a
+                        href={`https://www.google.com/maps?q=${coords.lat},${coords.lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[#eb3838] hover:text-[#d32f2f] font-medium flex items-center gap-1"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        เปิดใน Google Maps
+                      </a>
+                    </div>
+                  </Card>
+                );
+              })()}
 
               {/* Updated Date */}
               {property.updatedAt && (
