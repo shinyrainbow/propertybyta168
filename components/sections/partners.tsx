@@ -2,15 +2,50 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { Building2, Award, Shield, Handshake } from "lucide-react";
 
 const partners = [
-  { name: "Sansiri", type: "Developer" },
-  { name: "AP Thailand", type: "Developer" },
-  { name: "Land & Houses", type: "Developer" },
-  { name: "SC Asset", type: "Developer" },
-  { name: "Origin", type: "Developer" },
-  { name: "Pruksa", type: "Developer" },
+  {
+    name: "Sansiri",
+    logo: "https://www.sansiri.com/assets/img/header/icon/sansiri-logo-2019.svg",
+    fallbackLogo: "/developers/sansiri.png"
+  },
+  {
+    name: "AP Thailand",
+    logo: "https://www.apthai.com/-/media/Global/Header/APLogo.ashx",
+    fallbackLogo: "/developers/ap-thailand.png"
+  },
+  {
+    name: "Ananda",
+    logo: "https://www.ananda.co.th/assets/images/logo-ananda.svg",
+    fallbackLogo: "/developers/ananda.png"
+  },
+  {
+    name: "Land & Houses",
+    logo: "https://www.lh.co.th/images/logo.png",
+    fallbackLogo: "/developers/land-houses.png"
+  },
+  {
+    name: "Origin",
+    logo: "https://www.origin.co.th/assets/images/logo-origin.svg",
+    fallbackLogo: "/developers/origin.png"
+  },
+  {
+    name: "Pruksa",
+    logo: "https://www.pruksa.com/th/-/media/Project/Pruksa/Pruksa-Thailand/Images/Header/Desktop/logo.svg",
+    fallbackLogo: "/developers/pruksa.png"
+  },
+  {
+    name: "SC Asset",
+    logo: "https://www.scasset.com/assets/images/logo.svg",
+    fallbackLogo: "/developers/sc-asset.png"
+  },
+  {
+    name: "Supalai",
+    logo: "https://www.supalai.com/wp-content/uploads/2020/12/logo-supalai.svg",
+    fallbackLogo: "/developers/supalai.png"
+  },
 ];
 
 export default function PartnersSection() {
@@ -87,11 +122,10 @@ export default function PartnersSection() {
               {[...partners, ...partners].map((partner, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 mx-8 flex items-center justify-center"
+                  className="flex-shrink-0 mx-6 flex items-center justify-center"
                 >
-                  <div className="bg-gray-50 hover:bg-[#C9A227]/5 border border-gray-100 hover:border-[#C9A227]/30 rounded-xl px-8 py-4 transition-all duration-300 min-w-[160px]">
-                    <div className="text-lg font-bold text-gray-700">{partner.name}</div>
-                    <div className="text-xs text-gray-400">{partner.type}</div>
+                  <div className="bg-gray-50 hover:bg-[#C9A227]/5 border border-gray-100 hover:border-[#C9A227]/30 rounded-xl px-6 py-4 transition-all duration-300 min-w-[140px] h-[70px] flex items-center justify-center">
+                    <div className="text-base font-bold text-gray-600 text-center">{partner.name}</div>
                   </div>
                 </div>
               ))}
