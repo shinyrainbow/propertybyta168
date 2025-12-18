@@ -458,6 +458,8 @@
     "whatsappPlaceholder": "+66xxxxxxxxx",
     "wechatLabel": "WeChat (Optional)",
     "wechatPlaceholder": "WeChat ID",
+    "listingTypeLabel": "Listing Type",
+    "listingTypePlaceholder": "Select type",
     "forSale": "For Sale",
     "forRent": "For Rent",
     "forBoth": "For Sale & Rent",

@@ -883,7 +883,7 @@ function SearchContent() {
 
           {/* Right Sidebar - Inquiry Form */}
           <aside className="hidden lg:block lg:w-80 flex-shrink-0">
-            <Card className="p-5 sticky top-24 shadow-lg bg-white border border-gray-200">
+            <Card className="p-5 sticky top-24 shadow-lg bg-white border border-gray-200 max-h-[calc(100vh-7rem)] overflow-y-auto">
               {isSubmitted ? (
                 /* Success State */
                 <div className="text-center py-6">

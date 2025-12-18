@@ -18,8 +18,8 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
     name: "",
     phone: "",
     lineId: "",
-    listingType: "",
-    propertyType: "",
+    whatsapp: "",
+    wechat: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,8 +60,8 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
       // Build message with optional fields
       const messageParts = [];
       if (formData.lineId) messageParts.push(`Line ID: ${formData.lineId}`);
-      if (formData.listingType) messageParts.push(`ประเภท: ${formData.listingType}`);
-      if (formData.propertyType) messageParts.push(`อสังหาริมทรัพย์: ${formData.propertyType}`);
+      if (formData.whatsapp) messageParts.push(`WhatsApp: ${formData.whatsapp}`);
+      if (formData.wechat) messageParts.push(`WeChat: ${formData.wechat}`);
       if (formData.message) messageParts.push(formData.message);
 
       const response = await fetch("/api/public/inquiries", {
@@ -186,60 +186,46 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("listingTypeLabel")} <span className="text-gray-400 font-normal">(ไม่บังคับ)</span>
+                      {t("lineIdLabel")}
                     </label>
-                    <select
-                      value={formData.listingType}
-                      onChange={(e) => setFormData({ ...formData, listingType: e.target.value })}
-                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
-                    >
-                      <option value="">{t("listingTypePlaceholder")}</option>
-                      <option value="sell">{t("forSale")}</option>
-                      <option value="rent">{t("forRent")}</option>
-                      <option value="both">{t("forBoth")}</option>
-                    </select>
+                    <div className="relative">
+                      <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input
+                        type="text"
+                        value={formData.lineId}
+                        onChange={(e) => setFormData({ ...formData, lineId: e.target.value })}
+                        className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                        placeholder={t("lineIdPlaceholder")}
+                      />
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("propertyTypeLabel")} <span className="text-gray-400 font-normal">(ไม่บังคับ)</span>
+                      {t("whatsappLabel")}
                     </label>
-                    <select
-                      value={formData.propertyType}
-                      onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
-                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
-                    >
-                      <option value="">{t("propertyTypePlaceholder")}</option>
-                      <option value="Condo">{t("condo")}</option>
-                      <option value="SingleHouse">{t("singleHouse")}</option>
-                      <option value="Townhouse">{t("townhouse")}</option>
-                      <option value="Villa">{t("villa")}</option>
-                      <option value="Land">{t("land")}</option>
-                      <option value="Office">{t("office")}</option>
-                      <option value="Store">{t("store")}</option>
-                      <option value="Factory">{t("factory")}</option>
-                      <option value="Hotel">{t("hotel")}</option>
-                      <option value="Building">{t("building")}</option>
-                      <option value="Apartment">{t("apartment")}</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    {t("lineIdLabel")}
-                  </label>
-                  <div className="relative">
-                    <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      value={formData.lineId}
-                      onChange={(e) => setFormData({ ...formData, lineId: e.target.value })}
-                      className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
-                      placeholder={t("lineIdPlaceholder")}
+                      value={formData.whatsapp}
+                      onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                      placeholder={t("whatsappPlaceholder")}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                      {t("wechatLabel")}
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.wechat}
+                      onChange={(e) => setFormData({ ...formData, wechat: e.target.value })}
+                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                      placeholder={t("wechatPlaceholder")}
                     />
                   </div>
                 </div>

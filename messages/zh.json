@@ -458,6 +458,8 @@
     "whatsappPlaceholder": "+66xxxxxxxxx",
     "wechatLabel": "微信 (可选)",
     "wechatPlaceholder": "微信 ID",
+    "listingTypeLabel": "委托类型",
+    "listingTypePlaceholder": "选择类型",
     "forSale": "出售",
     "forRent": "出租",
     "forBoth": "出售和出租",

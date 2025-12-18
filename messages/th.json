@@ -458,6 +458,8 @@
     "whatsappPlaceholder": "+66xxxxxxxxx",
     "wechatLabel": "WeChat (ไม่บังคับ)",
     "wechatPlaceholder": "WeChat ID",
+    "listingTypeLabel": "ประเภทการฝาก",
+    "listingTypePlaceholder": "เลือกประเภท",
     "forSale": "ขาย",
     "forRent": "เช่า",
     "forBoth": "ขายและเช่า",
