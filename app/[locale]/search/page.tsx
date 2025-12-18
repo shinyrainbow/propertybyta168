@@ -100,6 +100,22 @@ function SearchContent() {
       : (property.propertyTitleTh || property.propertyTitleEn || "");
   };
 
+  // Get property address based on property type
+  // - Condo: use project's address fields
+  // - Other types: use property's address fields
+  const getPropertyAddress = (property: NainaHubProperty): string => {
+    if (property.propertyType === "Condo" && property.project) {
+      return [
+        property.project.addressDistrict,
+        property.project.addressProvince,
+      ].filter(Boolean).join(", ");
+    }
+    return [
+      property.propertyDistrict,
+      property.propertyProvince,
+    ].filter(Boolean).join(", ");
+  };
+
   const getTimeAgo = (dateString: string | null | undefined) => {
     if (!dateString) return null;
     const date = new Date(dateString);
@@ -800,10 +816,10 @@ function SearchContent() {
                       {/* Property Details */}
                       <div className={`p-4 flex-1 flex flex-col ${viewMode === "list" ? "justify-between" : ""}`}>
                         <div>
-                          {property.project && (
+                          {getPropertyAddress(property) && (
                             <div className="flex items-center text-xs text-gray-500 mb-1">
                               <MapPin className="w-3 h-3 mr-1" />
-                              {getProjectName(property.project)}
+                              {getPropertyAddress(property)}
                             </div>
                           )}
 

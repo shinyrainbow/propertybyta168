@@ -74,6 +74,9 @@ interface Property {
     addressProvince?: string;
   } | null;
   amenities?: string[];
+  note: string | null;
+  noteEn: string | null;
+  noteZh: string | null;
 }
 
 /**
@@ -139,6 +142,9 @@ const mockProjectProperties: Record<string, Property> = {
       addressDistrict: "Watthana",
       addressProvince: "Bangkok",
     },
+    note: null,
+    noteEn: null,
+    noteZh: null,
   },
   "project-2": {
     id: "project-2",
@@ -181,6 +187,9 @@ const mockProjectProperties: Record<string, Property> = {
       projectNameEn: "Garden Valley Villas",
       projectNameTh: "Garden Valley Villas",
     },
+    note: null,
+    noteEn: null,
+    noteZh: null,
   },
   "project-3": {
     id: "project-3",
@@ -222,6 +231,9 @@ const mockProjectProperties: Record<string, Property> = {
       addressDistrict: "Din Daeng",
       addressProvince: "Bangkok",
     },
+    note: null,
+    noteEn: null,
+    noteZh: null,
   },
   "project-4": {
     id: "project-4",
@@ -264,6 +276,9 @@ const mockProjectProperties: Record<string, Property> = {
       addressDistrict: "Khlong San",
       addressProvince: "Bangkok",
     },
+    note: null,
+    noteEn: null,
+    noteZh: null,
   },
   "project-5": {
     id: "project-5",
@@ -307,6 +322,9 @@ const mockProjectProperties: Record<string, Property> = {
       projectNameEn: "The Heritage Estate",
       projectNameTh: "The Heritage Estate",
     },
+    note: null,
+    noteEn: null,
+    noteZh: null,
   },
   "project-6": {
     id: "project-6",
@@ -348,6 +366,9 @@ const mockProjectProperties: Record<string, Property> = {
       addressDistrict: "Watthana",
       addressProvince: "Bangkok",
     },
+    note: null,
+    noteEn: null,
+    noteZh: null,
   },
 };
 
@@ -441,6 +462,9 @@ const generateFallbackProperty = (id: string): Property => {
     views: 100 + idNum * 50,
     createdAt: "2024-12-01T00:00:00Z",
     updatedAt: "2024-12-01T00:00:00Z",
+    note: null,
+    noteEn: null,
+    noteZh: null,
     ...addressFields,
   };
 };
@@ -464,6 +488,17 @@ export default function PropertyDetailPage() {
     return useEnglish
       ? (property.propertyTitleEn || property.propertyTitleTh || "")
       : (property.propertyTitleTh || property.propertyTitleEn || "");
+  };
+  const getPropertyNote = (property: { note?: string | null; noteEn?: string | null; noteZh?: string | null } | null | undefined) => {
+    if (!property) return "";
+    if (locale === "zh") {
+      return property.noteZh || property.noteEn || property.note || "";
+    }
+    if (locale === "en") {
+      return property.noteEn || property.note || "";
+    }
+    // Thai locale
+    return property.note || property.noteEn || "";
   };
 
   const [property, setProperty] = useState<Property | null>(null);
@@ -996,7 +1031,7 @@ export default function PropertyDetailPage() {
                       </div>
                     </div>
                   )}
-                  {property.sellPriceNum && property.sellPriceNum > 0 && (
+                  {property.sellPriceNum != null && property.sellPriceNum > 0 && (
                     <div>
                       <div className="text-sm text-gray-500 mb-1">{t("propertyDetail.salePrice")}</div>
                       <div className="text-3xl font-bold text-[#eb3838]">
@@ -1108,6 +1143,24 @@ export default function PropertyDetailPage() {
                   </h2>
                   <p className="text-gray-600 leading-relaxed whitespace-pre-line">
                     {property.descriptionTh || property.descriptionEn}
+                  </p>
+                </Card>
+              )}
+
+              {/* Note */}
+              {getPropertyNote(property) && (
+                <Card
+                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-[350ms] ${
+                    isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8"
+                  }`}
+                >
+                  <h2 className="text-lg font-bold text-gray-900 mb-4">
+                    {t("propertyDetail.note")}
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                    {getPropertyNote(property)}
                   </p>
                 </Card>
               )}

@@ -572,7 +572,8 @@
     "beds": "Beds",
     "baths": "Baths",
     "area": "Area",
-    "learnMore": "LEARN MORE"
+    "learnMore": "LEARN MORE",
+    "note": "Note"
   },
   "homePage": {
     "sellOrRent": "Sell or rent",

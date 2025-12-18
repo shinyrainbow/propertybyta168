@@ -572,7 +572,8 @@
     "beds": "卧室",
     "baths": "浴室",
     "area": "面积",
-    "learnMore": "了解更多"
+    "learnMore": "了解更多",
+    "note": "备注"
   },
   "homePage": {
     "sellOrRent": "出售或出租",
