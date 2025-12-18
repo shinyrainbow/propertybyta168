@@ -13,6 +13,10 @@ export interface NainaHubProject {
   projectLocationText: string | null;
   projectLatitude: number | null;
   projectLongitude: number | null;
+  // Address fields for Condo properties
+  addressSubDistrict: string | null;
+  addressDistrict: string | null;
+  addressProvince: string | null;
 }
 
 export type PropertyStatus =
@@ -52,6 +56,10 @@ export interface NainaHubProperty {
   sellPriceNum: number;
   latitude: number | null;
   longitude: number | null;
+  // Address fields for non-Condo properties
+  propertySubDistrict: string | null;
+  propertyDistrict: string | null;
+  propertyProvince: string | null;
   projectCode: string;
   project: NainaHubProject;
   status: PropertyStatus;
@@ -160,6 +168,38 @@ export interface SuggestionsResponse {
 }
 
 const NAINAHUB_SUGGESTIONS_URL = "https://nainahub.com/api/public/properties/suggestions";
+
+/**
+ * Get property address based on property type
+ * - Condo: use project's address fields (addressSubDistrict, addressDistrict, addressProvince)
+ * - Other types: use property's address fields (propertySubDistrict, propertyDistrict, propertyProvince)
+ */
+export function getPropertyAddress(property: NainaHubProperty): {
+  subDistrict: string | null;
+  district: string | null;
+  province: string | null;
+} {
+  if (property.propertyType === "Condo") {
+    return {
+      subDistrict: property.project?.addressSubDistrict ?? null,
+      district: property.project?.addressDistrict ?? null,
+      province: property.project?.addressProvince ?? null,
+    };
+  }
+  return {
+    subDistrict: property.propertySubDistrict,
+    district: property.propertyDistrict,
+    province: property.propertyProvince,
+  };
+}
+
+/**
+ * Get formatted address string based on property type
+ */
+export function getPropertyAddressString(property: NainaHubProperty): string {
+  const { subDistrict, district, province } = getPropertyAddress(property);
+  return [subDistrict, district, province].filter(Boolean).join(", ");
+}
 
 /**
  * Fetch search suggestions from NainaHub API

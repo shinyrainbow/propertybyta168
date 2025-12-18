@@ -159,6 +159,9 @@
     }
   },
   "hero": {
+    "badge": "欢迎来到 Property by TA168",
+    "title1": "寻找您的梦想",
+    "title2": "房产",
     "title": "寻找您的",
     "titleHighlight": "梦想房产",
     "subtitle": "在曼谷最佳地段发现优质房产",
@@ -168,6 +171,22 @@
       "expertAgents": "专业顾问",
       "years": "年经验"
     }
+  },
+  "features": {
+    "wideSelection": "丰富选择",
+    "wideSelectionDesc": "公寓、别墅、联排别墅、土地、别墅",
+    "trusted": "值得信赖",
+    "trustedDesc": "受到众多满意客户的信赖",
+    "expertTeam": "专业团队",
+    "expertTeamDesc": "24/7 全天候咨询服务",
+    "bestPrice": "最优价格",
+    "bestPriceDesc": "保证市场最优价格"
+  },
+  "stats": {
+    "yearsExperience": "年经验",
+    "awards": "获得奖项",
+    "propertiesListed": "房产列表",
+    "happyClients": "满意客户"
   },
   "search": {
     "search": "搜索",
@@ -203,6 +222,8 @@
     "searchButton": "搜索",
     "resetFilters": "重置筛选",
     "filters": "筛选条件",
+    "hideFilters": "隐藏筛选",
+    "showFilters": "显示筛选",
     "found": "找到",
     "clearAll": "清除所有",
     "applyFilters": "应用筛选",
@@ -255,7 +276,9 @@
     "month": "月",
     "verified": "已验证",
     "confirmedAvailable": "确认空置",
+    "exclusive": "TA168独家",
     "inquireNow": "立即咨询",
+    "to": "至",
     "pending": "待审核",
     "available": "可用",
     "reserved": "已预订",
@@ -281,6 +304,9 @@
     "yearsAgo": "{count}年前"
   },
   "sections": {
+    "featured": "精选",
+    "discover": "发现",
+    "explore": "探索",
     "popularProperties": "热门房产",
     "popularSubtitle": "最受关注的房产",
     "popularProperties2": "为您精选的房产",
@@ -415,7 +441,7 @@
     "benefit3Desc": "随时跟踪进度"
   },
   "listPropertyPopup": {
-    "title": "委托出售/出租您的房产",
+    "title": "联系咨询",
     "subtitle": "填写您的信息，我们将与您联系",
     "nameLabel": "姓名",
     "namePlaceholder": "请输入您的姓名",

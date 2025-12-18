@@ -56,9 +56,10 @@ interface Property {
   sellPriceNum: number | null;
   latitude: number | null;
   longitude: number | null;
-  address?: string;
-  district?: string;
-  province?: string;
+  // Address fields for non-Condo types
+  propertySubDistrict?: string;
+  propertyDistrict?: string;
+  propertyProvince?: string;
   status: string;
   featured: boolean;
   views: number;
@@ -67,8 +68,32 @@ interface Property {
   project: {
     projectNameEn: string;
     projectNameTh: string;
+    // Address fields for Condo types
+    addressSubDistrict?: string;
+    addressDistrict?: string;
+    addressProvince?: string;
   } | null;
   amenities?: string[];
+}
+
+/**
+ * Get property address based on property type
+ * - Condo: use project's address fields
+ * - Other types: use property's address fields
+ */
+function getPropertyAddressString(property: Property): string {
+  if (property.propertyType === "Condo" && property.project) {
+    return [
+      property.project.addressSubDistrict,
+      property.project.addressDistrict,
+      property.project.addressProvince,
+    ].filter(Boolean).join(", ");
+  }
+  return [
+    property.propertySubDistrict,
+    property.propertyDistrict,
+    property.propertyProvince,
+  ].filter(Boolean).join(", ");
 }
 
 // Mock property data for new projects
@@ -102,9 +127,6 @@ const mockProjectProperties: Record<string, Property> = {
     sellPriceNum: 4500000,
     latitude: 13.7563,
     longitude: 100.5018,
-    address: "Sukhumvit Road",
-    district: "Watthana",
-    province: "Bangkok",
     status: "available",
     featured: true,
     views: 1250,
@@ -113,6 +135,9 @@ const mockProjectProperties: Record<string, Property> = {
     project: {
       projectNameEn: "The Skyline Residence",
       projectNameTh: "The Skyline Residence",
+      addressSubDistrict: "Khlong Toei",
+      addressDistrict: "Watthana",
+      addressProvince: "Bangkok",
     },
   },
   "project-2": {
@@ -144,9 +169,9 @@ const mockProjectProperties: Record<string, Property> = {
     sellPriceNum: 8900000,
     latitude: 12.9236,
     longitude: 100.8825,
-    address: "Pattaya-Naklua Road",
-    district: "Bang Lamung",
-    province: "Chonburi",
+    propertySubDistrict: "Na Kluea",
+    propertyDistrict: "Bang Lamung",
+    propertyProvince: "Chonburi",
     status: "available",
     featured: true,
     views: 890,
@@ -185,9 +210,6 @@ const mockProjectProperties: Record<string, Property> = {
     sellPriceNum: 3200000,
     latitude: 13.7649,
     longitude: 100.5679,
-    address: "Ratchadaphisek Road",
-    district: "Din Daeng",
-    province: "Bangkok",
     status: "available",
     featured: false,
     views: 650,
@@ -196,6 +218,9 @@ const mockProjectProperties: Record<string, Property> = {
     project: {
       projectNameEn: "Metro Park Tower",
       projectNameTh: "Metro Park Tower",
+      addressSubDistrict: "Din Daeng",
+      addressDistrict: "Din Daeng",
+      addressProvince: "Bangkok",
     },
   },
   "project-4": {
@@ -227,9 +252,6 @@ const mockProjectProperties: Record<string, Property> = {
     sellPriceNum: 12500000,
     latitude: 13.7235,
     longitude: 100.4983,
-    address: "Charoen Nakhon Road",
-    district: "Khlong San",
-    province: "Bangkok",
     status: "available",
     featured: true,
     views: 1580,
@@ -238,6 +260,9 @@ const mockProjectProperties: Record<string, Property> = {
     project: {
       projectNameEn: "Riverside Serenity",
       projectNameTh: "Riverside Serenity",
+      addressSubDistrict: "Khlong San",
+      addressDistrict: "Khlong San",
+      addressProvince: "Bangkok",
     },
   },
   "project-5": {
@@ -270,9 +295,9 @@ const mockProjectProperties: Record<string, Property> = {
     sellPriceNum: 15000000,
     latitude: 13.759,
     longitude: 100.5671,
-    address: "Rama 9 Road",
-    district: "Huai Khwang",
-    province: "Bangkok",
+    propertySubDistrict: "Huai Khwang",
+    propertyDistrict: "Huai Khwang",
+    propertyProvince: "Bangkok",
     status: "available",
     featured: true,
     views: 2100,
@@ -311,9 +336,6 @@ const mockProjectProperties: Record<string, Property> = {
     sellPriceNum: 6800000,
     latitude: 13.733,
     longitude: 100.5847,
-    address: "Thonglor Soi 10",
-    district: "Watthana",
-    province: "Bangkok",
     status: "available",
     featured: true,
     views: 980,
@@ -322,6 +344,9 @@ const mockProjectProperties: Record<string, Property> = {
     project: {
       projectNameEn: "Urban Loft Collection",
       projectNameTh: "Urban Loft Collection",
+      addressSubDistrict: "Khlong Tan Nuea",
+      addressDistrict: "Watthana",
+      addressProvince: "Bangkok",
     },
   },
 };
@@ -330,15 +355,11 @@ const mockProjectProperties: Record<string, Property> = {
 const generateFallbackProperty = (id: string): Property => {
   const propertyTypes = ["Condo", "SingleHouse", "Townhouse"];
   const locations = [
-    { address: "Sukhumvit Road", district: "Watthana", province: "Bangkok" },
-    { address: "Rama 9 Road", district: "Huai Khwang", province: "Bangkok" },
-    { address: "Thonglor Soi 10", district: "Watthana", province: "Bangkok" },
-    {
-      address: "Ratchadaphisek Road",
-      district: "Din Daeng",
-      province: "Bangkok",
-    },
-    { address: "Silom Road", district: "Bang Rak", province: "Bangkok" },
+    { subDistrict: "Khlong Toei", district: "Watthana", province: "Bangkok" },
+    { subDistrict: "Huai Khwang", district: "Huai Khwang", province: "Bangkok" },
+    { subDistrict: "Khlong Tan Nuea", district: "Watthana", province: "Bangkok" },
+    { subDistrict: "Din Daeng", district: "Din Daeng", province: "Bangkok" },
+    { subDistrict: "Silom", district: "Bang Rak", province: "Bangkok" },
   ];
 
   // Use ID to generate consistent but varied data
@@ -353,6 +374,27 @@ const generateFallbackProperty = (id: string): Property => {
     propertyType === "Condo"
       ? 2000000 + (idNum % 10) * 500000
       : 5000000 + (idNum % 10) * 1000000;
+
+  // Build address fields based on property type
+  const addressFields = propertyType === "Condo"
+    ? {
+        project: {
+          projectNameEn: `Premium Residence ${idNum}`,
+          projectNameTh: `พรีเมียม เรสซิเดนซ์ ${idNum}`,
+          addressSubDistrict: location.subDistrict,
+          addressDistrict: location.district,
+          addressProvince: location.province,
+        },
+      }
+    : {
+        propertySubDistrict: location.subDistrict,
+        propertyDistrict: location.district,
+        propertyProvince: location.province,
+        project: {
+          projectNameEn: `Premium Residence ${idNum}`,
+          projectNameTh: `พรีเมียม เรสซิเดนซ์ ${idNum}`,
+        },
+      };
 
   return {
     id,
@@ -394,16 +436,12 @@ const generateFallbackProperty = (id: string): Property => {
     sellPriceNum: idNum % 3 !== 0 ? price : null,
     latitude: 13.7563 + (idNum % 10) * 0.01,
     longitude: 100.5018 + (idNum % 10) * 0.01,
-    ...location,
     status: "available",
     featured: idNum % 2 === 0,
     views: 100 + idNum * 50,
     createdAt: "2024-12-01T00:00:00Z",
     updatedAt: "2024-12-01T00:00:00Z",
-    project: {
-      projectNameEn: `Premium Residence ${idNum}`,
-      projectNameTh: `พรีเมียม เรสซิเดนซ์ ${idNum}`,
-    },
+    ...addressFields,
   };
 };
 
@@ -472,17 +510,45 @@ export default function PropertyDetailPage() {
       return;
     }
 
+    if (!property) {
+      setFormError("Property not found");
+      return;
+    }
+
     setFormSubmitting(true);
     setFormError("");
 
-    // Simulate API call with delay
-    setTimeout(() => {
-      setFormSuccess(true);
-      setContactForm({ name: "", phone: "", message: "" });
+    try {
+      const response = await fetch("/api/public/inquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          propertyId: property.id,
+          propertyCode: property.agentPropertyCode,
+          propertyTitle: getPropertyTitle(property),
+          name: contactForm.name.trim(),
+          phone: contactForm.phone.trim(),
+          message: contactForm.message.trim() || null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFormSuccess(true);
+        setContactForm({ name: "", phone: "", message: "" });
+        setTimeout(() => setFormSuccess(false), 5000);
+      } else {
+        setFormError(data.error || "Failed to submit inquiry");
+      }
+    } catch (error) {
+      console.error("Error submitting inquiry:", error);
+      setFormError("Failed to submit inquiry. Please try again.");
+    } finally {
       setFormSubmitting(false);
-      // Reset success message after 5 seconds
-      setTimeout(() => setFormSuccess(false), 5000);
-    }, 500);
+    }
   };
 
   // Trigger entrance animation
@@ -1099,9 +1165,7 @@ export default function PropertyDetailPage() {
                   <div className="mt-4 flex items-center justify-between">
                     <div className="text-sm text-gray-600">
                       {/* <span className="font-medium">ที่อยู่: </span> */}
-                      {[property.address, property.district, property.province]
-                        .filter(Boolean)
-                        .join(", ")}
+                      {getPropertyAddressString(property)}
                     </div>
                     <a
                       href={`https://www.google.com/maps?q=${property.latitude},${property.longitude}`}
