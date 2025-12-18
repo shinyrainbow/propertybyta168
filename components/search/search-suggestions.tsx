@@ -168,12 +168,12 @@ export function SearchSuggestions({ searchText, onSelect, isOpen, onClose }: Sea
                       <p className="text-sm font-medium text-gray-900 truncate">
                         {location.text}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      {/* <p className="text-xs text-gray-500">
                         {location.type === "condo"
                           ? (locale === "th" ? "โครงการคอนโด" : "Condo Project")
                           : (locale === "th" ? "อสังหาริมทรัพย์" : "Property")
                         }
-                      </p>
+                      </p> */}
                     </div>
                   </button>
                 ))}
