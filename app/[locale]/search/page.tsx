@@ -792,7 +792,7 @@ function SearchContent() {
                             e.stopPropagation();
                             toggleFavorite(property.id);
                           }}
-                          className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md z-10"
+                          className="absolute top-2 right-12 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md z-10"
                         >
                           <Heart
                             className={`w-4 h-4 transition-colors ${
@@ -803,20 +803,23 @@ function SearchContent() {
                           />
                         </button>
 
+                        {/* Bottom overlay - Location */}
+                        <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent">
+                          <div className="flex items-center gap-1 text-white text-xs">
+                            <MapPin className="w-3 h-3" />
+                            <span className="line-clamp-1">{getPropertyAddressString(property, locale) || "Bangkok"}</span>
+                          </div>
+                        </div>
+
                       </div>
 
                       {/* Property Details */}
                       <div className={`p-4 flex-1 flex flex-col ${viewMode === "list" ? "justify-between" : ""}`}>
                         <div>
-                          {getPropertyAddressString(property, locale) && (
-                            <div className="flex items-center text-xs text-gray-500 mb-1">
-                              <MapPin className="w-3 h-3 mr-1" />
-                              {getPropertyAddressString(property, locale)}
-                            </div>
-                          )}
-
                           <h3 className={`font-bold text-gray-900 mb-2 group-hover:text-[#eb3838] transition-colors ${viewMode === "list" ? "line-clamp-1" : "line-clamp-2"}`}>
-                            {getPropertyTitle(property)}
+                            {property.propertyType === "Condo" && property.project
+                              ? getProjectName(property.project)
+                              : getPropertyTitle(property)}
                           </h3>
 
                           <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 pb-3 border-b border-gray-100">

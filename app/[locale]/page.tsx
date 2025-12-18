@@ -870,13 +870,21 @@ export default function PublicPropertiesPage() {
                       <Heart className={`w-5 h-5 transition-colors ${isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-400"}`} />
                     </button>
 
-                    {/* Image Count */}
-                    {property.imageUrls && property.imageUrls.length > 1 && (
-                      <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2 py-1 bg-black/60 text-white text-xs rounded-md">
-                        <Images className="w-3.5 h-3.5" />
-                        <span>{property.imageUrls.length}</span>
+                    {/* Bottom overlay - Location & Image Count */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 text-white text-xs">
+                          <MapPin className="w-3.5 h-3.5" />
+                          <span className="line-clamp-1">{getPropertyAddressString(property, locale) || "Bangkok"}</span>
+                        </div>
+                        {property.imageUrls && property.imageUrls.length > 1 && (
+                          <div className="flex items-center gap-1 px-2 py-0.5 bg-black/40 text-white text-xs rounded">
+                            <Images className="w-3 h-3" />
+                            <span>{property.imageUrls.length}</span>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* Content */}
@@ -884,10 +892,6 @@ export default function PublicPropertiesPage() {
                     <h3 className="font-semibold text-gray-900 line-clamp-1 mb-1">
                       {getProjectName(property.project) || getPropertyTitle(property)}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {getPropertyAddressString(property, locale) || "Bangkok"}
-                    </p>
 
                     {/* Price */}
                     <div className="mb-4">
@@ -1066,13 +1070,21 @@ export default function PublicPropertiesPage() {
                       <Heart className={`w-5 h-5 transition-colors ${isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-400"}`} />
                     </button>
 
-                    {/* Image Count */}
-                    {property.imageUrls && property.imageUrls.length > 1 && (
-                      <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2 py-1 bg-black/60 text-white text-xs rounded-md">
-                        <Images className="w-3.5 h-3.5" />
-                        <span>{property.imageUrls.length}</span>
+                    {/* Bottom overlay - Location & Image Count */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 text-white text-xs">
+                          <MapPin className="w-3.5 h-3.5" />
+                          <span className="line-clamp-1">{getPropertyAddressString(property, locale) || "Bangkok"}</span>
+                        </div>
+                        {property.imageUrls && property.imageUrls.length > 1 && (
+                          <div className="flex items-center gap-1 px-2 py-0.5 bg-black/40 text-white text-xs rounded">
+                            <Images className="w-3 h-3" />
+                            <span>{property.imageUrls.length}</span>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* Content */}
@@ -1080,10 +1092,6 @@ export default function PublicPropertiesPage() {
                     <h3 className="font-semibold text-gray-900 line-clamp-1 mb-1">
                       {getProjectName(property.project) || getPropertyTitle(property)}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {getPropertyAddressString(property, locale) || "Bangkok"}
-                    </p>
 
                     {/* Price */}
                     <div className="mb-4">

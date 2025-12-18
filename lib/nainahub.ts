@@ -197,34 +197,39 @@ export function getPropertyAddress(property: NainaHubProperty): {
 
 /**
  * Get formatted address string based on property type
- * Falls back to locationText fields if address fields are empty
- * Uses English version for en/zh locales
+ * For en/zh locales: prioritize locationTextEn fields
+ * For th locale: use structured address fields (Thai) or locationText
  */
 export function getPropertyAddressString(property: NainaHubProperty, locale?: string): string {
   const useEnglish = locale === "en" || locale === "zh";
+
+  // For English/Chinese: prioritize English location text
+  if (useEnglish) {
+    // First try English location text
+    if (property.propertyType === "Condo" && property.project) {
+      if (property.project.projectLocationTextEn) {
+        return property.project.projectLocationTextEn;
+      }
+    }
+    if (property.propertyLocationTextEn) {
+      return property.propertyLocationTextEn;
+    }
+  }
+
+  // For Thai or as fallback: use structured address fields
   const { district, province } = getPropertyAddress(property);
   const addressFromFields = [district, province].filter(Boolean).join(", ");
-
-  // If address fields are populated, use them
   if (addressFromFields) {
     return addressFromFields;
   }
 
-  // Fall back to locationText fields
-  if (property.propertyType === "Condo" && property.project) {
-    const projectLocation = useEnglish
-      ? (property.project.projectLocationTextEn || property.project.projectLocationText)
-      : (property.project.projectLocationText || property.project.projectLocationTextEn);
-    if (projectLocation) {
-      return projectLocation;
-    }
+  // Final fallback to locationText fields
+  if (property.propertyType === "Condo" && property.project?.projectLocationText) {
+    return property.project.projectLocationText;
   }
 
-  const propertyLocation = useEnglish
-    ? (property.propertyLocationTextEn || property.propertyLocationText)
-    : (property.propertyLocationText || property.propertyLocationTextEn);
-  if (propertyLocation) {
-    return propertyLocation;
+  if (property.propertyLocationText) {
+    return property.propertyLocationText;
   }
 
   return "";
