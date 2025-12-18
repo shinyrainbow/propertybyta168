@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { getPopularProperties } from "@/lib/data";
+import { getPopularProperties } from "@/lib/property-extensions";
 
 export async function GET() {
   try {
-    const popularProperties = getPopularProperties(8);
+    const popularProperties = await getPopularProperties(8);
     return NextResponse.json({
       success: true,
       data: popularProperties,

@@ -304,7 +304,16 @@ export default function PublicPropertiesPage() {
     const loadInitialData = async () => {
       try {
         const response = await fetchPropertiesFromAPI({});
-        setPopularProperties(response.data.slice(0, 10));
+
+        // Fetch recommended/popular properties from the dedicated endpoint
+        const popularRes = await fetch("/api/public/popular");
+        const popularData = await popularRes.json();
+        if (popularData.success && popularData.data.length > 0) {
+          setPopularProperties(popularData.data);
+        } else {
+          // Fallback to first 10 if no recommended properties
+          setPopularProperties(response.data.slice(0, 10));
+        }
 
         const closed = response.data
           .filter((p: NainaHubProperty) => p.status === "sold" || p.status === "rented")
