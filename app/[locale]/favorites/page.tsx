@@ -291,11 +291,11 @@ export default function FavoritesPage() {
                             {getPropertyTitle(property) || getProjectName(property.project)}
                           </h3>
 
-                          {getPropertyAddressString(property) && (
+                          {getPropertyAddressString(property, locale) && (
                             <div className="flex items-center gap-1 text-gray-500 text-sm mb-3">
                               <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                               <span className="line-clamp-1">
-                                {getPropertyAddressString(property)}
+                                {getPropertyAddressString(property, locale)}
                               </span>
                             </div>
                           )}

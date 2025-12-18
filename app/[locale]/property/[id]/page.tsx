@@ -60,6 +60,9 @@ interface Property {
   propertySubDistrict?: string;
   propertyDistrict?: string;
   propertyProvince?: string;
+  // Location text fields
+  propertyLocationText?: string | null;
+  propertyLocationTextEn?: string | null;
   status: string;
   featured: boolean;
   views: number;
@@ -77,6 +80,9 @@ interface Property {
     addressDistrict?: string;
     addressProvince?: string;
     addressZipcode?: string;
+    // Location text fields
+    projectLocationText?: string | null;
+    projectLocationTextEn?: string | null;
   } | null;
   amenities?: string[];
   note: string | null;
@@ -88,22 +94,45 @@ interface Property {
  * Get property address based on property type
  * - Condo: use project's address fields (including addressNumberRoad)
  * - Other types: use property's address fields
+ * - Uses English location text for en/zh locales
  */
-function getPropertyAddressString(property: Property): string {
+function getPropertyAddressString(property: Property, locale?: string): string {
+  const useEnglish = locale === "en" || locale === "zh";
+
+  // First try to build address from structured fields
   if (property.propertyType === "Condo" && property.project) {
-    return [
+    const structuredAddress = [
       property.project.addressNumberRoad,
       property.project.addressSubDistrict,
       property.project.addressDistrict,
       property.project.addressProvince,
       property.project.addressZipcode,
     ].filter(Boolean).join(", ");
+
+    if (structuredAddress) return structuredAddress;
+
+    // Fall back to location text
+    const projectLocation = useEnglish
+      ? (property.project.projectLocationTextEn || property.project.projectLocationText)
+      : (property.project.projectLocationText || property.project.projectLocationTextEn);
+    if (projectLocation) return projectLocation;
   }
-  return [
+
+  const structuredAddress = [
     property.propertySubDistrict,
     property.propertyDistrict,
     property.propertyProvince,
   ].filter(Boolean).join(", ");
+
+  if (structuredAddress) return structuredAddress;
+
+  // Fall back to location text
+  const propertyLocation = useEnglish
+    ? (property.propertyLocationTextEn || property.propertyLocationText)
+    : (property.propertyLocationText || property.propertyLocationTextEn);
+  if (propertyLocation) return propertyLocation;
+
+  return "";
 }
 
 /**
@@ -1042,10 +1071,10 @@ export default function PropertyDetailPage() {
                     {getProjectName(property.project)}
                   </div>
                 )}
-                {getPropertyAddressString(property) && (
+                {getPropertyAddressString(property, locale) && (
                   <div className="flex items-center text-gray-600">
                     <MapPin className="w-5 h-5 mr-2 text-[#eb3838]" />
-                    {getPropertyAddressString(property)}
+                    {getPropertyAddressString(property, locale)}
                   </div>
                 )}
               </div>
@@ -1341,7 +1370,7 @@ export default function PropertyDetailPage() {
                     </div>
                     <div className="mt-4 flex items-center justify-between">
                       <div className="text-sm text-gray-600">
-                        {getPropertyAddressString(property)}
+                        {getPropertyAddressString(property, locale)}
                       </div>
                       <a
                         href={`https://www.google.com/maps?q=${coords.lat},${coords.lng}`}

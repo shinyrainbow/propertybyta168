@@ -808,10 +808,10 @@ function SearchContent() {
                       {/* Property Details */}
                       <div className={`p-4 flex-1 flex flex-col ${viewMode === "list" ? "justify-between" : ""}`}>
                         <div>
-                          {getPropertyAddressString(property) && (
+                          {getPropertyAddressString(property, locale) && (
                             <div className="flex items-center text-xs text-gray-500 mb-1">
                               <MapPin className="w-3 h-3 mr-1" />
-                              {getPropertyAddressString(property)}
+                              {getPropertyAddressString(property, locale)}
                             </div>
                           )}
 

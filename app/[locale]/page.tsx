@@ -886,7 +886,7 @@ export default function PublicPropertiesPage() {
                     </h3>
                     <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" />
-                      {getPropertyAddressString(property) || "Bangkok"}
+                      {getPropertyAddressString(property, locale) || "Bangkok"}
                     </p>
 
                     {/* Price */}
@@ -1082,7 +1082,7 @@ export default function PublicPropertiesPage() {
                     </h3>
                     <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" />
-                      {getPropertyAddressString(property) || "Bangkok"}
+                      {getPropertyAddressString(property, locale) || "Bangkok"}
                     </p>
 
                     {/* Price */}
@@ -1411,6 +1411,9 @@ export default function PublicPropertiesPage() {
               {t("homePage.weHelpSell")} {t("homePage.withGuaranteed")}{" "}
               <span className="text-[#eb3838]">{t("homePage.guaranteedText")}</span> {t("homePage.services")}
             </h2>
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+              {t("homePage.serviceDescription")}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
