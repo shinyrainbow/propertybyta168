@@ -149,7 +149,7 @@ export default function TermsOfServicePage() {
             <div className="bg-gray-50 rounded-lg p-4">
               <p className="text-gray-700 font-medium">Property by Ta 168</p>
               <p className="text-gray-600">Email: propertybyta168@gmail.com</p>
-              <p className="text-gray-600">โทร: 061-259-6657</p>
+              <p className="text-gray-600">โทร: 096-262-2888</p>
             </div>
           </section>
 

@@ -953,14 +953,14 @@ export default function PropertiesPage() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <Building2 className="w-8 h-8 text-[#C9A227]" />
             <span className="text-xl font-bold text-white">
-              propertybyta168
+              Property by Ta 168
             </span>
           </div>
           <p className="mb-2 text-sm">
-            Premium Real Estate Solutions | Bangkok, Thailand
+            {t("footer.tagline")}
           </p>
           <p className="text-xs">
-            © 2025 propertybyta168. All rights reserved.
+            {t("footer.copyright")}
           </p>
         </div>
       </footer>

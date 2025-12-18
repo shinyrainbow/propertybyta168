@@ -123,7 +123,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="tel:061-259-6657"
+                  href="tel:096-262-2888"
                   className="flex items-start gap-3 group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-[#eb3838]/20 flex items-center justify-center flex-shrink-0 group-hover:bg-[#eb3838] transition-colors duration-300">
@@ -131,7 +131,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <p className="text-gray-500 text-xs mb-0.5">{tFooter("callUs") || "Call Us"}</p>
-                    <p className="text-white text-sm font-medium">061-259-6657</p>
+                    <p className="text-white text-sm font-medium">096-262-2888</p>
                   </div>
                 </a>
               </li>

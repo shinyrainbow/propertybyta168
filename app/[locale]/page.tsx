@@ -190,6 +190,16 @@ export default function PublicPropertiesPage() {
   const [closedCanScrollLeft, setClosedCanScrollLeft] = useState(false);
   const [closedCanScrollRight, setClosedCanScrollRight] = useState(false);
 
+  // Popular properties slider
+  const popularSliderRef = useRef<HTMLDivElement>(null);
+  const [popularCanScrollLeft, setPopularCanScrollLeft] = useState(false);
+  const [popularCanScrollRight, setPopularCanScrollRight] = useState(false);
+
+  // Latest listings slider
+  const latestSliderRef = useRef<HTMLDivElement>(null);
+  const [latestCanScrollLeft, setLatestCanScrollLeft] = useState(false);
+  const [latestCanScrollRight, setLatestCanScrollRight] = useState(false);
+
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [latestListings, setLatestListings] = useState<Property[]>([]);
 
@@ -278,9 +288,18 @@ export default function PublicPropertiesPage() {
     (ref: React.RefObject<HTMLDivElement | null>, sliderType: string) => {
       if (!ref.current) return;
       const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+      const canScrollLeft = scrollLeft > 0;
+      const canScrollRight = scrollLeft < scrollWidth - clientWidth - 10;
+
       if (sliderType === "closed") {
-        setClosedCanScrollLeft(scrollLeft > 0);
-        setClosedCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+        setClosedCanScrollLeft(canScrollLeft);
+        setClosedCanScrollRight(canScrollRight);
+      } else if (sliderType === "popular") {
+        setPopularCanScrollLeft(canScrollLeft);
+        setPopularCanScrollRight(canScrollRight);
+      } else if (sliderType === "latest") {
+        setLatestCanScrollLeft(canScrollLeft);
+        setLatestCanScrollRight(canScrollRight);
       }
     },
     []
@@ -351,6 +370,12 @@ export default function PublicPropertiesPage() {
         setTimeout(() => {
           if (closedDealsSliderRef.current) {
             checkSliderScroll(closedDealsSliderRef, "closed");
+          }
+          if (popularSliderRef.current) {
+            checkSliderScroll(popularSliderRef, "popular");
+          }
+          if (latestSliderRef.current) {
+            checkSliderScroll(latestSliderRef, "latest");
           }
         }, 100);
 
@@ -444,17 +469,7 @@ export default function PublicPropertiesPage() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-2xl">
-            {/* Badge */}
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 bg-[#eb3838]/10 rounded-full mb-6 transition-all duration-700 ${
-                heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-              }`}
-            >
-              <span className="w-2 h-2 bg-[#eb3838] rounded-full animate-pulse" />
-              <span className="text-[#eb3838] text-sm font-medium">{t("hero.badge")}</span>
-            </div>
-
+          <div className="max-w-3xl mx-auto text-center">
             {/* Headline */}
             <h1
               className={`text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight transition-all duration-700 ${
@@ -464,17 +479,17 @@ export default function PublicPropertiesPage() {
             >
               {t("hero.title1")}
               <br />
-              <span className="text-[#eb3838]">{t("hero.title2")}</span>
+              <span className="text-[#eb3838] text-4xl">{t("hero.title2")}</span>
             </h1>
 
             {/* Subtitle */}
             <p
-              className={`text-lg text-gray-600 mb-8 max-w-lg transition-all duration-700 ${
+              className={`text-lg text-gray-600 mb-8 transition-all duration-700 ${
                 heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
               }`}
               style={{ transitionDelay: "200ms" }}
             >
-              {t("hero.subtitle")}
+              คัดทรัพย์ตรงงบ ทั้งคอนโด บ้าน และที่ดิน ใกล้ BTS/MRT ดูแลตั้งแต่เลือกจนถึงทําสัญญา
             </p>
 
             {/* Search Box */}
@@ -581,7 +596,7 @@ export default function PublicPropertiesPage() {
 
             {/* Stats */}
             <div
-              className={`flex flex-wrap gap-8 transition-all duration-700 ${
+              className={`flex flex-wrap justify-center gap-8 transition-all duration-700 ${
                 heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
               }`}
               style={{ transitionDelay: "400ms" }}
@@ -619,36 +634,50 @@ export default function PublicPropertiesPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 mx-auto mb-4 bg-[#eb3838]/10 rounded-2xl flex items-center justify-center">
-                <Building2 className="w-8 h-8 text-[#eb3838]" />
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-16">
+            <div className="text-center flex items-center gap-3">
+              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Building2 className="w-6 h-6 text-[#eb3838]" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{t("features.wideSelection")}</h3>
-              <p className="text-sm text-gray-500">{t("features.wideSelectionDesc")}</p>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900 text-sm">{t("features.wideSelection")}</h3>
+                <p className="text-xs text-gray-500">{t("features.wideSelectionDesc")}</p>
+              </div>
             </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 mx-auto mb-4 bg-[#eb3838]/10 rounded-2xl flex items-center justify-center">
-                <Shield className="w-8 h-8 text-[#eb3838]" />
+            <div className="text-center flex items-center gap-3">
+              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Shield className="w-6 h-6 text-[#eb3838]" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{t("features.trusted")}</h3>
-              <p className="text-sm text-gray-500">{t("features.trustedDesc")}</p>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900 text-sm">{t("features.trusted")}</h3>
+                <p className="text-xs text-gray-500">{t("features.trustedDesc")}</p>
+              </div>
             </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 mx-auto mb-4 bg-[#eb3838]/10 rounded-2xl flex items-center justify-center">
-                <Users className="w-8 h-8 text-[#eb3838]" />
+            <div className="text-center flex items-center gap-3">
+              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Users className="w-6 h-6 text-[#eb3838]" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{t("features.expertTeam")}</h3>
-              <p className="text-sm text-gray-500">{t("features.expertTeamDesc")}</p>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900 text-sm">{t("features.expertTeam")}</h3>
+                <p className="text-xs text-gray-500">
+                  {t("features.expertTeamDesc").split("__FREE__").map((part, i, arr) =>
+                    i < arr.length - 1 ? (
+                      <span key={i}>{part}<span className="text-[#eb3838] font-semibold">{t("features.free")}</span></span>
+                    ) : <span key={i}>{part}</span>
+                  )}
+                </p>
+              </div>
             </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 mx-auto mb-4 bg-[#eb3838]/10 rounded-2xl flex items-center justify-center">
-                <TrendingUp className="w-8 h-8 text-[#eb3838]" />
+            <div className="text-center flex items-center gap-3">
+              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-6 h-6 text-[#eb3838]" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">{t("features.bestPrice")}</h3>
-              <p className="text-sm text-gray-500">{t("features.bestPriceDesc")}</p>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900 text-sm">{t("features.bestPrice")}</h3>
+                <p className="text-xs text-gray-500">{t("features.bestPriceDesc")}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -733,21 +762,51 @@ export default function PublicPropertiesPage() {
               <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.popularProperties2")}</h2>
               <p className="text-gray-500 mt-2 max-w-lg">{t("sections.popularPropertiesSubtitle")}</p>
             </div>
-            <Link href="/search" className="mt-4 md:mt-0">
-              <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
-                {t("common.viewAll")}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
+            <div className="flex items-center gap-4 mt-4 md:mt-0">
+              <div className="flex items-center gap-2">
+                <button
+                  className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                    popularCanScrollLeft
+                      ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                      : "border-gray-300 text-gray-300 cursor-not-allowed"
+                  }`}
+                  onClick={() => scrollSlider(popularSliderRef, "left", "popular")}
+                  disabled={!popularCanScrollLeft}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                    popularCanScrollRight
+                      ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                      : "border-gray-300 text-gray-300 cursor-not-allowed"
+                  }`}
+                  onClick={() => scrollSlider(popularSliderRef, "right", "popular")}
+                  disabled={!popularCanScrollRight}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+              <Link href="/search">
+                <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
+                  {t("common.viewAll")}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
 
-          {/* Property Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularProperties.slice(0, 8).map((property, index) => (
+          {/* Property Cards Slider */}
+          <div
+            ref={popularSliderRef}
+            className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+            onScroll={() => checkSliderScroll(popularSliderRef, "popular")}
+          >
+            {popularProperties.slice(0, 10).map((property, index) => (
               <Link
                 key={property.id}
                 href={`/property/${property.id}`}
-                className={`block transition-all duration-500 ${
+                className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
                   isVisible["popular"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 80}ms` }}
@@ -899,21 +958,51 @@ export default function PublicPropertiesPage() {
               <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.latestListings")}</h2>
               <p className="text-gray-500 mt-2 max-w-lg">{t("sections.latestListingsSubtitle")}</p>
             </div>
-            <Link href="/search" className="mt-4 md:mt-0">
-              <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
-                {t("common.viewAll")}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
+            <div className="flex items-center gap-4 mt-4 md:mt-0">
+              <div className="flex items-center gap-2">
+                <button
+                  className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                    latestCanScrollLeft
+                      ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                      : "border-gray-300 text-gray-300 cursor-not-allowed"
+                  }`}
+                  onClick={() => scrollSlider(latestSliderRef, "left", "latest")}
+                  disabled={!latestCanScrollLeft}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                    latestCanScrollRight
+                      ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                      : "border-gray-300 text-gray-300 cursor-not-allowed"
+                  }`}
+                  onClick={() => scrollSlider(latestSliderRef, "right", "latest")}
+                  disabled={!latestCanScrollRight}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+              <Link href="/search">
+                <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
+                  {t("common.viewAll")}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
 
-          {/* Property Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {latestListings.slice(0, 8).map((property, index) => (
+          {/* Property Cards Slider */}
+          <div
+            ref={latestSliderRef}
+            className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+            onScroll={() => checkSliderScroll(latestSliderRef, "latest")}
+          >
+            {latestListings.slice(0, 10).map((property, index) => (
               <Link
                 key={property.id}
                 href={`/property/${property.id}`}
-                className={`block transition-all duration-500 ${
+                className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
                   isVisible["latest"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 80}ms` }}
@@ -1082,7 +1171,7 @@ export default function PublicPropertiesPage() {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {properties.map((property, index) => (
+                {properties.slice(0, 8).map((property, index) => (
                   <Link
                     key={property.id}
                     href={`/property/${property.id}`}
@@ -1171,47 +1260,15 @@ export default function PublicPropertiesPage() {
                 ))}
               </div>
 
-              {/* Pagination */}
-              {total > 12 && (
-                <div className="flex justify-center items-center gap-2 mt-10">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={page === 1}
-                    onClick={() => setPage(page - 1)}
-                    className="border-gray-300 text-gray-600"
-                  >
-                    {t("common.previous")}
+              {/* See All Button */}
+              <div className="flex justify-center mt-10">
+                <Link href="/search">
+                  <Button variant="outline" className="border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white">
+                    {t("common.viewAll")}
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
-                  <div className="flex gap-1">
-                    {Array.from({ length: Math.min(5, Math.ceil(total / 12)) }, (_, i) => {
-                      const pageNum = i + 1;
-                      return (
-                        <Button
-                          key={pageNum}
-                          size="sm"
-                          variant={page === pageNum ? "default" : "outline"}
-                          onClick={() => setPage(pageNum)}
-                          className={page === pageNum
-                            ? "bg-[#eb3838] hover:bg-[#d32f2f] text-white"
-                            : "border-gray-300 text-gray-600"}
-                        >
-                          {pageNum}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={page >= Math.ceil(total / 12)}
-                    onClick={() => setPage(page + 1)}
-                    className="border-gray-300 text-gray-600"
-                  >
-                    {t("common.next")}
-                  </Button>
-                </div>
-              )}
+                </Link>
+              </div>
             </>
           )}
         </div>
@@ -1512,11 +1569,11 @@ export default function PublicPropertiesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                onClick={() => { navigator.clipboard.writeText("0612596657"); toast.success(t("common.copiedPhone")); }}
+                onClick={() => { navigator.clipboard.writeText("0962622888"); toast.success(t("common.copiedPhone")); }}
                 className="bg-white text-gray-900! hover:bg-gray-100 font-medium px-8"
               >
                 <Phone className="w-5 h-5 mr-2" />
-                061-259-6657
+                096-262-2888
               </Button>
               <Button
                 onClick={() => router.push("/contact")}

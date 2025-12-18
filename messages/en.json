@@ -68,7 +68,7 @@
     "about": "About Us",
     "contact": "Contact",
     "favorites": "Favorites",
-    "premiumRealEstate": "Premium Real Estate"
+    "premiumRealEstate": "Real Estate Platform"
   },
   "about": {
     "hero": {
@@ -159,12 +159,12 @@
     }
   },
   "hero": {
-    "badge": "Welcome to property by ta168",
-    "title1": "Find Your Dream",
-    "title2": "Property",
-    "title": "Find Your Dream",
-    "titleHighlight": "Property",
-    "subtitle": "Discover premium quality properties in the best locations of Bangkok",
+    "badge": "",
+    "title1": "Real Estate Hub",
+    "title2": "Rent, Sale, Condo, House, Land in Thailand",
+    "title": "Real Estate Hub",
+    "titleHighlight": "Rent, Sale, Condo, House, Land in Thailand",
+    "subtitle": "",
     "stats": {
       "properties": "Properties",
       "happyClients": "Happy Clients",
@@ -178,7 +178,8 @@
     "trusted": "Trusted",
     "trustedDesc": "Trusted by many satisfied customers",
     "expertTeam": "Expert Team",
-    "expertTeamDesc": "24/7 consultation available",
+    "expertTeamDesc": "24/7 __FREE__ consultation available",
+    "free": "FREE",
     "bestPrice": "Best Price",
     "bestPriceDesc": "Guaranteed best prices in the market"
   },
@@ -314,7 +315,7 @@
     "newArrivals": "New Arrivals",
     "latestListings": "Latest Listings",
     "latestListingsSubtitle": "Recently updated properties",
-    "closedDeals": "Recently Closed Deals",
+    "closedDeals": "Recent Deals",
     "closedDealsSubtitle": "Properties recently sold or rented",
     "partners": "Our Properties Are From",
     "partnersSubtitle": "Properties from Thailand's leading real estate developers",
@@ -348,8 +349,8 @@
     "subtitle": "Contact us today for consultation and special offers"
   },
   "footer": {
-    "tagline": "Premium Real Estate Solutions | Bangkok, Thailand",
-    "copyright": "© 2025 roperty by ta168 Co., Ltd. All rights reserved."
+    "tagline": "Real Estate Listing Platform | Bangkok, Thailand",
+    "copyright": "© 2025 Property by Ta 168. All rights reserved."
   },
   "review": {
     "rentedAt": "Rented at",
@@ -441,16 +442,22 @@
     "benefit3Desc": "Track progress anytime"
   },
   "listPropertyPopup": {
-    "title": "Contact Us",
-    "subtitle": "Fill in your details and we'll contact you",
+    "title": "Want us to help find the right room for you?",
+    "subtitle": "Fill in a short form so our consultant can match properties to your budget and location!",
     "nameLabel": "Full Name",
     "namePlaceholder": "Enter your name",
     "phoneLabel": "Phone Number",
     "phonePlaceholder": "08x-xxx-xxxx",
+    "budgetLabel": "Budget",
+    "budgetPlaceholder": "e.g. 10,000 - 20,000 THB/month",
+    "locationLabel": "Preferred Location",
+    "locationPlaceholder": "e.g. Rama 9, Sukhumvit, Bangkok",
     "lineIdLabel": "Line ID (Optional)",
     "lineIdPlaceholder": "@yourlineid",
-    "listingTypeLabel": "Listing Type",
-    "listingTypePlaceholder": "Select listing type",
+    "whatsappLabel": "WhatsApp (Optional)",
+    "whatsappPlaceholder": "+66xxxxxxxxx",
+    "wechatLabel": "WeChat (Optional)",
+    "wechatPlaceholder": "WeChat ID",
     "forSale": "For Sale",
     "forRent": "For Rent",
     "forBoth": "For Sale & Rent",
@@ -468,7 +475,7 @@
     "building": "Building",
     "apartment": "Apartment",
     "messageLabel": "Additional Message",
-    "messagePlaceholder": "Details about your property...",
+    "messagePlaceholder": "Special requirements...",
     "submitting": "Submitting...",
     "submitButton": "Submit",
     "successTitle": "Submitted Successfully!",
@@ -592,12 +599,13 @@
     "guaranteedService": "Guaranteed Service",
     "professionalSupport": "Professional support 24/7",
     "getInTouch": "GET IN TOUCH",
-    "howItWorks": "SEARCH PROEPRTIES",
+    "howItWorks": "Our Services",
     "clientSatisfaction": "Client Satisfaction",
-    "weHelpSell": "We'll help sell your house,",
-    "withGuaranteed": "with our",
-    "guaranteedText": "Guaranteed",
-    "services": "services",
+    "weHelpSell": "Reach tenants and buyers who match your target",
+    "withGuaranteed": "",
+    "guaranteedText": "",
+    "services": "",
+    "serviceDescription": "We screen quality customers to present properties through appropriate channels, so you can rent and sell faster without wasting time and with no hidden fees!!",
     "step1": "STEP 1",
     "step1Line1": "Give us a call,",
     "step1Line2": "we'll help",
@@ -605,8 +613,8 @@
     "step2Line1": "List your",
     "step2Line2": "property",
     "step3": "STEP 3",
-    "step3Line1": "Your home sold",
-    "step3Line2": "Guaranteed",
+    "step3Line1": "Rent, Sell your Condo,",
+    "step3Line2": "House, Land",
     "years": "Years",
     "ofExperience": "of experience",
     "awardsGained": "Awards Gained",

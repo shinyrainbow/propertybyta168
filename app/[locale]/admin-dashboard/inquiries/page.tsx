@@ -305,10 +305,10 @@ export default function InquiriesPage() {
                     )}
 
                     {inquiry.message && (
-                      <p className="text-sm text-gray-700 line-clamp-2 bg-gray-50 p-2 rounded">
+                      <div className="text-sm text-gray-700 bg-gray-50 p-2 rounded">
                         <MessageSquare className="w-4 h-4 inline mr-1 text-gray-400" />
-                        {inquiry.message}
-                      </p>
+                        <span className="whitespace-pre-line">{inquiry.message}</span>
+                      </div>
                     )}
 
                     {inquiry.notes && (
@@ -403,7 +403,7 @@ export default function InquiriesPage() {
                 {selectedInquiry.message && (
                   <div>
                     <div className="text-sm text-gray-500 mb-1">ข้อความ</div>
-                    <div className="bg-gray-50 p-3 rounded-lg text-gray-900">
+                    <div className="bg-gray-50 p-3 rounded-lg text-gray-900 whitespace-pre-line">
                       {selectedInquiry.message}
                     </div>
                   </div>

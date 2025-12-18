@@ -30,9 +30,9 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: t("contactPage.phone"),
-      details: ["061-259-6657"],
+      details: ["096-262-2888"],
       color: "from-[#eb3838] to-[#d32f2f]",
-      links: ["tel:0612596657"],
+      links: ["tel:0962622888"],
     },
     {
       icon: MapPin,
@@ -259,7 +259,7 @@ export default function ContactPage() {
                         <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#eb3838]" />
                       </div>
                       <p className="text-gray-900 font-medium text-sm md:text-base">
-                        property by ta168
+                        property by ta 168
                       </p>
                       <p className="text-gray-500 text-xs md:text-sm">
                         {t("contactPage.location")}

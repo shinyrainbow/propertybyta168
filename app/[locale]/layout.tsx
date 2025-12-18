@@ -38,11 +38,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://propertybyta168.com"),
   title: {
-    default: "propertybyta168 - Premium Real Estate Bangkok",
+    default: "Property by Ta 168 - แพลตฟอร์มรวมประกาศอสังหาริมทรัพย์",
     template: "%s | propertybyta168",
   },
   description:
-    "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok. Professional real estate consulting services.",
+    "สําหรับซื้อ ขาย และให้เช่า คอนโด บ้าน และที่ดิน พร้อมทรัพย์หลากหลายทําเล ใกล้ BTS/MRT ค้นหาง่าย ข้อมูลชัดเจน และมีที่ปรึกษาคอยดูแลตั้งแต่เลือกทรัพย์จนถึงทําสัญญา",
   keywords: [
     "real estate",
     "condo",
@@ -73,23 +73,23 @@ export const metadata: Metadata = {
     locale: "th_TH",
     url: "https://propertybyta168.com",
     siteName: "propertybyta168",
-    title: "propertybyta168 - Premium Real Estate Bangkok",
+    title: "Property by Ta 168 - แพลตฟอร์มรวมประกาศอสังหาริมทรัพย์",
     description:
-      "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok.",
+      "สําหรับซื้อ ขาย และให้เช่า คอนโด บ้าน และที่ดิน พร้อมทรัพย์หลากหลายทําเล ใกล้ BTS/MRT ค้นหาง่าย ข้อมูลชัดเจน และมีที่ปรึกษาคอยดูแลตั้งแต่เลือกทรัพย์จนถึงทําสัญญา",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "propertybyta168 - Premium Real Estate Bangkok",
+        alt: "Property by Ta 168 - แพลตฟอร์มรวมประกาศอสังหาริมทรัพย์",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "propertybyta168 - Premium Real Estate Bangkok",
+    title: "Property by Ta 168 - แพลตฟอร์มรวมประกาศอสังหาริมทรัพย์",
     description:
-      "Find condos, single houses, townhouses for rent and sale in the best locations of Bangkok.",
+      "สําหรับซื้อ ขาย และให้เช่า คอนโด บ้าน และที่ดิน พร้อมทรัพย์หลากหลายทําเล ใกล้ BTS/MRT ค้นหาง่าย ข้อมูลชัดเจน และมีที่ปรึกษาคอยดูแลตั้งแต่เลือกทรัพย์จนถึงทําสัญญา",
     images: ["/og-image.jpg"],
   },
   robots: {

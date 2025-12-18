@@ -162,8 +162,11 @@ function SearchContent() {
   const [inquiryForm, setInquiryForm] = useState({
     name: "",
     phone: "",
+    budget: "",
+    location: "",
     lineId: "",
-    listingType: "",
+    whatsapp: "",
+    wechat: "",
     propertyType: "",
     message: "",
   });
@@ -177,8 +180,11 @@ function SearchContent() {
     try {
       // Build message with optional fields
       const messageParts = [];
+      if (inquiryForm.budget) messageParts.push(`งบประมาณ: ${inquiryForm.budget}`);
+      if (inquiryForm.location) messageParts.push(`ทำเลที่สนใจ: ${inquiryForm.location}`);
       if (inquiryForm.lineId) messageParts.push(`Line ID: ${inquiryForm.lineId}`);
-      if (inquiryForm.listingType) messageParts.push(`ประเภท: ${inquiryForm.listingType}`);
+      if (inquiryForm.whatsapp) messageParts.push(`WhatsApp: ${inquiryForm.whatsapp}`);
+      if (inquiryForm.wechat) messageParts.push(`WeChat: ${inquiryForm.wechat}`);
       if (inquiryForm.propertyType) messageParts.push(`อสังหาริมทรัพย์: ${inquiryForm.propertyType}`);
       if (inquiryForm.message) messageParts.push(inquiryForm.message);
 
@@ -938,44 +944,31 @@ function SearchContent() {
 
                     <div>
                       <label className="block text-xs font-medium text-gray-700 mb-1">
-                        {t("listPropertyPopup.listingTypeLabel")}
+                        {t("listPropertyPopup.budgetLabel")}
                       </label>
-                      <select
-                        required
-                        value={inquiryForm.listingType}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, listingType: e.target.value })}
-                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
-                      >
-                        <option value="">{t("listPropertyPopup.listingTypePlaceholder")}</option>
-                        <option value="sell">{t("listPropertyPopup.forSale")}</option>
-                        <option value="rent">{t("listPropertyPopup.forRent")}</option>
-                        <option value="both">{t("listPropertyPopup.forBoth")}</option>
-                      </select>
+                      <input
+                        type="text"
+                        value={inquiryForm.budget}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, budget: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                        placeholder={t("listPropertyPopup.budgetPlaceholder")}
+                      />
                     </div>
 
                     <div>
                       <label className="block text-xs font-medium text-gray-700 mb-1">
-                        {t("listPropertyPopup.propertyTypeLabel")}
+                        {t("listPropertyPopup.locationLabel")}
                       </label>
-                      <select
-                        required
-                        value={inquiryForm.propertyType}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, propertyType: e.target.value })}
-                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
-                      >
-                        <option value="">{t("listPropertyPopup.propertyTypePlaceholder")}</option>
-                        <option value="Condo">{t("listPropertyPopup.condo")}</option>
-                        <option value="SingleHouse">{t("listPropertyPopup.singleHouse")}</option>
-                        <option value="Townhouse">{t("listPropertyPopup.townhouse")}</option>
-                        <option value="Villa">{t("listPropertyPopup.villa")}</option>
-                        <option value="Land">{t("listPropertyPopup.land")}</option>
-                        <option value="Office">{t("listPropertyPopup.office")}</option>
-                        <option value="Store">{t("listPropertyPopup.store")}</option>
-                        <option value="Factory">{t("listPropertyPopup.factory")}</option>
-                        <option value="Hotel">{t("listPropertyPopup.hotel")}</option>
-                        <option value="Building">{t("listPropertyPopup.building")}</option>
-                        <option value="Apartment">{t("listPropertyPopup.apartment")}</option>
-                      </select>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          value={inquiryForm.location}
+                          onChange={(e) => setInquiryForm({ ...inquiryForm, location: e.target.value })}
+                          className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                          placeholder={t("listPropertyPopup.locationPlaceholder")}
+                        />
+                      </div>
                     </div>
 
                     <div>
@@ -992,6 +985,52 @@ function SearchContent() {
                           placeholder={t("listPropertyPopup.lineIdPlaceholder")}
                         />
                       </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.whatsappLabel")}
+                      </label>
+                      <input
+                        type="text"
+                        value={inquiryForm.whatsapp}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, whatsapp: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                        placeholder={t("listPropertyPopup.whatsappPlaceholder")}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.wechatLabel")}
+                      </label>
+                      <input
+                        type="text"
+                        value={inquiryForm.wechat}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, wechat: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                        placeholder={t("listPropertyPopup.wechatPlaceholder")}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        {t("listPropertyPopup.propertyTypeLabel")}
+                      </label>
+                      <select
+                        value={inquiryForm.propertyType}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, propertyType: e.target.value })}
+                        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
+                      >
+                        <option value="">{t("listPropertyPopup.propertyTypePlaceholder")}</option>
+                        <option value="condo">{t("search.condo")}</option>
+                        <option value="house">{t("search.singleHouse")}</option>
+                        <option value="townhouse">{t("search.townhouse")}</option>
+                        <option value="villa">{t("search.villa")}</option>
+                        <option value="land">{t("search.land")}</option>
+                        <option value="office">{t("search.office")}</option>
+                        <option value="store">{t("search.store")}</option>
+                      </select>
                     </div>
 
                     <div>

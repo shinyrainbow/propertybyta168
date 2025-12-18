@@ -148,7 +148,7 @@ export function SearchSuggestions({ searchText, onSelect, isOpen, onClose }: Sea
               <div className="px-4 py-2 bg-gray-50 border-b border-gray-100">
                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5" />
-                  {locale === "th" ? "สถานที่" : "Locations"}
+                  {locale === "th" ? "ทำเล" : "Locations"}
                 </span>
               </div>
               <div>

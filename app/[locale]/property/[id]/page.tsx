@@ -670,11 +670,25 @@ export default function PropertyDetailPage() {
         const propertyData = await response.json();
         setProperty(propertyData);
 
-        // Fetch recommended properties
-        const recommendedResponse = await fetch(`/api/nainahub/properties?limit=4`);
+        // Fetch recommended properties - prioritize same project
+        const recommendedResponse = await fetch(`/api/nainahub/properties?limit=50`);
         if (recommendedResponse.ok) {
           const recommendedData = await recommendedResponse.json();
-          setRecommendedProperties(recommendedData.data.filter((p: any) => p.id !== propertyId).slice(0, 4));
+          const allProperties = recommendedData.data.filter((p: any) => p.id !== propertyId);
+
+          // First, get properties from the same project
+          const sameProjectProperties = propertyData.projectCode
+            ? allProperties.filter((p: any) => p.projectCode === propertyData.projectCode)
+            : [];
+
+          // Then get other properties
+          const otherProperties = allProperties.filter((p: any) =>
+            !propertyData.projectCode || p.projectCode !== propertyData.projectCode
+          );
+
+          // Combine: same project first, then others
+          const combined = [...sameProjectProperties, ...otherProperties].slice(0, 4);
+          setRecommendedProperties(combined);
         }
 
         setLoading(false);
@@ -1399,11 +1413,11 @@ export default function PropertyDetailPage() {
                   <div className="space-y-3">
                     {/* Phone Button */}
                     <Button
-                      onClick={() => copyToClipboard("0655558989", "phone")}
+                      onClick={() => copyToClipboard("0962622888", "phone")}
                       className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
                     >
                       <Phone className="w-5 h-5 mr-2" />
-                      {copiedText === "phone" ? "คัดลอกแล้ว!" : "065-555-8989"}
+                      {copiedText === "phone" ? "คัดลอกแล้ว!" : "096-262-2888"}
                     </Button>
                     <Button
                       variant="outline"
