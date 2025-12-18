@@ -1295,8 +1295,10 @@ export default function PropertyDetailPage() {
                 </Card>
               )}
 
-              {/* Location Map */}
+              {/* Location Map - Only show if Project Info section is not shown */}
               {(() => {
+                // Don't show Location section if Project Info is already displayed (Condo with project)
+                if (property.propertyType === "Condo" && property.project) return null;
                 const coords = getPropertyCoordinates(property);
                 if (!coords) return null;
                 return (
