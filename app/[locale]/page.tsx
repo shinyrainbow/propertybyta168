@@ -50,6 +50,7 @@ import {
   type NainaHubProperty,
   type FetchPropertiesParams,
   type NainaHubResponse,
+  getPropertyAddressString,
 } from "@/lib/nainahub";
 import { SearchSuggestions } from "@/components/search/search-suggestions";
 
@@ -817,7 +818,7 @@ export default function PublicPropertiesPage() {
                     </h3>
                     <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" />
-                      {property.project?.projectLocationText || property.propertyLocationText || "Bangkok"}
+                      {getPropertyAddressString(property) || "Bangkok"}
                     </p>
 
                     {/* Price */}
@@ -983,7 +984,7 @@ export default function PublicPropertiesPage() {
                     </h3>
                     <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5" />
-                      {property.project?.projectLocationText || property.propertyLocationText || "Bangkok"}
+                      {getPropertyAddressString(property) || "Bangkok"}
                     </p>
 
                     {/* Price */}

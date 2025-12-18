@@ -14,7 +14,7 @@ export async function GET() {
 
   try {
     // Fetch real properties from NainaHub API
-    const apiResponse = await fetchNainaHubProperties({ limit: 100 });
+    const apiResponse = await fetchNainaHubProperties({ limit: 1000 });
 
     if (!apiResponse.success) {
       return NextResponse.json(

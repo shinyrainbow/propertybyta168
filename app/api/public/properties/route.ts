@@ -5,7 +5,7 @@ import { getProperties } from "@/lib/data";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "12");
+  const limitParam = searchParams.get("limit");
   const propertyType = searchParams.get("propertyType");
   const listingType = searchParams.get("listingType");
   const bedrooms = searchParams.get("bedrooms");
@@ -57,8 +57,23 @@ export async function GET(request: NextRequest) {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
-  // Pagination
+  // Return all if no limit specified, otherwise paginate
   const total = filtered.length;
+  if (!limitParam) {
+    return NextResponse.json({
+      success: true,
+      data: filtered,
+      pagination: {
+        page: 1,
+        limit: total,
+        total,
+        totalPages: 1,
+      },
+    });
+  }
+
+  // Pagination
+  const limit = parseInt(limitParam);
   const start = (page - 1) * limit;
   const end = start + limit;
   const data = filtered.slice(start, end);

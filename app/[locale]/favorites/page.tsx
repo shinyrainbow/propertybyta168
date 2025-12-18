@@ -19,7 +19,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useFavorites } from "@/hooks/useFavorites";
 import { toast } from "sonner";
-import { type NainaHubProperty } from "@/lib/nainahub";
+import { type NainaHubProperty, getPropertyAddressString } from "@/lib/nainahub";
 
 type Property = NainaHubProperty;
 
@@ -291,11 +291,11 @@ export default function FavoritesPage() {
                             {getPropertyTitle(property) || getProjectName(property.project)}
                           </h3>
 
-                          {property.project?.projectLocationText && (
+                          {getPropertyAddressString(property) && (
                             <div className="flex items-center gap-1 text-gray-500 text-sm mb-3">
                               <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                               <span className="line-clamp-1">
-                                {property.project.projectLocationText}
+                                {getPropertyAddressString(property)}
                               </span>
                             </div>
                           )}
