@@ -229,7 +229,8 @@ function SearchContent() {
 
     // Trigger search when URL params change (e.g., from header dropdown)
     setSearchTrigger(prev => prev + 1);
-  }, [searchParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.toString()]);
 
   // Animation trigger
   useEffect(() => {
@@ -302,7 +303,8 @@ function SearchContent() {
     };
 
     loadData();
-  }, [searchTrigger, searchParams]); // Search when searchTrigger or URL params change
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTrigger, searchParams.toString()]); // Search when searchTrigger or URL params change
 
   // Handle search button click
   const handleSearch = () => {
