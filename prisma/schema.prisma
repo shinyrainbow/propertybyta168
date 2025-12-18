@@ -136,6 +136,7 @@ model Inquiry {
   name          String   // Customer name
   phone         String   // Customer phone
   message       String?  @db.Text // Optional message
+  source        String?  // Where inquiry came from (e.g., "property-detail", "search-page", "popup")
   status        String   @default("new") // "new", "contacted", "resolved"
   notes         String?  @db.Text // Admin notes
   createdAt     DateTime @default(now())

@@ -27,11 +27,21 @@ interface Inquiry {
   name: string;
   phone: string;
   message: string | null;
+  source: string | null;
   status: string;
   notes: string | null;
   createdAt: string;
   updatedAt: string;
 }
+
+const getSourceLabel = (source: string | null) => {
+  switch (source) {
+    case "popup": return "ป๊อปอัพ";
+    case "search-page": return "หน้าค้นหา";
+    case "property-detail": return "หน้าทรัพย์สิน";
+    default: return source || "ไม่ระบุ";
+  }
+};
 
 const statusOptions = [
   { value: "new", label: "ใหม่", color: "bg-blue-100 text-blue-800", icon: AlertCircle },
@@ -252,6 +262,11 @@ export default function InquiriesPage() {
                         <StatusIcon className="w-3 h-3" />
                         {statusConfig.label}
                       </span>
+                      {inquiry.source && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                          จาก: {getSourceLabel(inquiry.source)}
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
@@ -394,9 +409,16 @@ export default function InquiriesPage() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Clock className="w-4 h-4" />
-                  ส่งเมื่อ {formatDate(selectedInquiry.createdAt)}
+                <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    ส่งเมื่อ {formatDate(selectedInquiry.createdAt)}
+                  </span>
+                  {selectedInquiry.source && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                      จาก: {getSourceLabel(selectedInquiry.source)}
+                    </span>
+                  )}
                 </div>
               </div>
 

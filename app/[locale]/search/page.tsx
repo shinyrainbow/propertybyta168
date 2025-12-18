@@ -173,20 +173,21 @@ function SearchContent() {
     setIsSubmitting(true);
 
     try {
-      const detailsParts = [];
-      if (inquiryForm.lineId) detailsParts.push(`Line ID: ${inquiryForm.lineId}`);
-      if (inquiryForm.message) detailsParts.push(inquiryForm.message);
-      detailsParts.push("(จากหน้าค้นหา)");
+      // Build message with optional fields
+      const messageParts = [];
+      if (inquiryForm.lineId) messageParts.push(`Line ID: ${inquiryForm.lineId}`);
+      if (inquiryForm.listingType) messageParts.push(`ประเภท: ${inquiryForm.listingType}`);
+      if (inquiryForm.propertyType) messageParts.push(`อสังหาริมทรัพย์: ${inquiryForm.propertyType}`);
+      if (inquiryForm.message) messageParts.push(inquiryForm.message);
 
-      const response = await fetch("/api/public/property-listings", {
+      const response = await fetch("/api/public/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: inquiryForm.name,
           phone: inquiryForm.phone,
-          listingType: inquiryForm.listingType || "sell",
-          propertyType: inquiryForm.propertyType || "Other",
-          details: detailsParts.join("\n"),
+          message: messageParts.length > 0 ? messageParts.join("\n") : null,
+          source: "search-page",
         }),
       });
 

@@ -57,21 +57,21 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
     setIsSubmitting(true);
 
     try {
-      // Build details with lineId and message
-      const detailsParts = [];
-      if (formData.lineId) detailsParts.push(`Line ID: ${formData.lineId}`);
-      if (formData.message) detailsParts.push(formData.message);
-      detailsParts.push("(จากป๊อปอัพ)"); // Mark as from popup
+      // Build message with optional fields
+      const messageParts = [];
+      if (formData.lineId) messageParts.push(`Line ID: ${formData.lineId}`);
+      if (formData.listingType) messageParts.push(`ประเภท: ${formData.listingType}`);
+      if (formData.propertyType) messageParts.push(`อสังหาริมทรัพย์: ${formData.propertyType}`);
+      if (formData.message) messageParts.push(formData.message);
 
-      const response = await fetch("/api/public/property-listings", {
+      const response = await fetch("/api/public/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          listingType: formData.listingType || "sell",
-          propertyType: formData.propertyType || "Other",
-          details: detailsParts.join("\n"),
+          message: messageParts.length > 0 ? messageParts.join("\n") : null,
+          source: "popup",
         }),
       });
 
@@ -189,10 +189,9 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("listingTypeLabel")}
+                      {t("listingTypeLabel")} <span className="text-gray-400 font-normal">(ไม่บังคับ)</span>
                     </label>
                     <select
-                      required
                       value={formData.listingType}
                       onChange={(e) => setFormData({ ...formData, listingType: e.target.value })}
                       className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"
@@ -206,10 +205,9 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
 
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("propertyTypeLabel")}
+                      {t("propertyTypeLabel")} <span className="text-gray-400 font-normal">(ไม่บังคับ)</span>
                     </label>
                     <select
-                      required
                       value={formData.propertyType}
                       onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
                       className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838] bg-white"

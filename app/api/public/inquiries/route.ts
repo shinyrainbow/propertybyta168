@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { propertyId, propertyCode, propertyTitle, name, phone, message } = body;
+    const { propertyId, propertyCode, propertyTitle, name, phone, message, source } = body;
 
     // Validate required fields
     if (!name || !phone) {
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
         name,
         phone,
         message: message || null,
+        source: source || null,
         status: "new",
       },
     });
