@@ -251,18 +251,6 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                   {isSubmitting ? t("submitting") : t("submitButton")}
                 </button>
               </form>
-
-              {/* Alternative Link */}
-              <p className="text-center text-xs text-gray-500 mt-3">
-                {t("orText")}{" "}
-                <Link
-                  href="/list-property"
-                  className="text-[#eb3838] hover:underline font-medium"
-                  onClick={handleClose}
-                >
-                  {t("visitPageLink")}
-                </Link>
-              </p>
             </>
           )}
         </div>

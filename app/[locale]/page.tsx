@@ -500,7 +500,7 @@ export default function PublicPropertiesPage() {
               style={{ transitionDelay: "300ms" }}
             >
               {/* Tabs */}
-              <div className="flex gap-4 mb-6">
+              <div className="flex justify-center gap-4 mb-6">
                 <button
                   onClick={() => setListingType("rent")}
                   className={`px-6 py-2 rounded-lg font-medium transition-all ${
