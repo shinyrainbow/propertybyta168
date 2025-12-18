@@ -1262,6 +1262,14 @@ export default function PublicPropertiesPage() {
                             {getSize(property)}m²
                           </span>
                         </div>
+
+                        {/* Time Ago */}
+                        {property.updatedAt && (
+                          <div className="mt-2 text-xs text-gray-400 flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />
+                            <span>{t("property.updated")} {getTimeAgo(property.updatedAt)}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </Link>
