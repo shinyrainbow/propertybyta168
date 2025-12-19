@@ -37,6 +37,7 @@ import { useFavorites } from "@/hooks/useFavorites";
 import Image from "next/image";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { SearchSuggestions } from "@/components/search/search-suggestions";
 import {
   type NainaHubProperty,
   type FetchPropertiesParams,
@@ -157,6 +158,7 @@ function SearchContent() {
   const [minPrice, setMinPrice] = useState<string>(minPriceParam);
   const [maxPrice, setMaxPrice] = useState<string>(maxPriceParam);
   const [searchTrigger, setSearchTrigger] = useState(0); // Trigger for manual search
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Inquiry form state
   const [inquiryForm, setInquiryForm] = useState({

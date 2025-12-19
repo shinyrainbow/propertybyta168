@@ -203,6 +203,18 @@ export default function PublicPropertiesPage() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [latestListings, setLatestListings] = useState<Property[]>([]);
 
+  // Short-term rental slider
+  const shortTermSliderRef = useRef<HTMLDivElement>(null);
+  const [shortTermCanScrollLeft, setShortTermCanScrollLeft] = useState(false);
+  const [shortTermCanScrollRight, setShortTermCanScrollRight] = useState(false);
+  const [shortTermProperties, setShortTermProperties] = useState<Property[]>([]);
+
+  // Pet-friendly slider
+  const petFriendlySliderRef = useRef<HTMLDivElement>(null);
+  const [petFriendlyCanScrollLeft, setPetFriendlyCanScrollLeft] = useState(false);
+  const [petFriendlyCanScrollRight, setPetFriendlyCanScrollRight] = useState(false);
+  const [petFriendlyProperties, setPetFriendlyProperties] = useState<Property[]>([]);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroVisible, setHeroVisible] = useState(false);
 
@@ -300,6 +312,12 @@ export default function PublicPropertiesPage() {
       } else if (sliderType === "latest") {
         setLatestCanScrollLeft(canScrollLeft);
         setLatestCanScrollRight(canScrollRight);
+      } else if (sliderType === "shortTerm") {
+        setShortTermCanScrollLeft(canScrollLeft);
+        setShortTermCanScrollRight(canScrollRight);
+      } else if (sliderType === "petFriendly") {
+        setPetFriendlyCanScrollLeft(canScrollLeft);
+        setPetFriendlyCanScrollRight(canScrollRight);
       }
     },
     []
@@ -377,6 +395,12 @@ export default function PublicPropertiesPage() {
           if (latestSliderRef.current) {
             checkSliderScroll(latestSliderRef, "latest");
           }
+          if (shortTermSliderRef.current) {
+            checkSliderScroll(shortTermSliderRef, "shortTerm");
+          }
+          if (petFriendlySliderRef.current) {
+            checkSliderScroll(petFriendlySliderRef, "petFriendly");
+          }
         }, 100);
 
         // Sort by updatedAt for latest listings
@@ -386,6 +410,14 @@ export default function PublicPropertiesPage() {
           return dateB - dateA;
         });
         setLatestListings(sortedByUpdate.slice(0, 8));
+
+        // Filter short-term rental properties
+        const shortTerm = response.data.filter((p: NainaHubProperty) => p.isAcceptShortTerm);
+        setShortTermProperties(shortTerm.slice(0, 10));
+
+        // Filter pet-friendly properties
+        const petFriendly = response.data.filter((p: NainaHubProperty) => p.isPetFriendly);
+        setPetFriendlyProperties(petFriendly.slice(0, 10));
 
         // Fetch blog posts
         const blogRes = await fetch("/api/public/blog?limit=3");
@@ -1145,6 +1177,296 @@ export default function PublicPropertiesPage() {
           </div>
         </div>
       </section>
+
+      {/* Short-term Rental Section */}
+      {shortTermProperties.length > 0 && (
+        <section
+          id="short-term"
+          ref={(el) => { observerRefs.current["short-term"] = el; }}
+          className="py-16 bg-white"
+        >
+          <div className="container mx-auto px-4">
+            {/* Section Header */}
+            <div className={`flex flex-col md:flex-row md:items-end md:justify-between mb-10 transition-all duration-700 ${
+              isVisible["short-term"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+              <div>
+                <span className="text-[#eb3838] text-sm font-medium">{t("sections.specialOffer")}</span>
+                <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.shortTermRental")}</h2>
+                <p className="text-gray-500 mt-2 max-w-lg">{t("sections.shortTermSubtitle")}</p>
+              </div>
+              <div className="flex items-center gap-4 mt-4 md:mt-0">
+                <div className="flex items-center gap-2">
+                  <button
+                    className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                      shortTermCanScrollLeft
+                        ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                        : "border-gray-300 text-gray-300 cursor-not-allowed"
+                    }`}
+                    onClick={() => scrollSlider(shortTermSliderRef, "left", "shortTerm")}
+                    disabled={!shortTermCanScrollLeft}
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                      shortTermCanScrollRight
+                        ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                        : "border-gray-300 text-gray-300 cursor-not-allowed"
+                    }`}
+                    onClick={() => scrollSlider(shortTermSliderRef, "right", "shortTerm")}
+                    disabled={!shortTermCanScrollRight}
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Property Cards Slider */}
+            <div
+              ref={shortTermSliderRef}
+              className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+              onScroll={() => checkSliderScroll(shortTermSliderRef, "shortTerm")}
+            >
+              {shortTermProperties.map((property, index) => (
+                <Link
+                  key={property.id}
+                  href={`/property/${property.id}`}
+                  className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
+                    isVisible["short-term"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  }`}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                >
+                  <div className="property-card group h-full flex flex-col">
+                    {/* Image Section */}
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      {property.imageUrls && property.imageUrls.length > 0 ? (
+                        <Image
+                          src={property.imageUrls[0]}
+                          alt={getPropertyTitle(property)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                          <MapPin className="w-10 h-10 text-gray-300" />
+                        </div>
+                      )}
+
+                      {/* Short-term Badge */}
+                      <div className="absolute top-3 left-3">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500 text-white text-xs font-medium rounded-md">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>{property.isAcceptShortTerm}</span>
+                        </div>
+                      </div>
+
+                      {/* Favorite */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(property.id);
+                        }}
+                        className="absolute top-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                      >
+                        <Heart className={`w-5 h-5 transition-colors ${isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-400"}`} />
+                      </button>
+
+                      {/* Bottom overlay - Location */}
+                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                        <div className="flex items-center gap-1 text-white text-xs">
+                          <MapPin className="w-3.5 h-3.5" />
+                          <span className="line-clamp-1">{getPropertyAddressString(property, locale) || "Bangkok"}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4 flex-1">
+                      <h3 className="font-semibold text-gray-900 line-clamp-1 mb-1">
+                        {getProjectName(property.project) || getPropertyTitle(property)}
+                      </h3>
+
+                      {/* Price */}
+                      <div className="mb-4">
+                        {property.rentalRateNum != null && property.rentalRateNum > 0 && (
+                          <div className="text-xl font-bold text-gray-900">
+                            ฿{formatPrice(property.rentalRateNum)}
+                            <span className="text-sm font-normal text-gray-500">/{t("property.month")}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Details */}
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <div className="flex items-center gap-1.5">
+                          <Bed className="w-4 h-4 text-gray-400" />
+                          <span>{property.bedRoomNum || 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Bath className="w-4 h-4 text-gray-400" />
+                          <span>{property.bathRoomNum || 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Maximize className="w-4 h-4 text-gray-400" />
+                          <span>{getSize(property)} {t("property.sqm")}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Pet-friendly Section */}
+      {petFriendlyProperties.length > 0 && (
+        <section
+          id="pet-friendly"
+          ref={(el) => { observerRefs.current["pet-friendly"] = el; }}
+          className="py-16 bg-gray-100"
+        >
+          <div className="container mx-auto px-4">
+            {/* Section Header */}
+            <div className={`flex flex-col md:flex-row md:items-end md:justify-between mb-10 transition-all duration-700 ${
+              isVisible["pet-friendly"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+              <div>
+                <span className="text-[#eb3838] text-sm font-medium">{t("sections.petLovers")}</span>
+                <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.petFriendly")}</h2>
+                <p className="text-gray-500 mt-2 max-w-lg">{t("sections.petFriendlySubtitle")}</p>
+              </div>
+              <div className="flex items-center gap-4 mt-4 md:mt-0">
+                <div className="flex items-center gap-2">
+                  <button
+                    className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                      petFriendlyCanScrollLeft
+                        ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                        : "border-gray-300 text-gray-300 cursor-not-allowed"
+                    }`}
+                    onClick={() => scrollSlider(petFriendlySliderRef, "left", "petFriendly")}
+                    disabled={!petFriendlyCanScrollLeft}
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    className={`w-10 h-10 flex items-center justify-center rounded-full border-2 transition-all ${
+                      petFriendlyCanScrollRight
+                        ? "border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white"
+                        : "border-gray-300 text-gray-300 cursor-not-allowed"
+                    }`}
+                    onClick={() => scrollSlider(petFriendlySliderRef, "right", "petFriendly")}
+                    disabled={!petFriendlyCanScrollRight}
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Property Cards Slider */}
+            <div
+              ref={petFriendlySliderRef}
+              className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+              onScroll={() => checkSliderScroll(petFriendlySliderRef, "petFriendly")}
+            >
+              {petFriendlyProperties.map((property, index) => (
+                <Link
+                  key={property.id}
+                  href={`/property/${property.id}`}
+                  className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
+                    isVisible["pet-friendly"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  }`}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                >
+                  <div className="property-card group h-full flex flex-col">
+                    {/* Image Section */}
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      {property.imageUrls && property.imageUrls.length > 0 ? (
+                        <Image
+                          src={property.imageUrls[0]}
+                          alt={getPropertyTitle(property)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                          <MapPin className="w-10 h-10 text-gray-300" />
+                        </div>
+                      )}
+
+                      {/* Pet-friendly Badge */}
+                      <div className="absolute top-3 left-3">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500 text-white text-xs font-medium rounded-md">
+                          <span>🐾</span>
+                          <span>{property.isPetFriendly}</span>
+                        </div>
+                      </div>
+
+                      {/* Favorite */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(property.id);
+                        }}
+                        className="absolute top-3 right-3 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                      >
+                        <Heart className={`w-5 h-5 transition-colors ${isFavorite(property.id) ? "fill-[#eb3838] text-[#eb3838]" : "text-gray-400"}`} />
+                      </button>
+
+                      {/* Bottom overlay - Location */}
+                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                        <div className="flex items-center gap-1 text-white text-xs">
+                          <MapPin className="w-3.5 h-3.5" />
+                          <span className="line-clamp-1">{getPropertyAddressString(property, locale) || "Bangkok"}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4 flex-1">
+                      <h3 className="font-semibold text-gray-900 line-clamp-1 mb-1">
+                        {getProjectName(property.project) || getPropertyTitle(property)}
+                      </h3>
+
+                      {/* Price */}
+                      <div className="mb-4">
+                        {property.rentalRateNum != null && property.rentalRateNum > 0 && (
+                          <div className="text-xl font-bold text-gray-900">
+                            ฿{formatPrice(property.rentalRateNum)}
+                            <span className="text-sm font-normal text-gray-500">/{t("property.month")}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Details */}
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <div className="flex items-center gap-1.5">
+                          <Bed className="w-4 h-4 text-gray-400" />
+                          <span>{property.bedRoomNum || 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Bath className="w-4 h-4 text-gray-400" />
+                          <span>{property.bathRoomNum || 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Maximize className="w-4 h-4 text-gray-400" />
+                          <span>{getSize(property)} {t("property.sqm")}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* All Properties Section */}
       <section

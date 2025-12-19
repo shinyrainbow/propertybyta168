@@ -67,6 +67,14 @@ export function SearchSuggestions({ searchText, onSelect, isOpen, onClose }: Sea
       : (project.nameTh || project.nameEn || "");
   }, [useEnglish]);
 
+  const getLocationText = useCallback((location: SuggestionLocation) => {
+    // For Thai: use text (projectLocationText for condo, propertyLocationText for others)
+    // For other languages: use textEn if available
+    return useEnglish
+      ? (location.textEn || location.text || "")
+      : (location.text || location.textEn || "");
+  }, [useEnglish]);
+
   // Filter suggestions based on search text
   const filteredProjects = suggestions?.projects.filter((project) => {
     if (!searchText || searchText.length < 1) return true;
@@ -77,7 +85,8 @@ export function SearchSuggestions({ searchText, onSelect, isOpen, onClose }: Sea
 
   const filteredLocations = suggestions?.locations.filter((location) => {
     if (!searchText || searchText.length < 1) return true;
-    return location.text.toLowerCase().includes(searchText.toLowerCase());
+    const locationText = getLocationText(location);
+    return locationText.toLowerCase().includes(searchText.toLowerCase());
   }).slice(0, 3) || [];
 
   const hasResults = filteredProjects.length > 0 || filteredLocations.length > 0;
@@ -156,7 +165,7 @@ export function SearchSuggestions({ searchText, onSelect, isOpen, onClose }: Sea
                   <button
                     key={`location-${index}`}
                     onClick={() => {
-                      onSelect(location.text);
+                      onSelect(getLocationText(location));
                       onClose();
                     }}
                     className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center gap-3 border-b border-gray-50 last:border-b-0"
@@ -166,14 +175,8 @@ export function SearchSuggestions({ searchText, onSelect, isOpen, onClose }: Sea
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate">
-                        {location.text}
+                        {getLocationText(location)}
                       </p>
-                      {/* <p className="text-xs text-gray-500">
-                        {location.type === "condo"
-                          ? (locale === "th" ? "โครงการคอนโด" : "Condo Project")
-                          : (locale === "th" ? "อสังหาริมทรัพย์" : "Property")
-                        }
-                      </p> */}
                     </div>
                   </button>
                 ))}

@@ -68,6 +68,8 @@ export interface NainaHubProperty {
   updatedAt: string;
   note: string | null;
   amenities?: string[];
+  isAcceptShortTerm?: string | null;
+  isPetFriendly?: string | null;
 }
 
 export interface NainaHubPagination {
@@ -156,6 +158,7 @@ export interface SuggestionProject {
 
 export interface SuggestionLocation {
   text: string;
+  textEn?: string;
   type: "condo" | "property";
 }
 
