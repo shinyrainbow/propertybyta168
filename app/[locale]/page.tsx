@@ -1299,11 +1299,22 @@ export default function PublicPropertiesPage() {
                         </div>
                       )}
 
-                      {/* Short-term Badge */}
-                      <div className="absolute top-3 left-3">
+                      {/* Status Badge + Short-term Badge */}
+                      <div className="absolute top-3 left-3 flex flex-col gap-2">
+                        {property.status === "available" ? (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md">
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            <span>{t("property.confirmedAvailable")}</span>
+                          </div>
+                        ) : property.status === "sold" || property.status === "rented" ? (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-600 text-white text-xs font-medium rounded-md">
+                            <FileText className="w-3.5 h-3.5" />
+                            <span>{property.status === "sold" ? t("property.sold") : t("property.rented")}</span>
+                          </div>
+                        ) : null}
                         <div className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500 text-white text-xs font-medium rounded-md">
                           <Calendar className="w-3.5 h-3.5" />
-                          <span>{property.isAcceptShortTerm}</span>
+                          <span>{t("sections.shortTermRental")}</span>
                         </div>
                       </div>
 
@@ -1439,11 +1450,22 @@ export default function PublicPropertiesPage() {
                         </div>
                       )}
 
-                      {/* Pet-friendly Badge */}
-                      <div className="absolute top-3 left-3">
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500 text-white text-xs font-medium rounded-md">
+                      {/* Status Badge + Pet-friendly Badge */}
+                      <div className="absolute top-3 left-3 flex flex-col gap-2">
+                        {property.status === "available" ? (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md">
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            <span>{t("property.confirmedAvailable")}</span>
+                          </div>
+                        ) : property.status === "sold" || property.status === "rented" ? (
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-600 text-white text-xs font-medium rounded-md">
+                            <FileText className="w-3.5 h-3.5" />
+                            <span>{property.status === "sold" ? t("property.sold") : t("property.rented")}</span>
+                          </div>
+                        ) : null}
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500 text-white text-xs font-medium rounded-md">
                           <span>🐾</span>
-                          <span>{property.isPetFriendly}</span>
+                          <span>{t("sections.petFriendly")}</span>
                         </div>
                       </div>
 
