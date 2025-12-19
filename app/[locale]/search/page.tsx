@@ -246,7 +246,7 @@ function SearchContent() {
     const loadData = async () => {
       try {
         // Use URL params directly for accurate filtering
-        const currentSearchText = searchParams.get("q") || "";
+        // Note: searchText is filtered client-side, not via API
         const currentPropertyType = searchParams.get("propertyType") || "";
         const currentListingType = searchParams.get("listingType") || "";
         const currentBedrooms = searchParams.get("bedrooms") || "";
@@ -255,9 +255,10 @@ function SearchContent() {
 
         console.log("📡 Loading properties... searchTrigger:", searchTrigger);
         setLoading(true);
+        // Note: We don't use q param for API because NainaHub's search doesn't work well
+        // for location text. Instead, we fetch all and filter client-side.
         const params: FetchPropertiesParams = {
-          limit: 100,
-          ...(currentSearchText && { q: currentSearchText }),
+          limit: 1000, // Fetch all properties for client-side filtering
           ...(currentPropertyType && currentPropertyType !== "all" && { propertyType: currentPropertyType as any }),
           ...(currentListingType && currentListingType !== "all" && { listingType: currentListingType as any }),
           ...(currentBedrooms && currentBedrooms !== "all" && { bedrooms: parseInt(currentBedrooms) }),
@@ -342,10 +343,36 @@ function SearchContent() {
     setSearchTrigger(prev => prev + 1);
   };
 
-  // Filter properties based on selected project (UI-only filter)
-  // All other filters (propertyType, listingType, bedrooms, prices, searchText) are handled by the API
+  // Filter properties based on selected project and search text (client-side)
+  // Note: NainaHub API's q param doesn't search through location fields well,
+  // so we do client-side filtering for search text
   useEffect(() => {
     let filtered = [...allProperties];
+
+    // Filter by search text (client-side - searches through multiple fields)
+    if (searchText) {
+      const searchLower = searchText.toLowerCase();
+      filtered = filtered.filter((p) => {
+        const searchableText = [
+          p.propertyTitleEn,
+          p.propertyTitleTh,
+          p.propertyLocationText,
+          p.propertyLocationTextEn,
+          p.project?.projectNameEn,
+          p.project?.projectNameTh,
+          p.project?.projectLocationText,
+          p.project?.projectLocationTextEn,
+          p.propertyDistrict,
+          p.propertySubDistrict,
+          p.propertyProvince,
+          p.project?.addressDistrict,
+          p.project?.addressSubDistrict,
+          p.project?.addressProvince,
+        ].filter(Boolean).join(" ").toLowerCase();
+
+        return searchableText.includes(searchLower);
+      });
+    }
 
     // Filter by project (UI-only feature)
     if (selectedProject) {
@@ -353,7 +380,7 @@ function SearchContent() {
     }
 
     setProperties(filtered);
-  }, [allProperties, selectedProject]);
+  }, [allProperties, selectedProject, searchText]);
 
   const formatPrice = (price: number | null) => {
     if (!price) return null;
