@@ -765,55 +765,35 @@ function SearchContent() {
                           </div>
                         )}
 
-                        {/* Badges */}
+                        {/* Status Badge */}
                         <div className="absolute top-2 left-2 flex flex-col gap-1">
-                          <div className="bg-[#eb3838] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
-                            {property.propertyType === "Condo"
-                              ? t("search.condo")
-                              : property.propertyType === "Townhouse"
-                              ? t("search.townhouse")
-                              : property.propertyType === "SingleHouse"
-                              ? t("search.singleHouse")
-                              : property.propertyType === "Villa"
-                              ? t("search.villa")
-                              : property.propertyType === "Land"
-                              ? t("search.land")
-                              : property.propertyType === "Office"
-                              ? t("search.office")
-                              : property.propertyType === "Store"
-                              ? t("search.store")
-                              : property.propertyType === "Factory"
-                              ? t("search.factory")
-                              : property.propertyType === "Hotel"
-                              ? t("search.hotel")
-                              : property.propertyType === "Building"
-                              ? t("search.building")
-                              : property.propertyType === "Apartment"
-                              ? t("search.apartment")
-                              : property.propertyType}
-                          </div>
-                        </div>
-
-                        {/* Listing Type & Closed Deal Badge */}
-                        <div className="absolute top-2 right-2 flex flex-col gap-1">
-                          {property.status === "sold" || property.status === "rented" ? (
-                            <div className="bg-gray-700 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
-                              <CheckCircle className="w-3 h-3" />
-                              {property.status === "sold" ? t("property.sold") : t("property.rented")}
+                          {property.status === "available" ? (
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md shadow-lg">
+                              <CheckCircle className="w-3.5 h-3.5" />
+                              <span>{t("property.confirmedAvailable")}</span>
+                            </div>
+                          ) : property.status === "sold" || property.status === "rented" ? (
+                            <div className={`flex items-center gap-1.5 px-2.5 py-1 text-white text-xs font-medium rounded-md shadow-lg ${property.status === "sold" ? "bg-[#eb3838]" : "bg-blue-500"}`}>
+                              <span>{t(`property.${property.status}`)}</span>
                             </div>
                           ) : (
-                            <>
-                              {property.rentalRateNum != null && property.rentalRateNum > 0 && (
-                                <div className="bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
-                                  {t("property.forRent")}
-                                </div>
-                              )}
-                              {property.sellPriceNum != null && property.sellPriceNum > 0 && (
-                                <div className="bg-amber-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
-                                  {t("property.forSale")}
-                                </div>
-                              )}
-                            </>
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-500 text-white text-xs font-medium rounded-md shadow-lg">
+                              <span>{t(`property.${property.status}`)}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Listing Type Badge */}
+                        <div className="absolute top-2 right-2 flex flex-col gap-1">
+                          {property.rentalRateNum != null && property.rentalRateNum > 0 && (
+                            <div className="bg-[#eb3838] text-white px-2.5 py-1 rounded-md text-xs font-medium shadow-lg">
+                              {t("property.forRent")}
+                            </div>
+                          )}
+                          {property.sellPriceNum != null && property.sellPriceNum > 0 && (
+                            <div className="bg-gray-900 text-white px-2.5 py-1 rounded-md text-xs font-medium shadow-lg">
+                              {t("property.forSale")}
+                            </div>
                           )}
                         </div>
 
@@ -824,7 +804,7 @@ function SearchContent() {
                             e.stopPropagation();
                             toggleFavorite(property.id);
                           }}
-                          className="absolute top-2 right-12 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md z-10"
+                          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md z-10"
                         >
                           <Heart
                             className={`w-4 h-4 transition-colors ${

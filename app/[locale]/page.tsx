@@ -96,6 +96,7 @@ async function fetchPropertiesFromAPI(params: FetchPropertiesParams = {}): Promi
   if (params.bedrooms) searchParams.set("bedrooms", params.bedrooms.toString());
   if (params.minPrice) searchParams.set("minPrice", params.minPrice.toString());
   if (params.maxPrice) searchParams.set("maxPrice", params.maxPrice.toString());
+  if (params.status) searchParams.set("status", params.status);
 
   const response = await fetch(`/api/nainahub/properties?${searchParams.toString()}`);
 
@@ -344,7 +345,33 @@ export default function PublicPropertiesPage() {
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const response = await fetchPropertiesFromAPI({});
+        // Fetch ALL properties (NainaHub defaults to 12, so we need high limit)
+        const response = await fetchPropertiesFromAPI({ limit: 1000 });
+
+        console.log("🔍 Raw API Response:", response);
+
+        if (!response?.data || !Array.isArray(response.data)) {
+          console.error("❌ Invalid API response:", response);
+          return;
+        }
+
+        // Debug: Log API response to check statuses and special flags
+        console.log("📊 API Response:", {
+          total: response.data.length,
+          statuses: response.data.reduce((acc: Record<string, number>, p: NainaHubProperty) => {
+            acc[p.status] = (acc[p.status] || 0) + 1;
+            return acc;
+          }, {}),
+          // Log actual values of isAcceptShortTerm and isPetFriendly
+          shortTermValues: response.data.map((p: NainaHubProperty) => p.isAcceptShortTerm).filter(Boolean),
+          petFriendlyValues: response.data.map((p: NainaHubProperty) => p.isPetFriendly).filter(Boolean),
+          shortTermCount: response.data.filter((p: NainaHubProperty) =>
+            p.isAcceptShortTerm && p.isAcceptShortTerm !== "no" && p.isAcceptShortTerm !== "false"
+          ).length,
+          petFriendlyCount: response.data.filter((p: NainaHubProperty) =>
+            p.isPetFriendly && p.isPetFriendly !== "no" && p.isPetFriendly !== "false"
+          ).length,
+        });
 
         // Filter out sold/rented properties - they should only appear in Recent Deals
         const activeProperties = response.data.filter(
@@ -365,6 +392,10 @@ export default function PublicPropertiesPage() {
         const closed = response.data
           .filter((p: NainaHubProperty) => p.status === "sold" || p.status === "rented")
           .slice(0, 10);
+        console.log("🏷️ Closed Deals:", {
+          count: closed.length,
+          properties: closed.map((p: NainaHubProperty) => ({ id: p.id, status: p.status, title: p.propertyTitleEn || p.propertyTitleTh })),
+        });
         setClosedDeals(closed);
 
         // Build projects map from active properties only
@@ -423,11 +454,19 @@ export default function PublicPropertiesPage() {
         setLatestListings(sortedByUpdate.slice(0, 8));
 
         // Filter short-term rental properties (excluding sold/rented)
-        const shortTerm = activeProperties.filter((p: NainaHubProperty) => p.isAcceptShortTerm);
+        // Check for truthy values that are not "no" or "false"
+        const shortTerm = activeProperties.filter((p: NainaHubProperty) => {
+          const val = p.isAcceptShortTerm;
+          return val && val !== "no" && val !== "false" && val !== "No" && val !== "False";
+        });
         setShortTermProperties(shortTerm.slice(0, 10));
 
         // Filter pet-friendly properties (excluding sold/rented)
-        const petFriendly = activeProperties.filter((p: NainaHubProperty) => p.isPetFriendly);
+        // Check for truthy values that are not "no" or "false"
+        const petFriendly = activeProperties.filter((p: NainaHubProperty) => {
+          const val = p.isPetFriendly;
+          return val && val !== "no" && val !== "false" && val !== "No" && val !== "False";
+        });
         setPetFriendlyProperties(petFriendly.slice(0, 10));
 
         // Fetch blog posts
@@ -1491,7 +1530,7 @@ export default function PublicPropertiesPage() {
           }`}>
             <span className="text-[#eb3838] text-sm font-medium">{t("sections.discover")}</span>
             <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.allProperties")}</h2>
-            <p className="text-gray-500 mt-2">{t("search.resultsFound", { count: total })}</p>
+            {/* <p className="text-gray-500 mt-2">{t("search.resultsFound", { count: total })}</p> */}
           </div>
 
           {loading ? (
@@ -1536,33 +1575,54 @@ export default function PublicPropertiesPage() {
                           </div>
                         )}
 
+                        {/* Status Badge */}
+                        <div className="absolute top-3 left-3 flex flex-col gap-2">
+                          {property.status === "available" ? (
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#22c55e] text-white text-xs font-medium rounded-md">
+                              <CheckCircle className="w-3.5 h-3.5" />
+                              <span>{t("property.confirmedAvailable")}</span>
+                            </div>
+                          ) : property.status === "sold" || property.status === "rented" ? (
+                            <div className={`flex items-center gap-1.5 px-2.5 py-1 text-white text-xs font-medium rounded-md ${property.status === "sold" ? "bg-[#eb3838]" : "bg-blue-500"}`}>
+                              <span>{t(`property.${property.status}`)}</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-500 text-white text-xs font-medium rounded-md">
+                              <span>{t(`property.${property.status}`)}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Listing Type Badge */}
                         <div className="absolute top-3 right-3 flex items-center gap-2">
                           {property.rentalRateNum && property.rentalRateNum > 0 ? (
-                            <span className="px-2 py-1 bg-[#eb3838] text-white text-xs font-medium rounded">
+                            <span className="px-2.5 py-1 bg-[#eb3838] text-white text-xs font-medium rounded-md">
                               {t("property.forRent")}
                             </span>
                           ) : (
-                            <span className="px-2 py-1 bg-gray-900 text-white text-xs font-medium rounded">
+                            <span className="px-2.5 py-1 bg-gray-900 text-white text-xs font-medium rounded-md">
                               {t("property.forSale")}
                             </span>
                           )}
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              toggleFavorite(property.id);
-                            }}
-                            className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md"
-                          >
-                            <Heart
-                              className={`w-4 h-4 transition-colors ${
-                                isFavorite(property.id)
-                                  ? "fill-[#eb3838] text-[#eb3838]"
-                                  : "text-gray-400 hover:text-[#eb3838]"
-                              }`}
-                            />
-                          </button>
                         </div>
+
+                        {/* Favorite */}
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleFavorite(property.id);
+                          }}
+                          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-md"
+                        >
+                          <Heart
+                            className={`w-4 h-4 transition-colors ${
+                              isFavorite(property.id)
+                                ? "fill-[#eb3838] text-[#eb3838]"
+                                : "text-gray-400 hover:text-[#eb3838]"
+                            }`}
+                          />
+                        </button>
                       </div>
 
                       <div className="p-4">
@@ -1623,16 +1683,22 @@ export default function PublicPropertiesPage() {
         </div>
       </section>
 
+      {/* Debug: Show closed deals count */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-yellow-100 p-2 text-center text-sm">
+          Debug: closedDeals.length = {closedDeals.length}
+        </div>
+      )}
+
       {/* Closed Deals Section */}
-      <section
-        id="closed-deals"
-        ref={(el) => { observerRefs.current["closed-deals"] = el; }}
-        className="py-16 bg-gray-100"
-      >
+      {closedDeals.length > 0 && (
+        <section
+          id="closed-deals"
+          ref={(el) => { observerRefs.current["closed-deals"] = el; }}
+          className="py-16 bg-gray-100"
+        >
         <div className="container mx-auto px-4">
-          <div className={`flex items-center justify-between mb-8 transition-all duration-1000 ${
-            isVisible["closed-deals"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}>
+          <div className="flex items-center justify-between mb-8">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Award className="w-6 h-6 text-[#eb3838]" />
@@ -1673,13 +1739,10 @@ export default function PublicPropertiesPage() {
             className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
             onScroll={() => checkSliderScroll(closedDealsSliderRef, "closed")}
           >
-            {closedDeals.map((property, index) => (
+            {closedDeals.map((property) => (
               <div
                 key={property.id}
-                className={`flex-shrink-0 w-72 transition-all duration-500 ${
-                  isVisible["closed-deals"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                className="flex-shrink-0 w-72"
               >
                 <Card className="group overflow-hidden border-0 rounded-xl bg-white h-full relative shadow-sm">
                   <div className="absolute inset-0 z-10 pointer-events-none">
@@ -1743,7 +1806,8 @@ export default function PublicPropertiesPage() {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* How It Works Section */}
       <section

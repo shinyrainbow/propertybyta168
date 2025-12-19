@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     const bedrooms = searchParams.get("bedrooms");
     const minPrice = searchParams.get("minPrice");
     const maxPrice = searchParams.get("maxPrice");
+    const status = searchParams.get("status");
 
     if (q) params.q = q;
     if (limit) params.limit = parseInt(limit);
@@ -31,6 +32,7 @@ export async function GET(request: Request) {
     if (bedrooms && bedrooms !== "all") params.bedrooms = parseInt(bedrooms);
     if (minPrice) params.minPrice = parseInt(minPrice);
     if (maxPrice) params.maxPrice = parseInt(maxPrice);
+    if (status) params.status = status as any;
 
     // Use getEnhancedProperties to merge with local extensions (recommend, tags, etc.)
     const response = await getEnhancedProperties(params, { includeHidden: true });
