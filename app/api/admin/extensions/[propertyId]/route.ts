@@ -58,7 +58,6 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     const extension = await upsertPropertyExtension(propertyId, {
       priority: body.priority,
       internalNotes: body.internalNotes,
-      isHidden: body.isHidden,
       isFeaturedPopular: body.isFeaturedPopular,
       mainPropertyType: body.mainPropertyType,
       subPropertyType: body.subPropertyType,

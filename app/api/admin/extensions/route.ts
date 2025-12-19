@@ -51,7 +51,6 @@ export async function POST(request: NextRequest) {
     const extension = await upsertPropertyExtension(body.externalPropertyId, {
       priority: body.priority,
       internalNotes: body.internalNotes,
-      isHidden: body.isHidden,
       isFeaturedPopular: body.isFeaturedPopular,
     });
 

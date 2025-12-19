@@ -70,7 +70,6 @@ model PropertyExtension {
   externalPropertyId String   @unique // ID from external NainaHub API
   priority           Int      @default(0) // For sorting/featuring
   internalNotes      String?  @db.Text // Admin notes
-  isHidden           Boolean  @default(false) // Hide from public listing
 
   // Property Type Classification
   mainPropertyType   String?  // "Living", "Land", "Commercial"

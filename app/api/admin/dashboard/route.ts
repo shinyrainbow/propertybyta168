@@ -41,7 +41,6 @@ export async function GET() {
       prisma.propertyExtension.count({
         where: {
           isFeaturedPopular: true,
-          isHidden: false,
         },
       }),
       // Review stats

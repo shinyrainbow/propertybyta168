@@ -48,7 +48,6 @@ interface PropertyExtension {
   externalPropertyId: string;
   priority: number;
   internalNotes: string | null;
-  isHidden: boolean;
   isFeaturedPopular: boolean;
   promotions: Promotion[];
   tags: PropertyTag[];
@@ -158,8 +157,6 @@ export default function PropertiesListPage() {
                 return p.extension?.promotions && p.extension.promotions.length > 0;
               case "closed_deal":
                 return p.status === "sold" || p.status === "rented";
-              case "hidden":
-                return p.extension?.isHidden;
               default:
                 return true;
             }
@@ -210,33 +207,6 @@ export default function PropertiesListPage() {
       }
     } catch (error) {
       console.error("Failed to toggle popular:", error);
-    } finally {
-      setUpdating(null);
-    }
-  };
-
-  const toggleHidden = async (propertyId: string, currentValue: boolean) => {
-    setUpdating(propertyId);
-    try {
-      const res = await fetch(`/api/admin/extensions/${propertyId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isHidden: !currentValue }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        // Update local state instead of refetching
-        setProperties((prev) =>
-          prev.map((p) =>
-            p.id === propertyId
-              ? { ...p, extension: data.data || { ...p.extension, isHidden: !currentValue } }
-              : p
-          )
-        );
-      }
-    } catch (error) {
-      console.error("Failed to toggle hidden:", error);
     } finally {
       setUpdating(null);
     }
@@ -444,9 +414,7 @@ export default function PropertiesListPage() {
           {properties.map((property) => (
             <Card
               key={property.id}
-              className={`p-4 hover:shadow-lg transition-shadow ${
-                property.extension?.isHidden ? "opacity-50" : ""
-              } ${property.status === "sold" || property.status === "rented" ? "border-green-300 bg-green-50/30" : ""}`}
+              className={`p-4 hover:shadow-lg transition-shadow ${property.status === "sold" || property.status === "rented" ? "border-green-300 bg-green-50/30" : ""}`}
             >
               <div className="flex flex-col lg:flex-row gap-4">
                 {/* Image */}

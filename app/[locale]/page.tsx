@@ -273,7 +273,8 @@ export default function PublicPropertiesPage() {
   const loadProperties = async () => {
     try {
       setLoading(true);
-      const params: FetchPropertiesParams = { page, limit: 12 };
+      // Fetch more to ensure we have 12 after filtering out sold/rented
+      const params: FetchPropertiesParams = { page, limit: 100 };
 
       if (propertyType && propertyType !== "all") params.propertyType = propertyType as any;
       if (listingType && listingType !== "all") params.listingType = listingType as any;
@@ -285,7 +286,7 @@ export default function PublicPropertiesPage() {
       const activeProperties = response.data.filter(
         (p: NainaHubProperty) => p.status !== "sold" && p.status !== "rented"
       );
-      setProperties(activeProperties);
+      setProperties(activeProperties.slice(0, 12));
       setTotal(activeProperties.length);
     } catch (error) {
       console.error("Error loading properties:", error);
@@ -451,7 +452,7 @@ export default function PublicPropertiesPage() {
           const dateB = new Date(b.updatedAt || 0).getTime();
           return dateB - dateA;
         });
-        setLatestListings(sortedByUpdate.slice(0, 8));
+        setLatestListings(sortedByUpdate.slice(0, 10));
 
         // Filter short-term rental properties (excluding sold/rented)
         // Check for truthy values that are not "no" or "false"
@@ -459,7 +460,7 @@ export default function PublicPropertiesPage() {
           const val = p.isAcceptShortTerm;
           return val && val !== "no" && val !== "false" && val !== "No" && val !== "False";
         });
-        setShortTermProperties(shortTerm.slice(0, 10));
+        setShortTermProperties(shortTerm);
 
         // Filter pet-friendly properties (excluding sold/rented)
         // Check for truthy values that are not "no" or "false"
@@ -467,7 +468,7 @@ export default function PublicPropertiesPage() {
           const val = p.isPetFriendly;
           return val && val !== "no" && val !== "false" && val !== "No" && val !== "False";
         });
-        setPetFriendlyProperties(petFriendly.slice(0, 10));
+        setPetFriendlyProperties(petFriendly);
 
         // Fetch blog posts
         const blogRes = await fetch("/api/public/blog?limit=3");
@@ -1465,7 +1466,7 @@ export default function PublicPropertiesPage() {
                         ) : null}
                         <div className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500 text-white text-xs font-medium rounded-md">
                           <span>🐾</span>
-                          <span>{t("sections.petFriendly")}</span>
+                          <span>{property.isPetFriendly}</span>
                         </div>
                       </div>
 
@@ -1563,7 +1564,7 @@ export default function PublicPropertiesPage() {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {properties.slice(0, 8).map((property, index) => (
+                {properties.map((property, index) => (
                   <Link
                     key={property.id}
                     href={`/property/${property.id}`}

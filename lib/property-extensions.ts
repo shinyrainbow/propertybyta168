@@ -33,8 +33,7 @@ export interface EnhancedPropertiesResponse {
  * Get properties from external API merged with local extensions
  */
 export async function getEnhancedProperties(
-  params: FetchPropertiesParams = {},
-  options: { includeHidden?: boolean } = {}
+  params: FetchPropertiesParams = {}
 ): Promise<EnhancedPropertiesResponse> {
   // 1. Fetch from external API
   const apiResponse = await fetchNainaHubProperties(params);
@@ -65,16 +64,11 @@ export async function getEnhancedProperties(
     extensions.map((e) => [e.externalPropertyId, e])
   );
 
-  // 4. Merge and optionally filter hidden properties
-  let enhancedData = apiResponse.data.map((property) => ({
+  // 4. Merge properties with extensions
+  const enhancedData = apiResponse.data.map((property) => ({
     ...property,
     extension: extensionMap.get(property.id) || null,
   }));
-
-  // Filter hidden properties unless includeHidden is true
-  if (!options.includeHidden) {
-    enhancedData = enhancedData.filter((p) => !p.extension?.isHidden);
-  }
 
   // 5. Sort by priority (higher first), then by original order
   enhancedData.sort((a, b) => {
@@ -126,7 +120,6 @@ export async function upsertPropertyExtension(
   data: {
     priority?: number;
     internalNotes?: string;
-    isHidden?: boolean;
     isFeaturedPopular?: boolean;
     mainPropertyType?: string | null;
     subPropertyType?: string | null;
@@ -252,7 +245,6 @@ export async function getPopularProperties(
   const popularExtensions = await prisma.propertyExtension.findMany({
     where: {
       isFeaturedPopular: true,
-      isHidden: false,
     },
     include: {
       tags: true,
@@ -337,7 +329,6 @@ export async function getClosedDeals(
   const extensions = await prisma.propertyExtension.findMany({
     where: {
       externalPropertyId: { in: propertyIds },
-      isHidden: false,
     },
     include: {
       tags: true,

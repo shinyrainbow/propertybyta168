@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     if (status) params.status = status as any;
 
     // Use getEnhancedProperties to merge with local extensions (recommend, tags, etc.)
-    const response = await getEnhancedProperties(params, { includeHidden: true });
+    const response = await getEnhancedProperties(params);
 
     return NextResponse.json(response);
   } catch (error) {

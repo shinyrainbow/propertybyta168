@@ -146,9 +146,20 @@ function SearchContent() {
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(projectParam);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Set default view mode based on screen size (list for mobile, grid for tablet/desktop)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setViewMode("list");
+      }
+    };
+    // Check on mount
+    handleResize();
+  }, []);
 
   // Filters - initialized from URL params
   const [searchText, setSearchText] = useState<string>(searchParams.get("q") || "");

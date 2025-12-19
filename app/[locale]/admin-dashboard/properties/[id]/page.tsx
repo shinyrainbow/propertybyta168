@@ -55,7 +55,6 @@ interface PropertyExtension {
   externalPropertyId: string;
   priority: number;
   internalNotes: string | null;
-  isHidden: boolean;
   isFeaturedPopular: boolean;
   mainPropertyType: string | null;
   subPropertyType: string | null;
@@ -115,7 +114,6 @@ export default function PropertyDetailsPage() {
     priority: 0,
     internalNotes: "",
     isFeaturedPopular: false,
-    isHidden: false,
     mainPropertyType: "" as string,
     subPropertyType: "" as string,
   });
@@ -147,7 +145,6 @@ export default function PropertyDetailsPage() {
             priority: data.data.extension.priority || 0,
             internalNotes: data.data.extension.internalNotes || "",
             isFeaturedPopular: data.data.extension.isFeaturedPopular || false,
-            isHidden: data.data.extension.isHidden || false,
             mainPropertyType: data.data.extension.mainPropertyType || autoMain || "",
             subPropertyType: data.data.extension.subPropertyType || autoSub || "",
           });
@@ -160,7 +157,6 @@ export default function PropertyDetailsPage() {
             priority: 0,
             internalNotes: "",
             isFeaturedPopular: false,
-            isHidden: false,
             mainPropertyType: autoMain || "",
             subPropertyType: autoSub || "",
           });
@@ -478,27 +474,6 @@ export default function PropertyDetailsPage() {
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
                     extensionForm.isFeaturedPopular ? "translate-x-6" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
-
-            {/* Hidden Toggle */}
-            <div className="flex items-center justify-between py-3 border-b">
-              <div className="flex items-center gap-2">
-                <XCircle className="w-5 h-5 text-gray-500" />
-                <span>ซ่อนจากหน้าเว็บ</span>
-              </div>
-              <button
-                type="button"
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  extensionForm.isHidden ? "bg-gray-500" : "bg-gray-200"
-                }`}
-                onClick={() => setExtensionForm({ ...extensionForm, isHidden: !extensionForm.isHidden })}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    extensionForm.isHidden ? "translate-x-6" : "translate-x-1"
                   }`}
                 />
               </button>
