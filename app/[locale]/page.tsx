@@ -1237,9 +1237,7 @@ export default function PublicPropertiesPage() {
         >
           <div className="container mx-auto px-4">
             {/* Section Header */}
-            <div className={`flex flex-col md:flex-row md:items-end md:justify-between mb-10 transition-all duration-700 ${
-              isVisible["short-term"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
               <div>
                 <span className="text-[#eb3838] text-sm font-medium">{t("sections.specialOffer")}</span>
                 <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.shortTermRental")}</h2>
@@ -1279,14 +1277,11 @@ export default function PublicPropertiesPage() {
               className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
               onScroll={() => checkSliderScroll(shortTermSliderRef, "shortTerm")}
             >
-              {shortTermProperties.map((property, index) => (
+              {shortTermProperties.map((property) => (
                 <Link
                   key={property.id}
                   href={`/property/${property.id}`}
-                  className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
-                    isVisible["short-term"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: `${index * 80}ms` }}
+                  className="flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block"
                 >
                   <div className="property-card group h-full flex flex-col">
                     {/* Image Section */}
@@ -1382,9 +1377,7 @@ export default function PublicPropertiesPage() {
         >
           <div className="container mx-auto px-4">
             {/* Section Header */}
-            <div className={`flex flex-col md:flex-row md:items-end md:justify-between mb-10 transition-all duration-700 ${
-              isVisible["pet-friendly"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
               <div>
                 <span className="text-[#eb3838] text-sm font-medium">{t("sections.petLovers")}</span>
                 <h2 className="text-3xl font-bold text-gray-900 mt-2">{t("sections.petFriendly")}</h2>
@@ -1424,14 +1417,11 @@ export default function PublicPropertiesPage() {
               className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
               onScroll={() => checkSliderScroll(petFriendlySliderRef, "petFriendly")}
             >
-              {petFriendlyProperties.map((property, index) => (
+              {petFriendlyProperties.map((property) => (
                 <Link
                   key={property.id}
                   href={`/property/${property.id}`}
-                  className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
-                    isVisible["pet-friendly"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: `${index * 80}ms` }}
+                  className="flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block"
                 >
                   <div className="property-card group h-full flex flex-col">
                     {/* Image Section */}
