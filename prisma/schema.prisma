@@ -79,11 +79,6 @@ model PropertyExtension {
   // Popular Properties
   isFeaturedPopular  Boolean  @default(false) // Show in popular section
 
-  // Closed Deals
-  closedDealDate     DateTime? // When the deal was closed
-  closedDealType     String?   // "sold" or "rented"
-  closedDealPrice    Float?    // Final deal price
-
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -92,7 +87,6 @@ model PropertyExtension {
   @@index([externalPropertyId])
   @@index([priority])
   @@index([isFeaturedPopular])
-  @@index([closedDealDate])
 }
 
 model PropertyTag {

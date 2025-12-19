@@ -94,6 +94,7 @@ export interface FetchPropertiesParams {
   bedrooms?: number;
   page?: number;
   limit?: number;
+  status?: PropertyStatus | "all";
 }
 
 /**
@@ -121,6 +122,7 @@ export async function fetchNainaHubProperties(
   if (params.bedrooms) searchParams.set("bedrooms", params.bedrooms.toString());
   if (params.page) searchParams.set("page", params.page.toString());
   if (params.limit) searchParams.set("limit", params.limit.toString());
+  if (params.status) searchParams.set("status", params.status);
 
   const url = `${NAINAHUB_API_URL}?${searchParams.toString()}`;
 

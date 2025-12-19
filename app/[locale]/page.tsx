@@ -280,8 +280,12 @@ export default function PublicPropertiesPage() {
       if (maxPrice) params.maxPrice = parseInt(maxPrice);
 
       const response = await fetchPropertiesFromAPI(params);
-      setProperties(response.data);
-      setTotal(response.pagination.total);
+      // Filter out sold/rented - they should only appear in Recent Deals
+      const activeProperties = response.data.filter(
+        (p: NainaHubProperty) => p.status !== "sold" && p.status !== "rented"
+      );
+      setProperties(activeProperties);
+      setTotal(activeProperties.length);
     } catch (error) {
       console.error("Error loading properties:", error);
       toast.error("Failed to load properties");
@@ -342,23 +346,30 @@ export default function PublicPropertiesPage() {
       try {
         const response = await fetchPropertiesFromAPI({});
 
+        // Filter out sold/rented properties - they should only appear in Recent Deals
+        const activeProperties = response.data.filter(
+          (p: NainaHubProperty) => p.status !== "sold" && p.status !== "rented"
+        );
+
         // Fetch recommended/popular properties from the dedicated endpoint
         const popularRes = await fetch("/api/public/popular");
         const popularData = await popularRes.json();
         if (popularData.success && popularData.data.length > 0) {
           setPopularProperties(popularData.data);
         } else {
-          // Fallback to first 10 if no recommended properties
-          setPopularProperties(response.data.slice(0, 10));
+          // Fallback to first 10 active properties if no recommended properties
+          setPopularProperties(activeProperties.slice(0, 10));
         }
 
+        // Closed Deals section - ONLY sold/rented properties
         const closed = response.data
           .filter((p: NainaHubProperty) => p.status === "sold" || p.status === "rented")
           .slice(0, 10);
         setClosedDeals(closed);
 
+        // Build projects map from active properties only
         const projectsMap = new Map<string, { count: number; image: string; project: any }>();
-        response.data.forEach((property: NainaHubProperty) => {
+        activeProperties.forEach((property: NainaHubProperty) => {
           if (property.project) {
             const existing = projectsMap.get(property.projectCode);
             if (existing) {
@@ -403,20 +414,20 @@ export default function PublicPropertiesPage() {
           }
         }, 100);
 
-        // Sort by updatedAt for latest listings
-        const sortedByUpdate = [...response.data].sort((a, b) => {
+        // Sort by updatedAt for latest listings (excluding sold/rented)
+        const sortedByUpdate = [...activeProperties].sort((a, b) => {
           const dateA = new Date(a.updatedAt || 0).getTime();
           const dateB = new Date(b.updatedAt || 0).getTime();
           return dateB - dateA;
         });
         setLatestListings(sortedByUpdate.slice(0, 8));
 
-        // Filter short-term rental properties
-        const shortTerm = response.data.filter((p: NainaHubProperty) => p.isAcceptShortTerm);
+        // Filter short-term rental properties (excluding sold/rented)
+        const shortTerm = activeProperties.filter((p: NainaHubProperty) => p.isAcceptShortTerm);
         setShortTermProperties(shortTerm.slice(0, 10));
 
-        // Filter pet-friendly properties
-        const petFriendly = response.data.filter((p: NainaHubProperty) => p.isPetFriendly);
+        // Filter pet-friendly properties (excluding sold/rented)
+        const petFriendly = activeProperties.filter((p: NainaHubProperty) => p.isPetFriendly);
         setPetFriendlyProperties(petFriendly.slice(0, 10));
 
         // Fetch blog posts

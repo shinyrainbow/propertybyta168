@@ -130,9 +130,6 @@ export async function upsertPropertyExtension(
     isFeaturedPopular?: boolean;
     mainPropertyType?: string | null;
     subPropertyType?: string | null;
-    closedDealDate?: Date | null;
-    closedDealType?: string | null;
-    closedDealPrice?: number | null;
   }
 ): Promise<PropertyExtensionWithRelations> {
   return prisma.propertyExtension.upsert({
@@ -256,7 +253,6 @@ export async function getPopularProperties(
     where: {
       isFeaturedPopular: true,
       isHidden: false,
-      closedDealDate: null, // Not closed deals
     },
     include: {
       tags: true,
@@ -279,11 +275,12 @@ export async function getPopularProperties(
   // 3. Create lookup map for API properties
   const apiPropertyMap = new Map(apiResponse.data.map((p) => [p.id, p]));
 
-  // 4. Merge and return
+  // 4. Merge and return (excluding sold/rented properties based on NainaHub status)
   const popularProperties: EnhancedProperty[] = [];
   for (const ext of popularExtensions) {
     const apiProperty = apiPropertyMap.get(ext.externalPropertyId);
-    if (apiProperty) {
+    // Only include if property exists and is not sold/rented
+    if (apiProperty && apiProperty.status !== "sold" && apiProperty.status !== "rented") {
       popularProperties.push({
         ...apiProperty,
         extension: ext,
@@ -318,7 +315,9 @@ export async function getClosedDeals(
   limit: number = 8
 ): Promise<EnhancedProperty[]> {
   // 1. Fetch all properties from API
-  const apiResponse = await fetchNainaHubProperties({ limit: 100 });
+  const apiResponse = await fetchNainaHubProperties({
+    limit: 100,
+  });
 
   if (!apiResponse.success) {
     return [];
@@ -359,36 +358,4 @@ export async function getClosedDeals(
     }));
 
   return closedDeals;
-}
-
-/**
- * Mark a property as a closed deal
- */
-export async function markAsClosedDeal(
-  externalPropertyId: string,
-  data: {
-    closedDealType: "sold" | "rented";
-    closedDealDate?: Date;
-    closedDealPrice?: number;
-  }
-): Promise<PropertyExtensionWithRelations> {
-  return upsertPropertyExtension(externalPropertyId, {
-    closedDealDate: data.closedDealDate || new Date(),
-    closedDealType: data.closedDealType,
-    closedDealPrice: data.closedDealPrice,
-    isFeaturedPopular: false, // Remove from popular when closed
-  });
-}
-
-/**
- * Remove closed deal status from a property
- */
-export async function removeClosedDeal(
-  externalPropertyId: string
-): Promise<PropertyExtensionWithRelations> {
-  return upsertPropertyExtension(externalPropertyId, {
-    closedDealDate: null,
-    closedDealType: null,
-    closedDealPrice: null,
-  });
 }

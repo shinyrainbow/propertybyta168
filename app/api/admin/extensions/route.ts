@@ -53,9 +53,6 @@ export async function POST(request: NextRequest) {
       internalNotes: body.internalNotes,
       isHidden: body.isHidden,
       isFeaturedPopular: body.isFeaturedPopular,
-      closedDealDate: body.closedDealDate ? new Date(body.closedDealDate) : body.closedDealDate,
-      closedDealType: body.closedDealType,
-      closedDealPrice: body.closedDealPrice,
     });
 
     return NextResponse.json({

@@ -267,11 +267,16 @@ function SearchContent() {
         console.log("🚀 API call params:", params);
         const response = await fetchPropertiesFromAPI(params);
         console.log("✅ API response received:", response.data.length, "properties");
-        setAllProperties(response.data);
 
-        // Generate projects from properties
+        // Filter out sold/rented - they should only appear in Recent Deals on homepage
+        const activeProperties = response.data.filter(
+          (p: NainaHubProperty) => p.status !== "sold" && p.status !== "rented"
+        );
+        setAllProperties(activeProperties);
+
+        // Generate projects from active properties only
         const projectsMap = new Map<string, { count: number; image: string; project: any }>();
-        response.data.forEach((property: NainaHubProperty) => {
+        activeProperties.forEach((property: NainaHubProperty) => {
           if (property.project) {
             const existing = projectsMap.get(property.projectCode);
             if (existing) {
@@ -469,18 +474,41 @@ function SearchContent() {
                   {t("common.search")}
                 </label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
                   <Input
                     type="text"
                     placeholder={t("searchPage.searchPlaceholder")}
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
+                    onFocus={() => setShowSuggestions(true)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
+                        setShowSuggestions(false);
                         handleSearch();
                       }
                     }}
                     className="pl-10 h-10 border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400"
+                  />
+                  <SearchSuggestions
+                    searchText={searchText}
+                    onSelect={(value) => {
+                      setSearchText(value);
+                      setShowSuggestions(false);
+                      // Trigger search after selecting suggestion
+                      setTimeout(() => {
+                        const params = new URLSearchParams();
+                        params.set("q", value);
+                        if (selectedProject) params.set("project", selectedProject);
+                        if (propertyType && propertyType !== "all") params.set("propertyType", propertyType);
+                        if (listingType && listingType !== "all") params.set("listingType", listingType);
+                        if (bedrooms && bedrooms !== "all") params.set("bedrooms", bedrooms);
+                        if (minPrice) params.set("minPrice", minPrice);
+                        if (maxPrice) params.set("maxPrice", maxPrice);
+                        router.push(`/search?${params.toString()}`, { scroll: false });
+                      }, 0);
+                    }}
+                    isOpen={showSuggestions}
+                    onClose={() => setShowSuggestions(false)}
                   />
                 </div>
               </div>

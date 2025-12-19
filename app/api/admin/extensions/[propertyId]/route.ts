@@ -62,9 +62,6 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       isFeaturedPopular: body.isFeaturedPopular,
       mainPropertyType: body.mainPropertyType,
       subPropertyType: body.subPropertyType,
-      closedDealDate: body.closedDealDate ? new Date(body.closedDealDate) : body.closedDealDate,
-      closedDealType: body.closedDealType,
-      closedDealPrice: body.closedDealPrice,
     });
 
     return NextResponse.json({
