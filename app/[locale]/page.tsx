@@ -1683,13 +1683,6 @@ export default function PublicPropertiesPage() {
         </div>
       </section>
 
-      {/* Debug: Show closed deals count */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="bg-yellow-100 p-2 text-center text-sm">
-          Debug: closedDeals.length = {closedDeals.length}
-        </div>
-      )}
-
       {/* Closed Deals Section */}
       {closedDeals.length > 0 && (
         <section
