@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import {
   ArrowLeft,
   Bed,
@@ -36,6 +37,7 @@ import {
   type MainPropertyType,
   type SubPropertyType,
 } from "@/lib/propertyTypes";
+import { generatePropertySlug } from "@/lib/slug";
 
 interface Promotion {
   id: string;
@@ -103,6 +105,7 @@ interface Property {
 export default function PropertyDetailsPage() {
   const params = useParams();
   const id = params.id as string;
+  const locale = useLocale();
 
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -605,7 +608,7 @@ export default function PropertyDetailsPage() {
 
           {/* View on Website */}
           <Card className="p-6">
-            <Link href={`/property/${property.id}`} target="_blank">
+            <Link href={`/property/${generatePropertySlug(property, locale)}`} target="_blank">
               <Button variant="outline" className="w-full">
                 ดูบนเว็บไซต์
               </Button>

@@ -33,6 +33,7 @@ import { Link } from "@/i18n/routing";
 import Header from "@/components/layout/header";
 import { getProperties, type Property as DataProperty } from "@/lib/data";
 import { useTranslations, useLocale } from "next-intl";
+import { generatePropertySlug } from "@/lib/slug";
 
 interface Property {
   id: string;
@@ -445,7 +446,7 @@ export default function PropertiesPage() {
                     {properties.map((property) => (
                       <Link
                         key={property.id}
-                        href={`/property/${property.id}`}
+                        href={`/property/${generatePropertySlug(property, locale)}`}
                       >
                         <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border-0 bg-white h-full">
                           {/* Image */}
@@ -610,7 +611,7 @@ export default function PropertiesPage() {
                     {properties.map((property) => (
                       <Link
                         key={property.id}
-                        href={`/property/${property.id}`}
+                        href={`/property/${generatePropertySlug(property, locale)}`}
                       >
                         <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border-0 bg-white">
                           <div className="flex flex-col sm:flex-row">

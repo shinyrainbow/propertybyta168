@@ -52,6 +52,7 @@ import {
   type NainaHubResponse,
   getPropertyAddressString,
 } from "@/lib/nainahub";
+import { generatePropertySlug } from "@/lib/slug";
 import { SearchSuggestions } from "@/components/search/search-suggestions";
 
 // Hero background images for slideshow
@@ -717,34 +718,34 @@ export default function PublicPropertiesPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 bg-gray-100">
+      <section className="py-6 md:py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-8 lg:gap-16">
-            <div className="text-center flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Building2 className="w-6 h-6 text-[#eb3838]" />
+          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap md:justify-center md:gap-8 lg:gap-16">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-[#eb3838]/10 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
+                <Building2 className="w-4 h-4 md:w-6 md:h-6 text-[#eb3838]" />
               </div>
               <div className="text-left">
-                <h3 className="font-semibold text-gray-900 text-sm">{t("features.wideSelection")}</h3>
-                <p className="text-xs text-gray-500">{t("features.wideSelectionDesc")}</p>
+                <h3 className="font-semibold text-gray-900 text-xs md:text-sm">{t("features.wideSelection")}</h3>
+                <p className="text-[10px] md:text-xs text-gray-500 leading-tight">{t("features.wideSelectionDesc")}</p>
               </div>
             </div>
-            <div className="text-center flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Shield className="w-6 h-6 text-[#eb3838]" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-[#eb3838]/10 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
+                <Shield className="w-4 h-4 md:w-6 md:h-6 text-[#eb3838]" />
               </div>
               <div className="text-left">
-                <h3 className="font-semibold text-gray-900 text-sm">{t("features.trusted")}</h3>
-                <p className="text-xs text-gray-500">{t("features.trustedDesc")}</p>
+                <h3 className="font-semibold text-gray-900 text-xs md:text-sm">{t("features.trusted")}</h3>
+                <p className="text-[10px] md:text-xs text-gray-500 leading-tight">{t("features.trustedDesc")}</p>
               </div>
             </div>
-            <div className="text-center flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Users className="w-6 h-6 text-[#eb3838]" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-[#eb3838]/10 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
+                <Users className="w-4 h-4 md:w-6 md:h-6 text-[#eb3838]" />
               </div>
               <div className="text-left">
-                <h3 className="font-semibold text-gray-900 text-sm">{t("features.expertTeam")}</h3>
-                <p className="text-xs text-gray-500">
+                <h3 className="font-semibold text-gray-900 text-xs md:text-sm">{t("features.expertTeam")}</h3>
+                <p className="text-[10px] md:text-xs text-gray-500 leading-tight">
                   {t("features.expertTeamDesc").split("__FREE__").map((part, i, arr) =>
                     i < arr.length - 1 ? (
                       <span key={i}>{part}<span className="text-[#eb3838] font-semibold">{t("features.free")}</span></span>
@@ -753,13 +754,13 @@ export default function PublicPropertiesPage() {
                 </p>
               </div>
             </div>
-            <div className="text-center flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#eb3838]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-6 h-6 text-[#eb3838]" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-[#eb3838]/10 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-4 h-4 md:w-6 md:h-6 text-[#eb3838]" />
               </div>
               <div className="text-left">
-                <h3 className="font-semibold text-gray-900 text-sm">{t("features.bestPrice")}</h3>
-                <p className="text-xs text-gray-500">{t("features.bestPriceDesc")}</p>
+                <h3 className="font-semibold text-gray-900 text-xs md:text-sm">{t("features.bestPrice")}</h3>
+                <p className="text-[10px] md:text-xs text-gray-500 leading-tight">{t("features.bestPriceDesc")}</p>
               </div>
             </div>
           </div>
@@ -888,7 +889,7 @@ export default function PublicPropertiesPage() {
             {popularProperties.slice(0, 10).map((property, index) => (
               <Link
                 key={property.id}
-                href={`/property/${property.id}`}
+                href={`/property/${generatePropertySlug(property, locale)}`}
                 className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
                   isVisible["popular"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
@@ -1088,7 +1089,7 @@ export default function PublicPropertiesPage() {
             {latestListings.slice(0, 10).map((property, index) => (
               <Link
                 key={property.id}
-                href={`/property/${property.id}`}
+                href={`/property/${generatePropertySlug(property, locale)}`}
                 className={`flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block transition-all duration-500 ${
                   isVisible["latest"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
@@ -1281,7 +1282,7 @@ export default function PublicPropertiesPage() {
               {shortTermProperties.map((property) => (
                 <Link
                   key={property.id}
-                  href={`/property/${property.id}`}
+                  href={`/property/${generatePropertySlug(property, locale)}`}
                   className="flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block"
                 >
                   <div className="property-card group h-full flex flex-col">
@@ -1315,7 +1316,7 @@ export default function PublicPropertiesPage() {
                         ) : null}
                         <div className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500 text-white text-xs font-medium rounded-md">
                           <Calendar className="w-3.5 h-3.5" />
-                          <span>{t("sections.shortTermRental")}</span>
+                          <span>{property.isAcceptShortTerm}</span>
                         </div>
                       </div>
 
@@ -1432,7 +1433,7 @@ export default function PublicPropertiesPage() {
               {petFriendlyProperties.map((property) => (
                 <Link
                   key={property.id}
-                  href={`/property/${property.id}`}
+                  href={`/property/${generatePropertySlug(property, locale)}`}
                   className="flex-shrink-0 w-80 lg:w-[calc(33.333%-16px)] block"
                 >
                   <div className="property-card group h-full flex flex-col">
@@ -1567,7 +1568,7 @@ export default function PublicPropertiesPage() {
                 {properties.map((property, index) => (
                   <Link
                     key={property.id}
-                    href={`/property/${property.id}`}
+                    href={`/property/${generatePropertySlug(property, locale)}`}
                     className={`block transition-all duration-500 ${
                       isVisible["properties"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                     }`}
@@ -1990,13 +1991,14 @@ export default function PublicPropertiesPage() {
               {t("cta.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                onClick={() => { navigator.clipboard.writeText("0962622888"); toast.success(t("common.copiedPhone")); }}
-                className="bg-white text-gray-900! hover:bg-gray-100 font-medium px-8"
-              >
-                <Phone className="w-5 h-5 mr-2" />
-                096-262-2888
-              </Button>
+              <a href="tel:0962622888">
+                <Button
+                  className="bg-white text-gray-900! hover:bg-gray-100 font-medium px-8"
+                >
+                  <Phone className="w-5 h-5 mr-2" />
+                  096-262-2888
+                </Button>
+              </a>
               <Button
                 onClick={() => router.push("/contact")}
                 variant="outline"
@@ -2038,7 +2040,28 @@ export default function PublicPropertiesPage() {
       <PartnersSection />
 
       {/* Footer */}
-      <Footer />
+      <Footer
+        seoContent={
+          <div className="space-y-6 text-gray-300">
+            <div>
+              <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                {t("seoHome.title1")}
+              </h2>
+              <p className="text-sm leading-relaxed">
+                {t("seoHome.desc1")}
+              </p>
+            </div>
+            <div>
+              <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                {t("seoHome.title2")}
+              </h2>
+              <p className="text-sm leading-relaxed">
+                {t("seoHome.desc2")}
+              </p>
+            </div>
+          </div>
+        }
+      />
     </div>
   );
 }

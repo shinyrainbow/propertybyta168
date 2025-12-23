@@ -9,6 +9,7 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Bed, Bath, Maximize, ChevronLeft, ChevronRight } from "lucide-react";
 import type { NainaHubProperty } from "@/lib/nainahub";
+import { generatePropertySlug } from "@/lib/slug";
 
 // Fix Leaflet default icon issue
 if (typeof window !== "undefined") {
@@ -106,6 +107,7 @@ interface PropertyMapProps {
   formatPrice: (price: number | null) => string | null;
   getSize: (property: NainaHubProperty) => string;
   t: (key: string) => string;
+  locale?: string;
 }
 
 // Component to display multiple properties in popup
@@ -114,11 +116,13 @@ function MultiPropertyPopup({
   formatPrice,
   getSize,
   t,
+  locale = "th",
 }: {
   properties: NainaHubProperty[];
   formatPrice: (price: number | null) => string | null;
   getSize: (property: NainaHubProperty) => string;
   t: (key: string) => string;
+  locale?: string;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const property = properties[currentIndex];
@@ -192,7 +196,7 @@ function MultiPropertyPopup({
           {getSize(property)} sqm
         </span>
       </div>
-      <Link href={`/property/${property.id}`} target="_blank">
+      <Link href={`/property/${generatePropertySlug(property, locale)}`} target="_blank">
         <Button size="sm" className="w-full bg-[#C9A227] hover:bg-[#A8841F] text-white">
           {t("common.viewDetails")}
         </Button>
@@ -208,6 +212,7 @@ export default function PropertyMap({
   formatPrice,
   getSize,
   t,
+  locale = "th",
 }: PropertyMapProps) {
   if (!customIcon) return null;
 
@@ -291,6 +296,7 @@ export default function PropertyMap({
                 formatPrice={formatPrice}
                 getSize={getSize}
                 t={t}
+                locale={locale}
               />
             </Popup>
           </Marker>

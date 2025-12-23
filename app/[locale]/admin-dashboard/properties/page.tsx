@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import {
   Search,
   Eye,
@@ -29,6 +30,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { generatePropertySlug } from "@/lib/slug";
 
 interface Promotion {
   id: string;
@@ -96,6 +98,7 @@ const PROMOTION_TYPES = [
 ];
 
 export default function PropertiesListPage() {
+  const locale = useLocale();
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
@@ -556,7 +559,7 @@ export default function PropertiesListPage() {
 
 
                   {/* View Property */}
-                  <Link href={`/property/${property.id}`} target="_blank">
+                  <Link href={`/property/${generatePropertySlug(property, locale)}`} target="_blank">
                     <Button variant="outline" size="sm" className="w-full text-gray-900">
                       <Eye className="w-4 h-4 mr-1" />
                       ดู

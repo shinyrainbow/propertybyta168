@@ -34,6 +34,7 @@ import Footer from "@/components/layout/footer";
 import { PropertyJsonLd } from "@/components/seo/json-ld";
 import ShareButton from "@/components/property/share-button";
 import { getAmenityLabelByLocale } from "@/lib/amenities";
+import { generatePropertySlug, isUUID } from "@/lib/slug";
 
 interface Property {
   id: string;
@@ -85,6 +86,7 @@ interface Property {
     projectLocationTextEn?: string | null;
   } | null;
   amenities?: string[];
+  isAcceptShortTerm?: string | null;
   note: string | null;
   noteEn: string | null;
   noteZh: string | null;
@@ -689,21 +691,31 @@ export default function PropertyDetailPage() {
   useEffect(() => {
     const loadProperty = async () => {
       try {
-        const propertyId = params.id as string;
+        const slug = params.slug as string;
 
-        // Fetch property from NainaHub API
-        const response = await fetch(`/api/nainahub/property/${propertyId}`);
+        // Fetch property from NainaHub API (supports both UUID and slug)
+        const response = await fetch(`/api/nainahub/property/${slug}`);
         if (!response.ok) {
           throw new Error("Property not found");
         }
         const propertyData = await response.json();
         setProperty(propertyData);
 
+        // Generate the canonical slug for the current locale
+        const canonicalSlug = generatePropertySlug(propertyData, locale);
+
+        // Redirect to locale-appropriate slug if:
+        // 1. Accessed via UUID, or
+        // 2. Current slug doesn't match the expected slug for this locale
+        if (propertyData.agentPropertyCode && slug !== canonicalSlug) {
+          router.replace(`/property/${canonicalSlug}`, { scroll: false });
+        }
+
         // Fetch recommended properties - prioritize same project
         const recommendedResponse = await fetch(`/api/nainahub/properties?limit=50`);
         if (recommendedResponse.ok) {
           const recommendedData = await recommendedResponse.json();
-          const allProperties = recommendedData.data.filter((p: any) => p.id !== propertyId);
+          const allProperties = recommendedData.data.filter((p: any) => p.id !== propertyData.id);
 
           // First, get properties from the same project
           const sameProjectProperties = propertyData.projectCode
@@ -727,10 +739,10 @@ export default function PropertyDetailPage() {
       }
     };
 
-    if (params.id) {
+    if (params.slug) {
       loadProperty();
     }
-  }, [params.id]);
+  }, [params.slug, router, locale]);
 
   const formatPrice = (price: number | null) => {
     if (!price) return null;
@@ -1055,22 +1067,31 @@ export default function PropertyDetailPage() {
                     : "opacity-0 translate-y-8"
                 }`}
               >
-                <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
+                <div className="flex items-center gap-2 text-sm text-gray-400 mb-2 flex-wrap">
                   <span className="bg-[#eb3838] text-white px-2 py-1 rounded-full">
                     {getPropertyTypeLabel(property.propertyType)}
                   </span>
+                  {property.isAcceptShortTerm && property.isAcceptShortTerm !== "no" && property.isAcceptShortTerm !== "false" && (
+                    <span className="flex items-center gap-1 bg-purple-600 text-white px-2 py-1 rounded-full">
+                      <Calendar className="w-3 h-3" />
+                      {property.isAcceptShortTerm}
+                    </span>
+                  )}
                   <span>|</span>
                   <span>{t("common.code")}: {property.agentPropertyCode}</span>
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                  {getPropertyTitle(property)}
+                  {property.project ? (
+                    <>
+                      {getProjectName(property.project)}
+                      <span className="block text-xl md:text-2xl font-semibold text-gray-700 mt-1">
+                        {getPropertyTitle(property)}
+                      </span>
+                    </>
+                  ) : (
+                    getPropertyTitle(property)
+                  )}
                 </h1>
-                {property.project && (
-                  <div className="flex items-center text-gray-600 mb-2">
-                    <Building2 className="w-5 h-5 mr-2 text-[#eb3838]" />
-                    {getProjectName(property.project)}
-                  </div>
-                )}
                 {getPropertyAddressString(property, locale) && (
                   <div className="flex items-center text-gray-600">
                     <MapPin className="w-5 h-5 mr-2 text-[#eb3838]" />
@@ -1107,6 +1128,16 @@ export default function PropertyDetailPage() {
                     </div>
                   )}
                 </div>
+                {property.isAcceptShortTerm && property.isAcceptShortTerm !== "no" && property.isAcceptShortTerm !== "false" && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center gap-2">
+                      <span className="flex items-center gap-1.5 bg-purple-600 text-white px-3 py-1.5 rounded-full text-sm font-medium">
+                        <Calendar className="w-4 h-4" />
+                        {property.isAcceptShortTerm}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </Card>
 
               {/* Features Grid */}
@@ -1196,10 +1227,28 @@ export default function PropertyDetailPage() {
                 </div>
               </Card>
 
+              {/* Note */}
+              {getPropertyNote(property) && (
+                <Card
+                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-300 ${
+                    isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8"
+                  }`}
+                >
+                  <h2 className="text-lg font-bold text-gray-900 mb-4">
+                    {t("propertyDetail.note")}
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                    {getPropertyNote(property)}
+                  </p>
+                </Card>
+              )}
+
               {/* Description */}
               {(property.descriptionTh || property.descriptionEn) && (
                 <Card
-                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-300 ${
+                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-[320ms] ${
                     isVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-8"
@@ -1244,24 +1293,6 @@ export default function PropertyDetailPage() {
                   </Card>
                 );
               })()}
-
-              {/* Note */}
-              {getPropertyNote(property) && (
-                <Card
-                  className={`p-6 shadow-lg bg-white border border-gray-200 transition-all duration-700 delay-[350ms] ${
-                    isVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-8"
-                  }`}
-                >
-                  <h2 className="text-lg font-bold text-gray-900 mb-4">
-                    {t("propertyDetail.note")}
-                  </h2>
-                  <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                    {getPropertyNote(property)}
-                  </p>
-                </Card>
-              )}
 
               {/* Amenities - Only show if property has amenities */}
               {property.amenities && property.amenities.length > 0 && (
@@ -1391,13 +1422,14 @@ export default function PropertyDetailPage() {
                   {/* Contact Buttons */}
                   <div className="space-y-3">
                     {/* Phone Button */}
-                    <Button
-                      onClick={() => copyToClipboard("0962622888", "phone")}
-                      className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
-                    >
-                      <Phone className="w-5 h-5 mr-2" />
-                      {copiedText === "phone" ? "คัดลอกแล้ว!" : "096-262-2888"}
-                    </Button>
+                    <a href="tel:0962622888" className="block">
+                      <Button
+                        className="w-full bg-[#eb3838] hover:bg-[#d32f2f] text-white py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                      >
+                        <Phone className="w-5 h-5 mr-2" />
+                        096-262-2888
+                      </Button>
+                    </a>
                     <Button
                       variant="outline"
                       className="w-full border-2 border-[#eb3838] text-[#eb3838] hover:bg-[#eb3838] hover:text-white py-6 text-base font-semibold rounded-xl transition-all"
@@ -1554,7 +1586,7 @@ export default function PropertyDetailPage() {
                 {recommendedProperties.map((rec, index) => (
                   <Link
                     key={rec.id}
-                    href={`/property/${rec.id}`}
+                    href={`/property/${generatePropertySlug(rec, locale)}`}
                     className={`group block transition-all duration-700 ${
                       isVisible
                         ? "opacity-100 translate-y-0"
@@ -1580,7 +1612,7 @@ export default function PropertyDetailPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                         {/* Badges */}
-                        <div className="absolute top-3 left-3 flex gap-1">
+                        <div className="absolute top-3 left-3 flex flex-wrap gap-1">
                           {rec.rentalRateNum != null &&
                             rec.rentalRateNum > 0 && (
                               <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-emerald-500">
@@ -1590,6 +1622,12 @@ export default function PropertyDetailPage() {
                           {rec.sellPriceNum != null && rec.sellPriceNum > 0 && (
                             <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-amber-500">
                               {t("property.forSale")}
+                            </span>
+                          )}
+                          {rec.isAcceptShortTerm && rec.isAcceptShortTerm !== "no" && rec.isAcceptShortTerm !== "false" && (
+                            <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold text-white bg-purple-600">
+                              <Calendar className="w-3 h-3" />
+                              {rec.isAcceptShortTerm}
                             </span>
                           )}
                         </div>

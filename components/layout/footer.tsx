@@ -4,8 +4,13 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { MapPin, Phone, Mail, ChevronRight } from "lucide-react";
+import { type ReactNode } from "react";
 
-export default function Footer() {
+interface FooterProps {
+  seoContent?: ReactNode;
+}
+
+export default function Footer({ seoContent }: FooterProps) {
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
   const tFooter = useTranslations("footerNav");
@@ -28,6 +33,15 @@ export default function Footer() {
     <footer className="bg-[#1a1a1a]">
       {/* Red Accent Line */}
       <div className="h-1 bg-[#eb3838]" />
+
+      {/* SEO Content Section */}
+      {seoContent && (
+        <div className="border-b border-white/10">
+          <div className="container mx-auto px-4 py-10 lg:py-12">
+            {seoContent}
+          </div>
+        </div>
+      )}
 
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-12 lg:py-16">

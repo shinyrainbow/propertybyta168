@@ -44,6 +44,7 @@ import {
   type NainaHubResponse,
   getPropertyAddressString,
 } from "@/lib/nainahub";
+import { generatePropertySlug } from "@/lib/slug";
 
 // Use NainaHub property type
 type Property = NainaHubProperty;
@@ -433,9 +434,63 @@ function SearchContent() {
     setSelectedProject(projectCode === selectedProject ? "" : projectCode);
   };
 
-  // Get selected project name for display
+  // Get selected project for display
   const selectedProjectObj = projects.find(p => p.projectCode === selectedProject);
-  const selectedProjectName = selectedProjectObj ? getProjectName(selectedProjectObj) : selectedProject;
+
+  // Get first property from selected project to extract location info
+  const firstPropertyInProject = selectedProject
+    ? properties.find(p => p.projectCode === selectedProject)
+    : null;
+
+  // Get location string from property/project
+  const getLocationString = () => {
+    if (!firstPropertyInProject) return "";
+    const district = firstPropertyInProject.project?.addressDistrict || firstPropertyInProject.propertyDistrict || "";
+    const subDistrict = firstPropertyInProject.project?.addressSubDistrict || firstPropertyInProject.propertySubDistrict || "";
+    return [subDistrict, district].filter(Boolean).join(" ");
+  };
+
+  // Get listing type text based on filter and property type
+  const getListingTypeText = () => {
+    const isCondo = firstPropertyInProject?.propertyType === "Condo" || !firstPropertyInProject;
+    if (listingType === "sale") {
+      return isCondo ? t("searchPage.condoForSale") : t("searchPage.propertyForSale");
+    }
+    // Default to rent
+    return isCondo ? t("searchPage.condoForRent") : t("searchPage.propertyForRent");
+  };
+
+  // Build H1 title for project page
+  const getProjectH1 = () => {
+    if (!selectedProjectObj) return t("searchPage.title");
+    const projectNameEn = selectedProjectObj.projectNameEn || "";
+    const projectNameTh = selectedProjectObj.projectNameTh || "";
+    const listingText = getListingTypeText();
+    const location = getLocationString();
+
+    // Format: "The saint residences (เดอะ เซนต์ เรซิเดนเซส) – คอนโดให้เช่า ทําเล ลาดพร้าว จตุจักร"
+    const projectDisplay = projectNameTh
+      ? `${projectNameEn} (${projectNameTh})`
+      : projectNameEn;
+    const locationPart = location ? ` ${t("searchPage.locationPrefix")} ${location}` : "";
+    return `${projectDisplay} – ${listingText}${locationPart}`;
+  };
+
+  // Build H2 subtitle for project page
+  const getProjectH2 = () => {
+    if (!selectedProjectObj) return t("searchPage.title");
+    const projectNameEn = selectedProjectObj.projectNameEn || "";
+    const projectNameTh = selectedProjectObj.projectNameTh || "";
+    const listingText = getListingTypeText();
+    const location = getLocationString();
+
+    // Format: "รวมคอนโดให้เช่า The saint residences (เดอะ เซนต์ เรซิเดนเซส) – คอนโดให้เช่า ทําเล ลาดพร้าว จตุจักร"
+    const projectDisplay = projectNameTh
+      ? `${projectNameEn} (${projectNameTh})`
+      : projectNameEn;
+    const locationPart = location ? ` ${t("searchPage.locationPrefix")} ${location}` : "";
+    return `${t("searchPage.allListingsPrefix")}${listingText} ${projectDisplay} – ${listingText}${locationPart}`;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -455,14 +510,22 @@ function SearchContent() {
           <div className="w-16 h-1 bg-[#eb3838] mx-auto mb-6" />
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             {selectedProject
-              ? `${t("searchPage.title")} - ${selectedProjectName}`
-              : t("searchPage.title")}
+              ? getProjectH1()
+              : !propertyType && !bedrooms && !minPrice && !maxPrice && !searchText && listingType === "rent"
+                ? t("searchPage.rentTitle")
+                : !propertyType && !bedrooms && !minPrice && !maxPrice && !searchText && listingType === "sale"
+                  ? t("searchPage.saleTitle")
+                  : t("searchPage.title")}
           </h1>
-          <p className="text-lg text-gray-600 mb-6">
+          <h2 className="text-lg text-gray-600 mb-6 font-normal">
             {selectedProject
-              ? `${properties.length} ${t("common.properties")} - ${selectedProjectName}`
-              : t("searchPage.subtitle")}
-          </p>
+              ? getProjectH2()
+              : !propertyType && !bedrooms && !minPrice && !maxPrice && !searchText && listingType === "rent"
+                ? t("searchPage.rentSubtitle")
+                : !propertyType && !bedrooms && !minPrice && !maxPrice && !searchText && listingType === "sale"
+                  ? t("searchPage.saleSubtitle")
+                  : t("searchPage.subtitle")}
+          </h2>
 
           {selectedProject && (
             <Button
@@ -687,12 +750,20 @@ function SearchContent() {
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
-                  {t("searchPage.title")}
-                </h2>
-                <p className="text-sm text-gray-500">
-                  {properties.length} {t("common.properties")}
-                </p>
+                <h3 className="text-xl font-bold text-gray-900">
+                  {selectedProject
+                    ? getProjectH2()
+                    : !propertyType && !bedrooms && !minPrice && !maxPrice && !searchText && listingType === "rent"
+                      ? t("searchPage.rentTitle")
+                      : !propertyType && !bedrooms && !minPrice && !maxPrice && !searchText && listingType === "sale"
+                        ? t("searchPage.saleTitle")
+                        : t("searchPage.title")}
+                </h3>
+                {!loading && (
+                  <p className="text-sm text-gray-500">
+                    {properties.length} {t("common.properties")}
+                  </p>
+                )}
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -771,7 +842,7 @@ function SearchContent() {
                 {properties.map((property, index) => (
                   <Link
                     key={property.id}
-                    href={`/property/${property.id}`}
+                    href={`/property/${generatePropertySlug(property, locale)}`}
                     className={`transition-all duration-500 ${
                       isVisible
                         ? "opacity-100 translate-y-0"
@@ -831,6 +902,12 @@ function SearchContent() {
                           {property.sellPriceNum != null && property.sellPriceNum > 0 && (
                             <div className="bg-gray-900 text-white px-2.5 py-1 rounded-md text-xs font-medium shadow-lg">
                               {t("property.forSale")}
+                            </div>
+                          )}
+                          {property.isAcceptShortTerm && property.isAcceptShortTerm !== "no" && property.isAcceptShortTerm !== "false" && (
+                            <div className="flex items-center gap-1 bg-purple-600 text-white px-2.5 py-1 rounded-md text-xs font-medium shadow-lg">
+                              <Calendar className="w-3 h-3" />
+                              <span>{property.isAcceptShortTerm}</span>
                             </div>
                           )}
                         </div>
@@ -1116,7 +1193,30 @@ function SearchContent() {
 
       {/* Footer */}
       <div className="mt-12">
-        <Footer />
+        <Footer
+          seoContent={
+            listingType === "rent" || listingType === "sale" ? (
+              <div className="space-y-6 text-gray-300">
+                <div>
+                  <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                    {t(listingType === "rent" ? "seoRent.title1" : "seoSale.title1")}
+                  </h2>
+                  <p className="text-sm leading-relaxed">
+                    {t(listingType === "rent" ? "seoRent.desc1" : "seoSale.desc1")}
+                  </p>
+                </div>
+                <div>
+                  <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                    {t(listingType === "rent" ? "seoRent.title2" : "seoSale.title2")}
+                  </h2>
+                  <p className="text-sm leading-relaxed">
+                    {t(listingType === "rent" ? "seoRent.desc2" : "seoSale.desc2")}
+                  </p>
+                </div>
+              </div>
+            ) : undefined
+          }
+        />
       </div>
     </div>
   );

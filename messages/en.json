@@ -380,6 +380,10 @@
   "searchPage": {
     "title": "Search Properties",
     "subtitle": "Find the perfect property from our listings",
+    "rentTitle": "Condos & Properties for Rent in Bangkok",
+    "rentSubtitle": "Find the best condos and houses for rent in Bangkok with Property by Ta 168",
+    "saleTitle": "Condos & Properties for Sale in Bangkok",
+    "saleSubtitle": "Find the best condos and houses for sale in Bangkok with Property by Ta 168",
     "searchPlaceholder": "Search by project name, property code...",
     "filters": "Filters",
     "showFilters": "Show Filters",
@@ -392,7 +396,13 @@
     "priceLowToHigh": "Price Low-High",
     "popularProjects": "Popular Projects",
     "allProjects": "All",
-    "bedroomsPlus": "bedrooms+"
+    "bedroomsPlus": "bedrooms+",
+    "condoForRent": "Condo for Rent",
+    "condoForSale": "Condo for Sale",
+    "propertyForRent": "Property for Rent",
+    "propertyForSale": "Property for Sale",
+    "locationPrefix": "Location",
+    "allListingsPrefix": "All"
   },
   "listProperty": {
     "title": "List Your Property",
@@ -445,7 +455,11 @@
     "benefit2Title": "Full Coverage",
     "benefit2Desc": "Service covers both Bangkok and provinces",
     "benefit3Title": "Easy Contact",
-    "benefit3Desc": "Track progress anytime"
+    "benefit3Desc": "Track progress anytime",
+    "seoTitle1": "List Your Condo or House for Sale or Rent with Property by Ta 168",
+    "seoDesc1": "If you are a property owner looking for a professional agent to list your condo for sale or your house for rent in Bangkok, Property by Ta 168 is here to make the entire process simple and efficient. We have a strong client base of both Thai and international (expat) customers actively seeking properties, supported by a proactive online marketing team. This allows your property to reach the right target audience quickly and close deals at a fair and competitive price.",
+    "seoTitle2": "Why List Your Property with Us?",
+    "seoDesc2": "With over 5 years of experience in Thailand's real estate market, we provide premium services including market price analysis, professional property photography, and careful screening of qualified tenants and buyers. We also handle the entire process through to lease agreement signing and, in the case of sales, ownership transfer at the Land Department. We offer free marketing services until the deal is successfully closed, ensuring your property is managed securely and professionally at every step."
   },
   "listPropertyPopup": {
     "title": "Want us to help find the right room for you?",
@@ -588,7 +602,7 @@
     "baths": "Baths",
     "area": "Area",
     "learnMore": "LEARN MORE",
-    "note": "Note",
+    "note": "Additional Details",
     "projectInfo": "Project Information",
     "projectName": "Project Name",
     "projectNameEn": "Project Name (EN)",
@@ -852,5 +866,23 @@
       "title": "Contact Us",
       "content": "If you have questions about these Terms of Service, please contact us at:"
     }
+  },
+  "seoRent": {
+    "title1": "Find Condos for Rent in Bangkok with Property by Ta 168",
+    "desc1": "We are a comprehensive source for condominium rentals across all areas of Bangkok, including Sukhumvit, Thonglor, Asok, Phrom Phong, Sathorn, Ari, Ploenchit, Ladprao, Onnut, Rama 9, Huai Khwang, Bangna, Ramkhamhaeng, Phra Khanong, Wongwian Yai, as well as condos conveniently located near BTS and MRT stations. With Property by Ta 168, you can be confident that we are fully committed to assisting you in finding the right unit that best matches your preferences and budget.",
+    "title2": "Why Choose to Rent a Condo with Us?",
+    "desc2": "At Property by Ta 168, we understand that finding the perfect home is not easy. With over 5 years of experience in Thailand's real estate industry, our team provides a full-service rental solution—from arranging on-site property viewings to ensuring legally compliant lease agreements. Best of all, tenants are not required to pay any brokerage or agency fees."
+  },
+  "seoSale": {
+    "title1": "Find Condos for Sale in Bangkok with Property by Ta 168",
+    "desc1": "We offer a comprehensive selection of condos for sale across all prime locations in Bangkok, with convenient transportation. Popular areas include Sukhumvit, Thonglor, Asok, Phrom Phong, Sathorn, Ari, Ploenchit, Ladprao, Onnut, Rama 9, Huai Khwang, Bangna, Ramkhamhaeng, Phra Khanong, Wongwian Yai, as well as condos located near BTS and MRT stations. With Property by Ta 168, you can be confident that we are fully committed to helping you find the right unit, in a great location, at the best price that matches your budget.",
+    "title2": "Why Buy or Sell a Condo with Us?",
+    "desc2": "At Property by Ta 168, we understand that finding the right property is not easy. With over 5 years of experience in Thailand's real estate market, we provide a complete end-to-end service — from arranging on-site property viewings, location analysis, and price evaluation, to handling the ownership transfer process at the Land Department. Our goal is to ensure that every buying or selling transaction is smooth, secure, and hassle-free for both foreign clients and Thai buyers and sellers."
+  },
+  "seoHome": {
+    "title1": "Property by Ta 168 – Comprehensive Real Estate in Every Prime Location of Bangkok",
+    "desc1": "Welcome to Property by Ta 168, a professional platform featuring rental and sale listings for condominiums, detached houses, townhouses, and land in prime locations across Bangkok and its metropolitan areas. We are committed to providing a smooth, convenient, and secure property search experience. With listings updated daily, we offer a wide selection of properties, including condos near BTS/MRT stations and luxury homes in premium projects that cater to every lifestyle.",
+    "title2": "Professional Real Estate Consulting Services with Over 5 Years of Experience",
+    "desc2": "We are more than just a property listing website. Property by Ta 168 is a dedicated team with over 5 years of experience in Thailand's real estate market, offering in-depth consultation for homebuyers, investors, landlords, and tenants. We support you through every step from location selection and price negotiation, to bank loan coordination and ownership transfer at the Land Department. Whether you are looking to rent a condo or house, sell or lease out your property, we provide proactive marketing solutions to help you close deals faster, with honesty and transparency at the core of everything we do."
   }
 }

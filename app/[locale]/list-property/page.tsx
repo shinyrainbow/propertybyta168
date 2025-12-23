@@ -129,7 +129,28 @@ export default function ListPropertyPage() {
             </div>
           </Card>
         </div>
-        <Footer />
+        <Footer
+          seoContent={
+            <div className="space-y-6 text-gray-300">
+              <div>
+                <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                  {t("seoTitle1")}
+                </h2>
+                <p className="text-sm leading-relaxed">
+                  {t("seoDesc1")}
+                </p>
+              </div>
+              <div>
+                <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                  {t("seoTitle2")}
+                </h2>
+                <p className="text-sm leading-relaxed">
+                  {t("seoDesc2")}
+                </p>
+              </div>
+            </div>
+          }
+        />
       </div>
     );
   }
@@ -395,7 +416,28 @@ export default function ListPropertyPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer
+        seoContent={
+          <div className="space-y-6 text-gray-300">
+            <div>
+              <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                {t("seoTitle1")}
+              </h2>
+              <p className="text-sm leading-relaxed">
+                {t("seoDesc1")}
+              </p>
+            </div>
+            <div>
+              <h2 className="text-lg md:text-xl font-bold text-white mb-3">
+                {t("seoTitle2")}
+              </h2>
+              <p className="text-sm leading-relaxed">
+                {t("seoDesc2")}
+              </p>
+            </div>
+          </div>
+        }
+      />
     </div>
   );
 }

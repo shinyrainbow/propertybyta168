@@ -152,6 +152,21 @@ export async function fetchNainaHubPropertyById(
   return response.data.find((p) => p.id === id) || null;
 }
 
+/**
+ * Fetch a single property by agent property code
+ * Used for SEO-friendly URL lookups
+ */
+export async function fetchNainaHubPropertyByCode(
+  code: string
+): Promise<NainaHubProperty | null> {
+  // Fetch with high limit to find the property
+  const response = await fetchNainaHubProperties({ limit: 100 });
+  const upperCode = code.toUpperCase();
+  return response.data.find(
+    (p) => p.agentPropertyCode?.toUpperCase() === upperCode
+  ) || null;
+}
+
 // Suggestions API types
 export interface SuggestionProject {
   nameEn: string;

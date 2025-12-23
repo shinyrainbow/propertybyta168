@@ -16,15 +16,15 @@ export default function FloatingLine() {
 
   return (
     <>
-      {/* Floating LINE Button - Desktop only, mobile uses bottom nav */}
+      {/* Floating LINE Button */}
       <button
         onClick={() => setShowQR(true)}
-        className={`fixed bottom-6 right-6 z-40 hidden md:flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 ${
+        className={`fixed bottom-20 right-4 md:bottom-6 md:right-6 z-40 flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white px-3 py-2 md:px-4 md:py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 ${
           isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
         }`}
       >
-        <MessageCircle className="w-5 h-5" />
-        <span className="font-medium">Line</span>
+        <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+        <span className="font-medium text-sm md:text-base">Line</span>
       </button>
 
       {/* Line QR Modal */}
@@ -49,7 +49,7 @@ export default function FloatingLine() {
             </div>
             <div className="bg-[#06C755]/5 rounded-xl p-6 flex justify-center">
               <Image
-                src="/qrcode.png"
+                src="/line.png"
                 alt="Line QR Code"
                 width={200}
                 height={200}

@@ -380,6 +380,10 @@
   "searchPage": {
     "title": "搜索房产",
     "subtitle": "从我们的房源中找到理想的房产",
+    "rentTitle": "曼谷公寓及房产出租",
+    "rentSubtitle": "与 Property by Ta 168 一起寻找曼谷最优质的出租公寓和别墅",
+    "saleTitle": "曼谷公寓及房产出售",
+    "saleSubtitle": "与 Property by Ta 168 一起寻找曼谷最优质的出售公寓和别墅",
     "searchPlaceholder": "按项目名称、房产编号搜索...",
     "filters": "筛选",
     "showFilters": "显示筛选",
@@ -392,7 +396,13 @@
     "priceLowToHigh": "价格从低到高",
     "popularProjects": "热门项目",
     "allProjects": "全部",
-    "bedroomsPlus": "卧室以上"
+    "bedroomsPlus": "卧室以上",
+    "condoForRent": "公寓出租",
+    "condoForSale": "公寓出售",
+    "propertyForRent": "房产出租",
+    "propertyForSale": "房产出售",
+    "locationPrefix": "地段",
+    "allListingsPrefix": "所有"
   },
   "listProperty": {
     "title": "委托出售/出租",
@@ -445,7 +455,11 @@
     "benefit2Title": "全面覆盖",
     "benefit2Desc": "服务覆盖曼谷及各府",
     "benefit3Title": "便捷联系",
-    "benefit3Desc": "随时跟踪进度"
+    "benefit3Desc": "随时跟踪进度",
+    "seoTitle1": "将您的公寓或住宅交由 Property by Ta 168 出售或出租",
+    "seoDesc1": "如果您是房产持有人，正在寻找专业代理协助出售公寓或出租住宅，Property by Ta 168 将为您提供一站式解决方案，让整个流程变得简单高效。我们拥有大量正在寻找住房的泰国及外国(外派人士)客户资源，并配备积极的线上营销团队，帮助您的房产快速触达目标客户，以合理且具竞争力的价格顺利成交。",
+    "seoTitle2": "为什么选择我们托管您的房产?",
+    "seoDesc2": "凭借超过5年的泰国房地产行业经验，我们提供全面且专业的服务，包括市场价格分析、房产专业拍摄，以及高质量租客与买家的筛选。此外，我们全程协助至租赁合同签署，若为出售案件，还将协助完成土地局的产权过户手续。我们提供免费营销服务，直至成功成交，确保您的房产在每一个环节都得到安全、专业的管理与照顾。"
   },
   "listPropertyPopup": {
     "title": "需要我们帮您找到合适的房间吗？",
@@ -588,7 +602,7 @@
     "baths": "浴室",
     "area": "面积",
     "learnMore": "了解更多",
-    "note": "备注",
+    "note": "附加信息",
     "projectInfo": "项目信息",
     "projectName": "项目名称",
     "projectNameEn": "项目名称 (EN)",
@@ -852,5 +866,23 @@
       "title": "联系我们",
       "content": "如果您对这些服务条款有疑问，请通过以下方式联系我们："
     }
+  },
+  "seoRent": {
+    "title1": "通过 Property by Ta 168 寻找曼谷出租公寓",
+    "desc1": "我们汇集了遍布曼谷各个区域的优质出租公寓，包括素坤逸（Sukhumvit）、通罗（Thonglor）、阿索克（Asok）、澎蓬（Phrom Phong）、沙吞（Sathorn）、阿里（Ari）、奔集（Ploenchit）、拉抛（Ladprao）、安努（Onnut）、拉玛9（Rama 9）、辉煌（Huai Khwang）、邦纳（Bangna）、兰甘亨（Ramkhamhaeng）、帕卡农（Phra Khanong）、翁维安亚（Wongwian Yai），以及靠近 BTS 与 MRT 轨道交通站的公寓。选择 Property by Ta 168，您可以放心，我们将全力协助您找到最符合需求且价格合理的理想房源。",
+    "title2": "为什么选择通过我们租赁公寓？",
+    "desc2": "Property by Ta 168 深知寻找心仪住所并非易事。凭借我们在泰国房地产行业超过 5 年的丰富经验，我们提供一站式的租赁服务——从实地看房安排到依法合规的租赁合同签署，全程为您妥善处理。最重要的是，租客无需支付任何中介或代理费用。"
+  },
+  "seoSale": {
+    "title1": "通过 Property by Ta 168 在曼谷寻找买卖公寓",
+    "desc1": "我们汇集了遍布曼谷各大优质地段的公寓买卖资源，交通便利，涵盖素坤逸（Sukhumvit）、通罗（Thonglor）、阿索克（Asok）、澎蓬（Phrom Phong）、沙吞（Sathorn）、阿里（Ari）、奔集（Ploenchit）、拉抛（Ladprao）、安努（Onnut）、拉玛9（Rama 9）、辉煌（Huai Khwang）、邦纳（Bangna）、兰甘亨（Ramkhamhaeng）、帕卡农（Phra Khanong）、翁维安亚（Wongwian Yai），以及靠近 BTS 与 MRT 轨道交通站的公寓。选择 Property by Ta 168，您可以放心，我们将全力协助您寻找理想房源、优质地段，并以最符合您预算的价格完成交易。",
+    "title2": "为什么选择与我们进行公寓买卖？",
+    "desc2": "Property by Ta 168 深知寻找合适的房产并非易事。凭借我们在泰国房地产行业超过 5 年的丰富经验，我们为您提供一站式全方位服务——从实地看房、地段分析、价格评估，到在土地局办理产权过户手续，全程专业协助，确保每一笔买卖对外国客户及泰国本地客户而言，都是安全、顺畅且值得信赖的交易体验。"
+  },
+  "seoHome": {
+    "title1": "Property by Ta 168 – 覆盖曼谷全区域的专业房地产平台",
+    "desc1": "欢迎来到 Property by Ta 168，我们是一个汇集公寓、独栋住宅、联排别墅及土地买卖与租赁信息的专业房地产平台，房源遍布曼谷及周边核心区域。我们致力于为客户提供简单、便捷且安全的找房体验，房源每日更新，涵盖 BTS/MRT 沿线公寓及高端住宅项目，全面满足不同生活方式与居住需求。",
+    "title2": "超过 5 年经验的专业房地产顾问服务",
+    "desc2": "Property by Ta 168 不仅仅是一个房产发布网站，更是一支拥有超过 5 年泰国房地产经验的专业团队。我们为自住买家、投资者以及租赁客户提供深入咨询服务，涵盖选址分析、价格谈判、银行贷款协调，以及在土地局完成产权过户等全流程服务。无论您是寻找公寓或住宅出租、出售或委托出租，我们都能通过积极的市场推广，帮助您更快速、安全地完成交易。诚信与透明，是 Property by Ta 168 始终坚持的核心价值。"
   }
 }

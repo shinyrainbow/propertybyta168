@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 import {
   Building2,
   Home,
@@ -14,6 +15,7 @@ import {
   CheckCircle,
   ArrowRight,
 } from "lucide-react";
+import { generatePropertySlug } from "@/lib/slug";
 
 interface DashboardData {
   stats: {
@@ -62,6 +64,7 @@ interface DashboardData {
 }
 
 export default function AdminDashboardPage() {
+  const locale = useLocale();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -334,7 +337,7 @@ export default function AdminDashboardPage() {
           {data.recentProperties.map((property) => (
             <Link
               key={property.id}
-              href={`/property/${property.id}`}
+              href={`/property/${generatePropertySlug(property, locale)}`}
               target="_blank"
               className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
             >

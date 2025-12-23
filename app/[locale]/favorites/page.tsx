@@ -20,6 +20,7 @@ import Footer from "@/components/layout/footer";
 import { useFavorites } from "@/hooks/useFavorites";
 import { toast } from "sonner";
 import { type NainaHubProperty, getPropertyAddressString } from "@/lib/nainahub";
+import { generatePropertySlug } from "@/lib/slug";
 
 type Property = NainaHubProperty;
 
@@ -228,7 +229,7 @@ export default function FavoritesPage() {
                   return (
                     <Link
                       key={property.id}
-                      href={`/property/${property.id}`}
+                      href={`/property/${generatePropertySlug(property, locale)}`}
                       className={`group block transition-all duration-500 ${
                         isVisible
                           ? "opacity-100 translate-y-0"

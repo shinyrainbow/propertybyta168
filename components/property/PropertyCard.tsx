@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
   Heart,
@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   Calendar,
 } from "lucide-react";
+import { generatePropertySlug } from "@/lib/slug";
 
 interface PropertyCardProps {
   property: {
@@ -46,6 +47,15 @@ interface PropertyCardProps {
     isExclusive?: boolean;
     isFeatured?: boolean;
     updatedAt?: string;
+    // Fields for SEO-friendly slug generation
+    agentPropertyCode?: string;
+    rentalRateNum?: number;
+    sellPriceNum?: number;
+    project?: {
+      projectNameTh?: string;
+      projectNameEn?: string;
+    };
+    propertyDistrict?: string;
   };
   locale?: string;
 }
@@ -108,8 +118,13 @@ export default function PropertyCard({ property, locale = "th" }: PropertyCardPr
     }
   };
 
+  // Generate slug with fallback to ID if required fields are missing
+  const propertySlug = property.agentPropertyCode
+    ? generatePropertySlug(property, locale)
+    : property.id;
+
   return (
-    <Link href={`/property/${property.id}`}>
+    <Link href={`/property/${propertySlug}`}>
       <div
         className="property-card bg-white rounded-xl overflow-hidden cursor-pointer border border-gray-100"
         onMouseEnter={() => setIsHovered(true)}
