@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Home, Phone, User, MessageCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
 
 interface ListPropertyPopupProps {
@@ -17,9 +16,7 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    lineId: "",
-    whatsapp: "",
-    wechat: "",
+    contactId: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,9 +56,7 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
     try {
       // Build message with optional fields
       const messageParts = [];
-      if (formData.lineId) messageParts.push(`Line ID: ${formData.lineId}`);
-      if (formData.whatsapp) messageParts.push(`WhatsApp: ${formData.whatsapp}`);
-      if (formData.wechat) messageParts.push(`WeChat: ${formData.wechat}`);
+      if (formData.contactId) messageParts.push(`Line/WhatsApp/WeChat: ${formData.contactId}`);
       if (formData.message) messageParts.push(formData.message);
 
       const response = await fetch("/api/public/inquiries", {
@@ -186,46 +181,18 @@ export default function ListPropertyPopup({ delayMs = 60000 }: ListPropertyPopup
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("lineIdLabel")}
-                    </label>
-                    <div className="relative">
-                      <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        value={formData.lineId}
-                        onChange={(e) => setFormData({ ...formData, lineId: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
-                        placeholder={t("lineIdPlaceholder")}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("whatsappLabel")}
-                    </label>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    {t("contactIdLabel")}
+                  </label>
+                  <div className="relative">
+                    <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      value={formData.whatsapp}
-                      onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
-                      placeholder={t("whatsappPlaceholder")}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      {t("wechatLabel")}
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.wechat}
-                      onChange={(e) => setFormData({ ...formData, wechat: e.target.value })}
-                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
-                      placeholder={t("wechatPlaceholder")}
+                      value={formData.contactId}
+                      onChange={(e) => setFormData({ ...formData, contactId: e.target.value })}
+                      className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#eb3838]/20 focus:border-[#eb3838]"
+                      placeholder={t("contactIdPlaceholder")}
                     />
                   </div>
                 </div>
