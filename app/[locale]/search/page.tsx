@@ -45,6 +45,7 @@ import {
   getPropertyAddressString,
 } from "@/lib/nainahub";
 import { generatePropertySlug } from "@/lib/slug";
+import { SearchResultsJsonLd } from "@/components/seo/json-ld";
 
 // Use NainaHub property type
 type Property = NainaHubProperty;
@@ -488,8 +489,26 @@ function SearchContent() {
     return `${t("searchPage.allListingsPrefix")}${listingText} ${projectDisplay} – ${listingText}${locationPart}`;
   };
 
+  // Build current URL for JSON-LD
+  const currentUrl = typeof window !== "undefined"
+    ? window.location.href
+    : `https://www.propertybyta168.com/${locale}/search${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* JSON-LD Structured Data for Search Results */}
+      {!loading && properties.length > 0 && (
+        <SearchResultsJsonLd
+          properties={properties}
+          searchQuery={searchText}
+          listingType={listingType}
+          propertyType={propertyType}
+          locale={locale}
+          currentUrl={currentUrl}
+          totalResults={properties.length}
+        />
+      )}
+
       {/* Shared Header */}
       <Header />
 
