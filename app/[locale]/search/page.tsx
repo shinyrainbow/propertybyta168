@@ -45,7 +45,6 @@ import {
   getPropertyAddressString,
 } from "@/lib/nainahub";
 import { generatePropertySlug } from "@/lib/slug";
-import { SearchResultsJsonLd } from "@/components/seo/json-ld";
 
 // Use NainaHub property type
 type Property = NainaHubProperty;
@@ -359,26 +358,38 @@ function SearchContent() {
     let filtered = [...allProperties];
 
     // Filter by search text (client-side - searches through multiple fields)
+    // For Condo: search by project name and location (both TH and EN)
+    // For other types: search by property title and location (both TH and EN)
     if (searchText) {
       const searchLower = searchText.toLowerCase();
       filtered = filtered.filter((p) => {
-        const searchableText = [
-          p.propertyTitleEn,
-          p.propertyTitleTh,
-          p.propertyLocationText,
-          p.propertyLocationTextEn,
-          p.project?.projectNameEn,
-          p.project?.projectNameTh,
-          p.project?.projectLocationText,
-          p.project?.projectLocationTextEn,
-          p.propertyDistrict,
-          p.propertySubDistrict,
-          p.propertyProvince,
-          p.project?.addressDistrict,
-          p.project?.addressSubDistrict,
-          p.project?.addressProvince,
-        ].filter(Boolean).join(" ").toLowerCase();
+        let searchableFields: (string | undefined | null)[] = [];
 
+        if (p.propertyType === "Condo") {
+          // For Condo: search project fields
+          searchableFields = [
+            p.project?.projectNameTh,
+            p.project?.projectNameEn,
+            p.project?.projectLocationText,
+            p.project?.projectLocationTextEn,
+            p.project?.addressDistrict,
+            p.project?.addressSubDistrict,
+            p.project?.addressProvince,
+          ];
+        } else {
+          // For other property types: search property title and location fields
+          searchableFields = [
+            p.propertyTitleTh,
+            p.propertyTitleEn,
+            p.propertyLocationText,
+            p.propertyLocationTextEn,
+            p.propertyDistrict,
+            p.propertySubDistrict,
+            p.propertyProvince,
+          ];
+        }
+
+        const searchableText = searchableFields.filter(Boolean).join(" ").toLowerCase();
         return searchableText.includes(searchLower);
       });
     }
@@ -489,26 +500,8 @@ function SearchContent() {
     return `${t("searchPage.allListingsPrefix")}${listingText} ${projectDisplay} – ${listingText}${locationPart}`;
   };
 
-  // Build current URL for JSON-LD
-  const currentUrl = typeof window !== "undefined"
-    ? window.location.href
-    : `https://www.propertybyta168.com/${locale}/search${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* JSON-LD Structured Data for Search Results */}
-      {!loading && properties.length > 0 && (
-        <SearchResultsJsonLd
-          properties={properties}
-          searchQuery={searchText}
-          listingType={listingType}
-          propertyType={propertyType}
-          locale={locale}
-          currentUrl={currentUrl}
-          totalResults={properties.length}
-        />
-      )}
-
       {/* Shared Header */}
       <Header />
 
