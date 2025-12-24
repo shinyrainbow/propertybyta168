@@ -15,7 +15,7 @@ export default function AboutPage() {
   const stats = [
     { icon: Home, value: "500+", label: t("stats.properties") },
     { icon: Users, value: "1000+", label: t("stats.clients") },
-    { icon: Award, value: "15+", label: t("stats.years") },
+    { icon: Award, value: "5+", label: t("stats.years") },
     { icon: TrendingUp, value: "95%", label: t("stats.satisfaction") },
   ];
 
